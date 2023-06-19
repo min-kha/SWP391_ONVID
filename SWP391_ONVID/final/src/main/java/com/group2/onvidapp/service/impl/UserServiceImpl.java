@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, UserDTOReponse> authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap) {
         UserDTOLoginRequest userDTOLoginRequest = userLoginRequestMap.get("user");
-        Optional<User> userOptional = userReposioty.findbyEmail(userDTOLoginRequest.getEmail());
+        Optional<User> userOptional = userReposioty.findByEmail(userDTOLoginRequest.getEmail());
         return null;
     }
 
