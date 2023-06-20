@@ -1,8 +1,10 @@
 package com.group2.onvidapp.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +23,15 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     @Autowired
     UserService UserService;
-    
+
     private final UserService userService;
 
-  
 
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+
+        return "aa";
+    }
 }

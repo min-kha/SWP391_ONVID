@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,12 +17,13 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
+
 @Data
 @Builder
 
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int userId;
     private Date date;
     private String userName;
@@ -32,9 +32,17 @@ public class User {
     private String email;
     private int role;
 
+
     @OneToMany(mappedBy = "teacher", 
     cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Course> courses;
+
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<ContentSite> ContentSite;
+
+
 }
