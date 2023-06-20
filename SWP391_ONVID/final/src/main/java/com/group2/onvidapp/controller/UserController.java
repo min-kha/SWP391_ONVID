@@ -24,9 +24,6 @@ public class UserController {
     
     private final UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, UserDTOReponse> login(HttpServletRequest req) {
-        return userService.authenticate(userLoginRequestMap);
-    }
+  
 
 }
