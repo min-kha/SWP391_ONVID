@@ -35,6 +35,6 @@ public class User {
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<ContentSite> ContentSite;
+    private Collection<ContentSite> contentSite;
 
 }
