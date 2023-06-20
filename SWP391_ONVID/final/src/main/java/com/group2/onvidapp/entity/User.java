@@ -1,25 +1,29 @@
 package com.group2.onvidapp.entity;
 
 import java.sql.Date;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
-@Table(name = "User")
+@Table
 @Data
 @Builder
 
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int userId;
     private Date date;
     private String userName;
@@ -27,5 +31,10 @@ public class User {
     @Column(unique = true)
     private String email;
     private int role;
+
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<ContentSite> ContentSite;
 
 }
