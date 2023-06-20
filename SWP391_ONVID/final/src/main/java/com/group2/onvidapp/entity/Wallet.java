@@ -21,7 +21,7 @@ import lombok.ToString;
 public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int walletID;
+    private int walletId;
     private double revenue;
 
     @OneToOne

@@ -15,7 +15,7 @@ public class Response {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int responseID;
-    private int answers;
+    private int answer;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
