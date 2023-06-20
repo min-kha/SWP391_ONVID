@@ -2,31 +2,25 @@ package com.group2.onvidapp.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table
-@Data
-@Builder
+public class AnswerChoice {
 
-public class ContentSite {
     @Id
-    @GeneratedValue
-    private int webContentId;
-    private String title;
-    private String image;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int answerChoiceID;
+    private String answer;
 
     @ManyToOne
-    @JoinColumn(name = "staff_id")
+    @JoinColumn(name = "question_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private User staff;
+    private Question question;
 }

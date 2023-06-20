@@ -5,29 +5,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.ManyToOne;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table
-@Data
-@Builder
-
-public class Wallet {
+public class Notification {
+//     notificationID: int
+// message: Nvarchar(200)
+// linkDirect: Varchar(200)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int walletId;
-    private double revenue;
+    private int notificationID;
+    private String message;
+    private String linkDirect;
 
-    @OneToOne
-    @JoinColumn(name = "teacher_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "notification_id")
+        @EqualsAndHashCode.Exclude
+    @ToString.Exclude 
     private User user;
-
 }
