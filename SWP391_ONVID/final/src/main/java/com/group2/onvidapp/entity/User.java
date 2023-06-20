@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table
+
 @Data
 @Builder
 
@@ -32,9 +32,17 @@ public class User {
     private String email;
     private int role;
 
+
+    @OneToMany(mappedBy = "teacher", 
+    cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Course> courses;
+
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<ContentSite> contentSite;
+
 
 }
