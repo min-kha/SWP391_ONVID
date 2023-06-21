@@ -1,4 +1,4 @@
-package com.group2.onvidapp.entity;
+package group5.swp391.onlinelearning.entity;
 
 import java.math.BigDecimal;
 import java.util.Collection;
