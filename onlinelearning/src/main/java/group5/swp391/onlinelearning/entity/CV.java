@@ -1,4 +1,4 @@
-package com.group2.onvidapp.entity;
+package group5.swp391.onlinelearning.entity;
 
 import java.util.Collection;
 import java.util.Date;
@@ -30,7 +30,7 @@ public class CV {
     @ManyToOne
     @JoinColumn(name = "course_id")
     @EqualsAndHashCode.Exclude
-    @ToString.Exclude 
+    @ToString.Exclude
     private Course course;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
