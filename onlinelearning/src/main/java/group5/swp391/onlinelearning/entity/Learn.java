@@ -1,7 +1,5 @@
 package group5.swp391.onlinelearning.entity;
 
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,18 +13,25 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Data
 @Builder
-public class View {
+@Data
+public class Learn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int viewId;
+    private int learnid;
+
+    private boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "student_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Course course;
+    private User student;
 
-    private Date date;
+    @ManyToOne
+    @JoinColumn(name = "lession_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Lession lession;
+
 }

@@ -27,10 +27,10 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int courseId;
+    private int courseId;
 
-    String courseName;
-    int status;
+    private String courseName;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
@@ -58,4 +58,13 @@ public class Course {
     @ToString.Exclude
     private User teacher;
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Lession> lessions;
 }

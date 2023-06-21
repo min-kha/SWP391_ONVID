@@ -17,7 +17,6 @@ import lombok.ToString;
 @Table
 @Data
 @Builder
-
 public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +28,4 @@ public class Wallet {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User user;
-
 }
