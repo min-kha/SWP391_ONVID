@@ -2,7 +2,6 @@ package group5.swp391.onlinelearning.entity;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -46,6 +45,16 @@ public class Course {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<View> views;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<CourseReview> courseReviews;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Feedback> feedbacks;
 
     @ManyToMany(mappedBy = "courses")
     @EqualsAndHashCode.Exclude
