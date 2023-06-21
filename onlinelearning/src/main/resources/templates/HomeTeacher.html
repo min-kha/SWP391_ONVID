@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Onvid</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&amp;display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap"
+    />
+    <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
+  </head>
+  <body
+    style="
+      background: rgb(229, 223, 255);
+      font-size: 18px;
+      font-family: 'Nunito Sans', sans-serif;
+    "
+  >
+    <div class="float-start" style="background: #ffffff">
+      <div>
+        <div style="padding: 15px">
+          <img src="assets/img/test-female-pic.jpg" width="97" height="89" />
+          <div>
+            <p
+              style="
+                font-family: 'Abril Fatface', serif;
+                font-weight: bold;
+                text-align: center;
+              "
+            >
+              Mrs.Thai
+            </p>
+            <p
+              class="text-center"
+              style="
+                font-family: 'Abril Fatface', serif;
+                font-weight: bold;
+                text-align: center;
+                color: var(--bs-blue);
+              "
+            >
+              My Profile
+            </p>
+          </div>
+        </div>
+        <div style="height: 4px; background: #cdcdcd"></div>
+      </div>
+      <div style="margin-top: 25px">
+        <p style="letter-spacing: 4px">MENU</p>
+        <div>
+          <div
+            class="d-md-flex justify-content-md-start align-items-md-center"
+            style="margin-bottom: 10px; padding-left: 10px"
+          >
+            <i
+              class="fa fa-comment"
+              style="color: var(--bs-gray); font-size: 18px"
+            ></i
+            ><button
+              class="btn btn-primary justify-content-start"
+              type="button"
+              style="
+                background: var(--bs-white);
+                padding: 3px;
+                font-size: 15px;
+                font-family: 'Nunito Sans', sans-serif;
+                text-align: center;
+                border-color: rgb(225, 225, 225);
+                font-weight: bold;
+                color: var(--bs-body-color);
+              "
+            >
+              Inbox
+            </button>
+          </div>
+          <div
+            class="d-md-flex justify-content-md-start align-items-md-center"
+            style="margin-bottom: 10px; padding-left: 10px"
+          >
+            <i
+              class="fa fa-send"
+              style="color: var(--bs-gray); font-size: 18px"
+            ></i
+            ><button
+              class="btn btn-primary justify-content-start"
+              type="button"
+              style="
+                background: var(--bs-white);
+                padding: 3px;
+                font-size: 15px;
+                font-family: 'Nunito Sans', sans-serif;
+                text-align: center;
+                border-color: rgb(225, 225, 225);
+                font-weight: bold;
+                color: var(--bs-body-color);
+              "
+            >
+              send
+            </button>
+          </div>
+          <div
+            class="d-md-flex justify-content-md-start align-items-md-center"
+            style="margin-bottom: 10px; padding-left: 10px"
+          >
+            <i
+              class="fa fa-pencil"
+              style="color: var(--bs-gray); font-size: 18px"
+            ></i
+            ><button
+              class="btn btn-primary justify-content-start"
+              type="button"
+              style="
+                background: var(--bs-white);
+                padding: 3px;
+                font-size: 15px;
+                font-family: 'Nunito Sans', sans-serif;
+                text-align: center;
+                border-color: rgb(225, 225, 225);
+                font-weight: bold;
+                color: var(--bs-body-color);
+              "
+            >
+              Draf
+            </button>
+          </div>
+          <div
+            class="d-md-flex justify-content-md-start align-items-md-center"
+            style="margin-bottom: 10px; padding-left: 10px"
+          >
+            <i
+              class="fa fa-trash"
+              style="color: var(--bs-gray); font-size: 18px"
+            ></i
+            ><button
+              class="btn btn-primary justify-content-start"
+              type="button"
+              style="
+                background: var(--bs-white);
+                padding: 3px;
+                font-size: 15px;
+                font-family: 'Nunito Sans', sans-serif;
+                text-align: center;
+                border-color: rgb(225, 225, 225);
+                font-weight: bold;
+                color: var(--bs-body-color);
+              "
+            >
+              delete
+            </button>
+          </div>
+          <div
+            class="d-md-flex justify-content-md-start align-items-md-center"
+            style="margin-bottom: 10px; padding-left: 10px"
+          >
+            <i
+              class="fa fa-star"
+              style="color: var(--bs-gray); font-size: 18px"
+            ></i
+            ><button
+              class="btn btn-primary justify-content-start"
+              type="button"
+              style="
+                background: var(--bs-white);
+                padding: 3px;
+                font-size: 15px;
+                font-family: 'Nunito Sans', sans-serif;
+                text-align: center;
+                border-color: rgb(225, 225, 225);
+                font-weight: bold;
+                color: var(--bs-body-color);
+              "
+            >
+              Facourite
+            </button>
+          </div>
+          <div
+            class="d-md-flex justify-content-md-start align-items-md-center"
+            style="margin-bottom: 10px; padding-left: 10px"
+          >
+            <i
+              class="fa fa-pie-chart"
+              style="color: var(--bs-gray); font-size: 18px"
+            ></i
+            ><button
+              class="btn btn-primary justify-content-start"
+              type="button"
+              style="
+                background: var(--bs-white);
+                padding: 3px;
+                font-size: 15px;
+                font-family: 'Nunito Sans', sans-serif;
+                text-align: center;
+                border-color: rgb(225, 225, 225);
+                font-weight: bold;
+                color: var(--bs-body-color);
+              "
+            >
+              Analytics
+            </button>
+          </div>
+          <div
+            class="d-md-flex justify-content-md-start align-items-md-center"
+            style="
+              margin-bottom: 10px;
+              padding-left: 10px;
+              border-left-style: ridge;
+              border-left-color: var(--bs-blue);
+            "
+          >
+            <i class="fa fa-gear" style="color: #65aaf4"></i>
+            <p style="margin-bottom: 0px; margin-left: 7px">Setting</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="d-md-flex justify-content-md-start" style="padding: 5px">
+          <button
+            class="btn btn-primary flex-fill"
+            type="button"
+            style="
+              padding: 6px 12px;
+              font-family: 'Abhaya Libre', serif;
+              border-left-color: var(--bs-btn-bg);
+              background: var(--bs-cyan);
+            "
+          >
+            Upgrade&nbsp; plane
+          </button>
+        </div>
+        <div class="d-md-flex justify-content-md-start" style="padding: 5px">
+          <button
+            class="btn btn-primary flex-fill"
+            type="button"
+            style="
+              padding: 6px 12px;
+              font-family: 'Abhaya Libre', serif;
+              background: #cde4ee;
+              border-style: none;
+              border-left-color: var(--bs-btn-bg);
+            "
+          >
+            contact support
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="padding-left: 200px; background: rgba(255, 255, 255, 0)">
+      <div style="padding-top: 25px; padding-right: 20px">
+        <div
+          class="d-md-flex d-lg-flex justify-content-md-end align-items-lg-center"
+          style="padding: 20px"
+        >
+          <h3
+            style="
+              font-family: 'Nunito Sans', sans-serif;
+              text-align: left;
+              margin-left: 10px;
+            "
+          >
+            overview
+          </h3>
+          <div
+            class="d-lg-flex flex-fill justify-content-lg-end"
+            style="padding-right: 10px"
+          >
+            <i class="fa fa-th-list d-md-flex justify-content-md-end"></i>
+          </div>
+          <div></div>
+        </div>
+        <div style="background: #f5f5f5">
+          <div
+            style="
+              padding: 5px;
+              padding-top: 3px;
+              background: var(--bs-btn-disabled-color);
+            "
+          >
+            <canvas
+              data-bss-chart='{"type":"bar","data":{"labels":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],"datasets":[{"label":"Revenue","backgroundColor":"#4e73df","borderColor":"#4e73df","data":["1","2","3","4","5","5","6","3","6","4","7"]}]},"options":{"maintainAspectRatio":true,"legend":{"display":false,"labels":{"fontStyle":"normal"}},"title":{"fontStyle":"bold"},"scales":{"xAxes":[{"gridLines":{"drawBorder":false,"drawTicks":false,"drawOnChartArea":false},"ticks":{"fontStyle":"normal"}}],"yAxes":[{"gridLines":{"drawBorder":false,"drawTicks":false,"drawOnChartArea":false},"ticks":{"fontStyle":"normal"}}]}}}'
+            ></canvas>
+          </div>
+          <div
+            class="table-responsive"
+            style="
+              border-top-left-radius: none;
+              border-top-right-radius: none;
+              border-bottom-right-radius: none;
+              border-bottom-left-radius: none;
+            "
+          >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Users</th>
+                  <th>user</th>
+                  <th>Users</th>
+                  <th>Users</th>
+                  <th>Users</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div>
+                      <div
+                        class="d-sm-flex justify-content-sm-start align-items-sm-center"
+                      >
+                        <img src="assets/img/test-woman.jpg" />
+                        <p style="margin-left: 10px">mr.Bean</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      class="d-sm-flex align-items-sm-center"
+                      style="padding-top: 31px"
+                    >
+                      <p
+                        class="d-sm-flex justify-content-sm-start align-items-sm-center"
+                        style="
+                          padding: 5px;
+                          padding-right: 10px;
+                          padding-left: 10px;
+                          background: #00feb2;
+                          border-radius: 17px;
+                        "
+                      >
+                        Active
+                      </p>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-top: 31px">
+                      <p style="margin-bottom: 4px">189</p>
+                      <p style="color: rgb(144, 144, 145)">Total&nbsp;user</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-top: 31px">
+                      <p style="margin-bottom: 4px">189</p>
+                      <p style="color: rgb(144, 144, 145)">Total conversiton</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-top: 31px">
+                      <p style="margin-bottom: 4px">189</p>
+                      <p style="color: rgb(144, 144, 145)">Total impression</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/script.min.js"></script>
+    <script src="assets/js/chart.min.min.js"></script>
+  </body>
+</html>
