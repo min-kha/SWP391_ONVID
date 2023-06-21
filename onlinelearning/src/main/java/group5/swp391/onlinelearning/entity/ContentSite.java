@@ -25,7 +25,7 @@ public class ContentSite {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "staff_Id")
+    @JoinColumn(name = "staff_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User staff;

@@ -18,9 +18,6 @@ import lombok.ToString;
 @Data
 @Builder
 
-// ViewID(PK): int
-// CourseID(FK):int
-// Date: date
 public class View {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

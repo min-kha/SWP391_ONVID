@@ -20,7 +20,7 @@ public class AnswerChoice {
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-        @EqualsAndHashCode.Exclude
-    @ToString.Exclude 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Question question;
 }
