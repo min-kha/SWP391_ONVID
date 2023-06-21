@@ -41,4 +41,23 @@ public class User {
     @ToString.Exclude
     private Collection<ContentSite> contentSites;
 
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<CourseReview> courseReview;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<WithdrawalDetail> WithdrawalsStudent;
+
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<WithdrawalDetail> WithdrawalsStaff;
 }
