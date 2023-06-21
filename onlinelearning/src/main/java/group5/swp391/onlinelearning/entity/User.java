@@ -41,12 +41,11 @@ public class User {
     @ToString.Exclude
     private Collection<ContentSite> contentSites;
 
-
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<MyOrder> orders;
-  
+
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -60,10 +59,12 @@ public class User {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-
-    private Collection<Learn> learn;
-  
     private Collection<WithdrawalDetail> WithdrawalsStudent;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Learn> learn;
 
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
