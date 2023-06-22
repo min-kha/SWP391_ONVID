@@ -11,25 +11,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-    private Date date;
-    private String userName;
+
+    private String name;
 
     @Column(unique = true)
     private String email;
     private int role;
+    private int status;
+    private String password;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
