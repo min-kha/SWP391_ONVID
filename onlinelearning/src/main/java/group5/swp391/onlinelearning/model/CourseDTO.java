@@ -8,7 +8,6 @@ import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.View;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

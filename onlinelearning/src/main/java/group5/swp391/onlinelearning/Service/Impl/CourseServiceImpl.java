@@ -27,7 +27,7 @@ public class CourseServiceImpl {
         if (courseOptional.isPresent()) {
             Course course = courseOptional.get();
             CourseDTO courseDTO = new CourseDTO();
-            // Sao chép các thuộc tính từ đối tượng Course sang CourseDTO
+            // copy course to courseDto
             courseDTO.setCourseId(course.getCourseId());
             courseDTO.setCourseName(course.getCourseName());
             courseDTO.setStatus(course.getStatus());
@@ -36,7 +36,7 @@ public class CourseServiceImpl {
             courseDTO.setDate(course.getDate());
             courseDTO.setTopic(course.getTopic());
             // get numeber of last views in the course
-            View view = (View) ((List) course.getViews()).get(course.getViews().size() - 1);
+            View view = ((List<View>) course.getViews()).get(course.getViews().size() - 1);
             courseDTO.setViews(view.getViewNumber());
             courseDTO.setFeedbacks(course.getFeedbacks());
             courseDTO.setTeacher(course.getTeacher());
