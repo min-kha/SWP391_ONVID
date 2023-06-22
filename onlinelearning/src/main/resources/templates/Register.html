@@ -57,15 +57,23 @@
           <div class="col-md-6 col-xl-4">
             <div class="card mb-5">
               <div class="card-body d-flex flex-column align-items-center">
-                <form class="text-center" method="post">
+                <form class="text-center" method="post" action="#" th:action="@{/register}" th:object="${user}">
                   <div class="mb-3">
-                    <input class="form-control" type="email" name="firstname" placeholder="First Name" /><input
-                      class="form-control" type="email" name="email" placeholder="Last Name" style="margin-top: 10px" />
+                    <input class="form-control" type="email" placeholder="Email" required />
+
                   </div>
                   <div class="mb-3">
-                    <input class="form-control" type="password" name="password" placeholder="Password" /><input
-                      class="form-control" type="password" name="repassword" placeholder="Confirm Password"
-                      style="margin-top: 10px" />
+                    <input class="form-control" type="text" placeholder="Name" required style="margin-top: 10px" />
+
+                  </div>
+                  <div class="mb-3">
+                    <input class="form-control" type="date" placeholder="BirthDay" required style="margin-top: 10px" />
+
+                  </div>
+                  <div class="mb-3">
+                    <input class="form-control" type="password" name="password" required placeholder="Password" />
+                    <input class="form-control" type="password" name="repassword" required
+                      placeholder="Confirm Password" style="margin-top: 10px" />
                   </div>
                   <div class="mb-3">
                     <button class="btn btn-primary d-block w-100" type="submit" style="

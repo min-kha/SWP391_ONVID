@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" style="height: 901px;">
+<html data-bs-theme="light" lang="en" style="height: 901px;" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Onvid</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700,700i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/Animated-Pretty-Product-List-v12-Animated-Pretty-Product-List.css">
-    <link rel="stylesheet" href="assets/css/Continue-Button.css">
-    <link rel="stylesheet" href="assets/css/Dashboard-layout-v11-DashBoard-light-boostrap.css">
-    <link rel="stylesheet" href="assets/css/Dashboard-layout-v11-styles.css">
-    <link rel="stylesheet" href="assets/css/Dashboard-layout-v11.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
-    <link rel="stylesheet" href="assets/css/navbar-shoppingcart-ecommerce.css">
-    <link rel="stylesheet" href="assets/css/NZ---TextboxLabel.css">
-    <link rel="stylesheet" href="assets/css/NZButtonSaveClose.css">
-    <link rel="stylesheet" href="assets/css/Pretty-Footer-.css">
-    <link rel="stylesheet" href="assets/css/Pretty-Search-Form-.css">
-    <link rel="stylesheet" href="assets/css/Search-Input-responsive.css">
-    <link rel="stylesheet" href="assets/css/Slider-laptop-laptop-Slider-1.css">
-    <link rel="stylesheet" href="assets/css/Slider-laptop-laptop-Slider.css">
-    <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown.css">
-    <link rel="stylesheet" href="assets/css/Ultimate-Testimonial-Slider.css">
+    <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome-all.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome5-overrides.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Animated-Pretty-Product-List-v12-Animated-Pretty-Product-List.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Continue-Button.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Dashboard-layout-v11-DashBoard-light-boostrap.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Dashboard-layout-v11-styles.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Dashboard-layout-v11.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Login-Form-Basic-icons.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/navbar-shoppingcart-ecommerce.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/NZ---TextboxLabel.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/NZButtonSaveClose.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Pretty-Footer-.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Pretty-Search-Form-.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Search-Input-responsive.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Slider-laptop-laptop-Slider-1.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Slider-laptop-laptop-Slider.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/sticky-dark-top-nav-with-dropdown.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/Ultimate-Testimonial-Slider.css}" />
 </head>
 
 <body>
@@ -55,7 +55,7 @@
             <div class="dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false"
                     data-bs-toggle="dropdown" href="#"><span
                         class="d-none d-lg-inline me-2 text-gray-100 small">Admin</span><img
-                        class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
+                        class="border rounded-circle img-profile"></a>
                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item"
                         href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a
                         class="dropdown-item" href="#"><i
@@ -106,7 +106,8 @@
                                         <td class="text-center">nguyentkhe160855@fpt.edu,vn</td>
                                         <td class="text-center">Admin</td>
                                         <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
-                                            <input type="checkbox"></td>
+                                            <input type="checkbox">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
@@ -117,7 +118,8 @@
                                         <td class="text-center">hungmatlon160855@fpt.edu,vn</td>
                                         <td>Admin</td>
                                         <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
-                                            <input type="checkbox"></td>
+                                            <input type="checkbox">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
@@ -128,7 +130,8 @@
                                         <td class="text-center">thaimatlon160855@fpt.edu,vn</td>
                                         <td>Admin</td>
                                         <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
-                                            <input type="checkbox"></td>
+                                            <input type="checkbox">
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -177,10 +180,10 @@
             <div></div>
         </footer>
     </div>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/Dashboard-layout-v11-DashBoard-light-boostrap.js"></script>
-    <script src="assets/js/Animated-Pretty-Product-List-v12-Animated-Pretty-Product-List.js"></script>
-    <script src="assets/js/Slider-laptop-laptop-Slider.js"></script>
+    <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/assets/js/Dashboard-layout-v11-DashBoard-light-boostrap.js}"></script>
+    <script th:src="@{/assets/js/Animated-Pretty-Product-List-v12-Animated-Pretty-Product-List.js}"></script>
+    <script th:src="@{/assets/js/Slider-laptop-laptop-Slider.js}"></script>
 </body>
 
 </html>

@@ -2,6 +2,7 @@ package group5.swp391.onlinelearning.entity;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -40,6 +41,8 @@ public class Course {
     private String decription;
 
     private BigDecimal price;
+
+    private Date date;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
