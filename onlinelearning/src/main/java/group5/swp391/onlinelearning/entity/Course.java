@@ -2,7 +2,6 @@ package group5.swp391.onlinelearning.entity;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,10 +26,10 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int courseId;
+    private int courseId;
 
-    String courseName;
-    int status;
+    private String courseName;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
@@ -47,6 +46,16 @@ public class Course {
     @ToString.Exclude
     private Collection<View> views;
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<CourseReview> courseReviews;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Feedback> feedbacks;
+
     @ManyToMany(mappedBy = "courses")
     @EqualsAndHashCode.Exclude
     @Exclude
@@ -58,4 +67,13 @@ public class Course {
     @ToString.Exclude
     private User teacher;
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Lession> lessions;
 }

@@ -1,38 +1,44 @@
 package group5.swp391.onlinelearning.entity;
 
+import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@Builder
 @Entity
+@Builder
 @Data
-public class Cart {
+public class MyOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartId;
+    private int orderId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "student_id")
-    private User user;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JoinTable(name = "cart_detail", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private Collection<Course> courses;
+    private User student;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<OrderDetail> orderDetails;
+
+    private BigDecimal amount;
+
+    private Date date;
 }
