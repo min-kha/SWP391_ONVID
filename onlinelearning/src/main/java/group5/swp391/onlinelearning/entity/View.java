@@ -21,7 +21,7 @@ public class View {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int viewId;
-
+    private long viewNumber;
     @ManyToOne
     @JoinColumn(name = "course_id")
     @EqualsAndHashCode.Exclude
