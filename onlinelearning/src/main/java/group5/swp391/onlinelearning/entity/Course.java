@@ -2,6 +2,7 @@ package group5.swp391.onlinelearning.entity;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -76,4 +77,6 @@ public class Course {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Lession> lessions;
+
+    private Date date;
 }
