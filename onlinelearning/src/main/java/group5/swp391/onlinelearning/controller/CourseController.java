@@ -36,4 +36,10 @@ public class CourseController {
         return "course/list";
     }
 
+    @GetMapping("/create")
+    public String getCreateCourse() {
+
+        return "course/add";
+    }
+
 }
