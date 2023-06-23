@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.Service;
+package group5.swp391.onlinelearning.service;
 
 import java.util.Collection;
 
