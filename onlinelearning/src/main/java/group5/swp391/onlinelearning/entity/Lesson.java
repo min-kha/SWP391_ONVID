@@ -1,36 +1,32 @@
 package group5.swp391.onlinelearning.entity;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-
-public class Feedback {
-
+public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int feedbackId;
-
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private User student;
+    private int learnId;
+    private String title;
+    private String lessonName;
+    private String document;
+    private String video;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
@@ -38,6 +34,8 @@ public class Feedback {
     @ToString.Exclude
     private Course course;
 
-    private int ratingStar;
-    private String comment;
+    @OneToMany(mappedBy = "lession", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Learn> learn;
 }
