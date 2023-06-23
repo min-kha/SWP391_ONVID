@@ -16,18 +16,43 @@ public class UserService implements IUserService {
     UserRepository userRepository;
 
     @Override
+    public List<User> getAllUsers() {
+        // TODO Auto-generated method stub
+        return userRepository.findAll();
+            }
+
+    @Override
+    public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
+        // TODO Auto-generated method stub
+        List<User> list = this.getAllUsers();
+        List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<UserDTOAccountRequest>();
+        for (User user : list) {
+            listUserDTOAccountRequest.add(mapper.mapperUsertoUserDTOAccountRequest(user));
+        }
+        return listUserDTOAccountRequest;
+        }
+
+    public void changeStatus(int id) {
+        User user = userRepository.findById(id).get();
+        if (user.getStatus() == 1) {
+            user.setStatus(0);
+        } else {
+            user.setStatus(1);
+        }
+        userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userRepository.findById(id).get();
+    }
+    @Override
     public boolean loginStudent(UserDTOLoginRequest student) {
-        List<User> users = getAllUser();
+        List<User> users = getAllUsers();
         for (User user : users) {
             if (student.getEmail().equals(user.getEmail()) && student.getPassword().equals(user.getPassword())) {
                 return true;
             }
         }
         return false;
-    }
-
-    @Override
-    public List<User> getAllUser() {
-        return userRepository.findAll();
-    }
 }
