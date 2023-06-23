@@ -8,7 +8,7 @@ public class MainController {
 
     @GetMapping("meo")
     public String login() {
-        return "Register";
+        return "home-student";
     }
 
 }

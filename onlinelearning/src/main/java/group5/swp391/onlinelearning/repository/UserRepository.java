@@ -7,4 +7,5 @@ import group5.swp391.onlinelearning.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+
 }

@@ -42,8 +42,6 @@ public class Course {
 
     private BigDecimal price;
 
-    private Date date;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" style="height: 901px">
+<html data-bs-theme="light" xmlns:th="http://www.thymeleaf.org" style="height: 901px">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
   <title>Onvid</title>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&amp;display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap" />
   <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
@@ -54,12 +54,16 @@
                     </path>
                   </svg>
                 </div>
-                <form class="text-center" method="post">
+                <form class="text-center" method="post" th:action="@{/student_login}" th:object="${student}">
                   <div class="mb-3">
-                    <input class="form-control" type="email" name="email" placeholder="Email" />
+                    <input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"
+                      required />
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></p>
                   </div>
                   <div class="mb-3">
-                    <input class="form-control" type="password" name="password" placeholder="Password" />
+                    <input class="form-control" type="password" name="password" placeholder="Password"
+                      th:field="*{password}" required />
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></p>
                   </div>
                   <div class="mb-3">
                     <button class="btn btn-primary d-block w-100" type="submit" style="
@@ -73,6 +77,8 @@
                     Forgot your password?<a href="#">Click here</a>
                   </p>
                   <p>If you don't have account, pls<a href="SignIn.html">Sign in</a></p>
+                  <p th:text="${loginError}" style="color: red;"></p>
+                  <p th:text="${EnterFeildError}" style="color: red;"></p>
                 </form>
               </div>
             </div>
@@ -127,8 +133,8 @@
       <div></div>
     </footer>
   </div>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/js/script.min.js"></script>
+  <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
+  <script th:src="@{/assets/js/script.min.js}"></script>
 </body>
 
 </html>
