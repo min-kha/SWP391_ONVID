@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import group5.swp391.onlinelearning.Service.Impl.CourseServiceImpl;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.model.CourseDTO;
+import group5.swp391.onlinelearning.service.Impl.CourseServiceImpl;
 
 @RequestMapping("/teacher/course")
 @Controller
