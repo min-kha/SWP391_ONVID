@@ -9,7 +9,8 @@ import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
-import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service2.IUserService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;

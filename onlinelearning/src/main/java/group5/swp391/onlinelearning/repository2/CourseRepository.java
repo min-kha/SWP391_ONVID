@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.Repository;
+package group5.swp391.onlinelearning.repository2;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
