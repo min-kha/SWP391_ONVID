@@ -64,6 +64,7 @@
                     <input class="form-control" type="password" name="password" placeholder="Password"
                       th:field="*{password}" required />
                     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></p>
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid password</div>
                   </div>
                   <div class="mb-3">
                     <button class="btn btn-primary d-block w-100" type="submit" style="

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
@@ -16,14 +17,19 @@ public class UserService implements IUserService {
     UserRepository userRepository;
 
     @Override
-    public boolean loginStudent(UserDTOLoginRequest student) {
+    public boolean loginStudent(UserDTOLoginRequest student, BindingResult bindingResult) {
         List<User> users = getAllUser();
+        boolean isValid = false;
         for (User user : users) {
             if (student.getEmail().equals(user.getEmail()) && student.getPassword().equals(user.getPassword())) {
-                return true;
+                isValid = true;
+                break;
             }
         }
-        return false;
+        if (!isValid) {
+            bindingResult.rejectValue("password", "login.error", "Đăng nhập không thành công");
+        }
+        return isValid;
     }
 
     @Override
