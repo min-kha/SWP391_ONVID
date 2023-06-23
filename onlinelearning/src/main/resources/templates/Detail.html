@@ -94,8 +94,9 @@
           <h4 class="text-center">
             <span class="text">Total:</span><span class="text-primary price">&nbsp; $360</span>
           </h4>
+          <!-- <div th:text="${#session.getAttribute('studentSession').getEmail()}"></div> -->
           <a class="btn btn-primary btn-sm active font-monospace text-nowrap text-truncate text-break fs-5 fw-light text-center bg-primary bg-gradient border-2 border-primary shadow-sm d-flex float-start d-md-flex flex-grow-1 ms-auto justify-content-md-center w-100"
-            role="button" href="Cart-1.html" style="
+            role="button" th:href="@{'/student/add-to-cart/'}" style="
                 margin-right: 0px;
                 padding: 5px;
                 color: var(--bs-btn-disabled-color);

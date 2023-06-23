@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.controller.LoginController;
+import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.service2.IUserService;
 
@@ -44,9 +45,9 @@ public class LoginTest {
     public void testPostStudentLogin_WithValidCredentials_RedirectToHomeStudent() {
         UserDTOLoginRequest student = new UserDTOLoginRequest("user1@example.com", "Kha123@");
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(userService.loginStudent(student)).thenReturn(true);
+        when(userService.loginStudent(student, bindingResult).getEmail()).thenReturn("user1@example.com");
 
-        String result = loginController.postStudentLogin(student, bindingResult, model);
+        String result = loginController.postStudentLogin(student, bindingResult, model, null);
 
         assertEquals("redirect:home-student", result);
         verify(model, never()).addAttribute(eq("loginError"), anyString());
@@ -56,9 +57,9 @@ public class LoginTest {
     @Test
     public void testPostStudentLogin_WithInvalidCredentials_ReturnLoginViewWithErrors() {
         UserDTOLoginRequest student = new UserDTOLoginRequest("123", "123");
-        when(bindingResult.hasErrors()).thenReturn(true);
-        when(userService.loginStudent(student)).thenReturn(false);
-        String result = loginController.postStudentLogin(student, bindingResult, model);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        when(userService.loginStudent(student, bindingResult).getEmail()).thenReturn("123");
+        String result = loginController.postStudentLogin(student, bindingResult, model, null);
 
         assertEquals("login", result);
         verify(model, atLeastOnce()).addAttribute("EnterFieldError", "Login failed");
@@ -69,9 +70,9 @@ public class LoginTest {
     public void testPostStudentLogin_WithInvalidLogin_ReturnLoginViewWithErrorMessage() {
         UserDTOLoginRequest student = new UserDTOLoginRequest("abc@example.com", "MatKhauSai123@");
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(userService.loginStudent(student)).thenReturn(false);
+        when(userService.loginStudent(student, bindingResult).getEmail()).thenReturn("abc@example.com");
 
-        String result = loginController.postStudentLogin(student, bindingResult, model);
+        String result = loginController.postStudentLogin(student, bindingResult, model, null);
 
         assertEquals("login", result);
         verify(model, times(1)).addAttribute("loginError", "Login failed");

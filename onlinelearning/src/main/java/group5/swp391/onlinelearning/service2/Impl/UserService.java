@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
@@ -22,13 +23,11 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> getAllUsers() {
-        // TODO Auto-generated method stub
         return userRepository.findAll();
     }
 
     @Override
     public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
-        // TODO Auto-generated method stub
         List<User> list = this.getAllUsers();
         List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<UserDTOAccountRequest>();
         for (User user : list) {
@@ -53,13 +52,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean loginStudent(UserDTOLoginRequest student) {
+    public User loginStudent(UserDTOLoginRequest student, BindingResult bindingResult) {
         List<User> users = getAllUsers();
+        User userRes = new User();
         for (User user : users) {
             if (student.getEmail().equals(user.getEmail()) && student.getPassword().equals(user.getPassword())) {
-                return true;
+                userRes = user;
+                break;
             }
         }
-        return false;
+        if (userRes == null) {
+            bindingResult.rejectValue("password", "login.error", "Đăng nhập không thành công");
+        }
+        return userRes;
     }
 }
