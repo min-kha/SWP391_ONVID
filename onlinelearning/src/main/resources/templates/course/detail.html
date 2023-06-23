@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết khóa học</title>
+</head>
+
+<body>
+    <h1>Chi tiết khóa học</h1>
+
+    <div th:if="${course != null}">
+        <h2 th:text="${course.courseName}"></h2>
+        <p><strong>Trạng thái:</strong> <span th:text="${course.status}"></span></p>
+        <p><strong>Mô tả:</strong> <span th:text="${course.description}"></span></p>
+        <p><strong>Giá:</strong> <span th:text="${course.price}"></span></p>
+        <p><strong>Ngày:</strong> <span th:text="${course.date}"></span></p>
+        <p><strong>Chủ đề:</strong> <span th:text="${course.topic.topicName}"></span></p>
+        <p><strong>Lượt xem:</strong> <span th:text="${course.views}"></span></p>
+
+        <h3>Phản hồi:</h3>
+        <ul>
+            <li th:each="feedback : ${course.feedbacks}" th:text="${feedback.comment}"></li>
+        </ul>
+
+        <h3>Giáo viên:</h3>
+        <p><strong>Tên:</strong> <span th:text="${course.teacher.name}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${course.teacher.email}"></span></p>
+
+        <h3>Bài học:</h3>
+        <ul>
+            <li th:each="lesson : ${course.lessons}" th:text="${lesson.lessonName}"></li>
+        </ul>
+    </div>
+
+    <div th:unless="${course != null}">
+        <p>Không tìm thấy thông tin khóa học.</p>
+    </div>
+</body>
+
+</html>

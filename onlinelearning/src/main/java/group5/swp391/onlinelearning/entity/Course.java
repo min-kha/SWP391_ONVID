@@ -14,15 +14,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.ToString.Exclude;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Course {
 
     @Id
@@ -31,18 +35,15 @@ public class Course {
 
     private String courseName;
     private int status;
+    private String description;
+    private BigDecimal price;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Topic topic;
-
-    private String decription;
-
-    private BigDecimal price;
-
-    private Date date;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
@@ -78,5 +79,5 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<Lession> lessions;
+    private Collection<Lesson> lessons;
 }

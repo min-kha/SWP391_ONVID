@@ -1,6 +1,5 @@
 package group5.swp391.onlinelearning.entity;
 
-import java.sql.Date;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -28,7 +27,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-
     private String name;
 
     @Column(unique = true)
