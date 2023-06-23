@@ -74,7 +74,4 @@ public class User {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<WithdrawalDetail> WithdrawalsStaff;
-
-    private String password;
-
 }

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import group5.swp391.onlinelearning.Service.IUserService;
 import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
+import group5.swp391.onlinelearning.service.IUserService;
 
 @Controller
 public class RegisterController {
