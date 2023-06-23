@@ -1,9 +1,9 @@
-package group5.swp391.onlinelearning.service;
+package group5.swp391.onlinelearning.Service;
 
-import java.util.List;
+import java.util.Collection;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
+import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
 
 public interface IUserService {
     public Collection<User> getAllUsers();

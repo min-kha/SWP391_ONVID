@@ -26,7 +26,7 @@ public class UserService implements IUserService {
     public List<User> getAllUsers() {
         // TODO Auto-generated method stub
         return userRepository.findAll();
-            }
+    }
 
     @Override
     public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
