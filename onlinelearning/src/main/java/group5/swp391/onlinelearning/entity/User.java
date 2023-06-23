@@ -75,4 +75,6 @@ public class User {
     @ToString.Exclude
     private Collection<WithdrawalDetail> WithdrawalsStaff;
 
+    private String password;
+
 }
