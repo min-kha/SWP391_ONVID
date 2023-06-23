@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.user.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
+import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.model.user.mapper.UserMapper;
 import group5.swp391.onlinelearning.repository2.UserRepository;
 import group5.swp391.onlinelearning.service2.IUserService;
@@ -22,13 +24,11 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> getAllUsers() {
-        // TODO Auto-generated method stub
         return userRepository.findAll();
     }
 
     @Override
     public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
-        // TODO Auto-generated method stub
         List<User> list = this.getAllUsers();
         List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<UserDTOAccountRequest>();
         for (User user : list) {
@@ -62,4 +62,21 @@ public class UserService implements IUserService {
         }
         return false;
     }
+
+    @Override
+    public void addStaff(StaffDTOCreate staffDTOCreate) {
+        User user = mapper.staffDTOCreateToUser(staffDTOCreate);
+        userRepository.save(user);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void addUserRegister(UserDTORegisterRequest userDTORegisterRequest) {
+        User user = mapper.userDTORegisterRequestToUser(userDTORegisterRequest);
+        userRepository.save(user);
+    }
+
 }

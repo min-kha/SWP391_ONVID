@@ -36,7 +36,6 @@ public class LoginController {
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("EnterFieldError", "Login failed");
-            model.addAttribute("EnterFieldError", "Login failed");
             return "login";
         } else {
             if (userService.loginStudent(student)) {

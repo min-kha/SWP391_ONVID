@@ -17,20 +17,34 @@ import group5.swp391.onlinelearning.service2.IUserService;
 public class RegisterController {
 
     @Autowired
-    private IUserService iUserService;
+    private IUserService userService;
 
     @GetMapping("/register")
     public String getMethodRegister(Model model) {
-        model.addAttribute("listAccout", iUserService.getAllUsers());
+        model.addAttribute("user", new UserDTORegisterRequest());
         return "Register";
     }
 
     @PostMapping("/register")
     public String postMethodRegister(@Valid @ModelAttribute("user") UserDTORegisterRequest userDTORegisterRequest,
             BindingResult bindingResult) {
+        if (userService.getUserByEmail(userDTORegisterRequest.getEmail()) != null) {
+            bindingResult.rejectValue("email", "error.email.exist", "Email address is duplicated");
+        }
+        if (!userDTORegisterRequest.getPassword().equals(userDTORegisterRequest.getRePassword())) {
+            bindingResult.rejectValue("rePass", "error.repass.notSam", "Repassword is not same with password");
+        }
         if (bindingResult.hasErrors()) {
             return "Register";
         }
-        return "Register";
+        userService.addUserRegister(userDTORegisterRequest);
+        return "redirect:home-student";
     }
+
+    @GetMapping("/student/home")
+    public String getHomeStudent() {
+
+        return "home-student";
+    }
+
 }

@@ -3,7 +3,9 @@ package group5.swp391.onlinelearning.model.user.mapper;
 import org.springframework.stereotype.Component;
 
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.user.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
+import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
 
 @Component
 public class UserMapper {
@@ -29,5 +31,27 @@ public class UserMapper {
             default:
                 return "Admin";
         }
+    }
+
+    public User staffDTOCreateToUser(StaffDTOCreate staffDTOCreate) {
+        User user = User.builder()
+                .name(staffDTOCreate.getName())
+                .email(staffDTOCreate.getEmail())
+                .password(staffDTOCreate.getPassword())
+                .role(2)
+                .status(1)
+                .build();
+        return user;
+    }
+
+    public User userDTORegisterRequestToUser(UserDTORegisterRequest userDTORegisterRequest) {
+        User user = User.builder()
+                .name(userDTORegisterRequest.getName())
+                .email(userDTORegisterRequest.getEmail())
+                .password(userDTORegisterRequest.getPassword())
+                .role(0)
+                .status(1)
+                .build();
+        return user;
     }
 }
