@@ -54,7 +54,7 @@
                     </path>
                   </svg>
                 </div>
-                <form class="text-center" method="post" th:action="@{/student_login}" th:object="${student}">
+                <form class="text-center" method="post" th:action="@{/login}" th:object="${student}">
                   <div class="mb-3">
                     <input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"
                       required />

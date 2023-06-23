@@ -26,7 +26,12 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("student_login")
+    @GetMapping("home-student")
+    public String getStudentHome() {
+        return "home-student";
+    }
+
+    @PostMapping("login")
     public String postStudentLogin(@Valid @ModelAttribute("student") UserDTOLoginRequest student,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -35,7 +40,7 @@ public class LoginController {
             return "login";
         } else {
             if (userService.loginStudent(student)) {
-                return "home-student";
+                return "redirect:home-student";
             } else {
                 model.addAttribute("loginError", "Login failed");
                 return "login";
