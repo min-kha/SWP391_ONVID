@@ -32,6 +32,6 @@ public class Learn {
     @JoinColumn(name = "lession_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Lession lession;
+    private Lesson lession;
 
 }

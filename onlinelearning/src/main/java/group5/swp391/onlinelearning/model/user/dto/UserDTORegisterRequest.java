@@ -21,8 +21,6 @@ public class UserDTORegisterRequest {
     private String email;
     @NotNull(message = "Name must not be empty")
     private String name;
-    @NotNull(message = "dob must not be empty")
-    private Date dob;
     @NotNull(message = "password must not be empty")
     private String password;
     @NotNull(message = "rePassword must not be empty")

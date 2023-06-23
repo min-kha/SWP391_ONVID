@@ -2,6 +2,7 @@ package group5.swp391.onlinelearning.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,14 +11,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
-import lombok.val;
+import group5.swp391.onlinelearning.service2.IUserService;
 
 @Controller
 public class RegisterController {
 
+    @Autowired
+    private IUserService iUserService;
+
     @GetMapping("/register")
     public String getMethodRegister(Model model) {
-        model.addAttribute("user", new UserDTORegisterRequest());
+        model.addAttribute("listAccout", iUserService.getAllUsers());
         return "Register";
     }
 
@@ -27,10 +31,6 @@ public class RegisterController {
         if (bindingResult.hasErrors()) {
             return "Register";
         }
-
-        // xly du lieu
-
-        return "redirect:/login";
+        return "Register";
     }
-
 }

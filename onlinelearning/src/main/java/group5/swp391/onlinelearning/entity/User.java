@@ -1,6 +1,5 @@
 package group5.swp391.onlinelearning.entity;
 
-import java.sql.Date;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -23,16 +22,18 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-    private Date date;
-    private String userName;
+    private String name;
 
     @Column(unique = true)
     private String email;
     private int role;
+    private int status;
+    private String password;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
@@ -74,6 +75,5 @@ public class User {
     @ToString.Exclude
     private Collection<WithdrawalDetail> WithdrawalsStaff;
 
-    private String password;
 
 }
