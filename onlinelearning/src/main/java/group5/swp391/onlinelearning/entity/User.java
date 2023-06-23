@@ -22,6 +22,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +32,8 @@ public class User {
     @Column(unique = true)
     private String email;
     private int role;
+    private int status;
+    private String password;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
@@ -71,5 +74,4 @@ public class User {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<WithdrawalDetail> WithdrawalsStaff;
-
 }
