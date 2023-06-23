@@ -7,11 +7,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserDTOReponse {
-    private int userId;
-    private Date date;
-    private String userName;
+public class UserDTOAccountRequest {
+    private int id;
+    private String name;
     private String email;
-    private int role;
-    private String token;
+    private String role;
+    private int status;
 }
