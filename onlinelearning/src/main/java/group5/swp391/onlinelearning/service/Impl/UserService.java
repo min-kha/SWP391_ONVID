@@ -1,12 +1,15 @@
 package group5.swp391.onlinelearning.service.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
+import group5.swp391.onlinelearning.model.user.mapper.UserMapper;
 import group5.swp391.onlinelearning.repository.UserRepository;
 import group5.swp391.onlinelearning.service.IUserService;
 
@@ -14,12 +17,14 @@ import group5.swp391.onlinelearning.service.IUserService;
 public class UserService implements IUserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserMapper mapper;
 
     @Override
     public List<User> getAllUsers() {
         // TODO Auto-generated method stub
         return userRepository.findAll();
-            }
+    }
 
     @Override
     public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
@@ -30,7 +35,7 @@ public class UserService implements IUserService {
             listUserDTOAccountRequest.add(mapper.mapperUsertoUserDTOAccountRequest(user));
         }
         return listUserDTOAccountRequest;
-        }
+    }
 
     public void changeStatus(int id) {
         User user = userRepository.findById(id).get();
@@ -46,6 +51,7 @@ public class UserService implements IUserService {
     public User getUserById(int id) {
         return userRepository.findById(id).get();
     }
+
     @Override
     public boolean loginStudent(UserDTOLoginRequest student) {
         List<User> users = getAllUsers();
@@ -55,4 +61,5 @@ public class UserService implements IUserService {
             }
         }
         return false;
+    }
 }

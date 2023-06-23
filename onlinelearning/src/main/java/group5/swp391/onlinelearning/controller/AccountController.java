@@ -6,11 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import group5.swp391.onlinelearning.Service.IUserService;
-import group5.swp391.onlinelearning.Service.Impl.UserService;
-import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.Impl.UserService;
 
 @Controller
 public class AccountController {

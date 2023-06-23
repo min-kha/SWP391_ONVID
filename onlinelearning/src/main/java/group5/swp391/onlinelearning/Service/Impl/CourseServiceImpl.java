@@ -1,6 +1,5 @@
-package group5.swp391.onlinelearning.Service.Impl;
+package group5.swp391.onlinelearning.service.Impl;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -8,10 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import group5.swp391.onlinelearning.Repository.CourseRepository;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.View;
 import group5.swp391.onlinelearning.model.CourseDTO;
+import group5.swp391.onlinelearning.repository.CourseRepository;
 
 @Service
 public class CourseServiceImpl {
