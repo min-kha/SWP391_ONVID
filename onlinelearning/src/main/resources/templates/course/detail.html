@@ -4,38 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Chi tiết khóa học</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&amp;display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap" />
+
+    <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome5-overrides.min.css}" />
+
+    <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
 </head>
 
 <body>
-    <h1>Chi tiết khóa học</h1>
+    <div class="card mt-4">
+        <div class="card-header">
+            <h1 class="card-title display-4 d-inline">Chi tiết khóa học</h1>
+            <a th:href="@{../list}" class="btn-sm btn btn-info">Trở về list</a>
+        </div>
+        <div class="card-body">
+            <div th:if="${course != null}">
+                <h2 class="mb-3" th:text="${course.courseName}"></h2>
+                <p><strong>Trạng thái:</strong> <span th:text="${course.status}"></span></p>
+                <p><strong>Mô tả:</strong> <span th:text="${course.description}"></span></p>
+                <p><strong>Giá:</strong> <span th:text="${course.price}"></span></p>
+                <p><strong>Ngày:</strong> <span th:text="${course.date}"></span></p>
+                <p><strong>Chủ đề:</strong>
+                    <span th:if="${course.topic != null}" th:text="${course.topic.topicName}"></span>
+                    <span th:unless="${course.topic != null}">Chưa có chủ đề</span>
+                </p>
 
-    <div th:if="${course != null}">
-        <h2 th:text="${course.courseName}"></h2>
-        <p><strong>Trạng thái:</strong> <span th:text="${course.status}"></span></p>
-        <p><strong>Mô tả:</strong> <span th:text="${course.description}"></span></p>
-        <p><strong>Giá:</strong> <span th:text="${course.price}"></span></p>
-        <p><strong>Ngày:</strong> <span th:text="${course.date}"></span></p>
-        <p><strong>Chủ đề:</strong> <span th:text="${course.topic.topicName}"></span></p>
-        <p><strong>Lượt xem:</strong> <span th:text="${course.views}"></span></p>
+                <p><strong>Lượt xem:</strong> <span th:text="${course.views}"></span></p>
 
-        <h3>Phản hồi:</h3>
-        <ul>
-            <li th:each="feedback : ${course.feedbacks}" th:text="${feedback.comment}"></li>
-        </ul>
+                <h3 class="mt-4">Phản hồi:</h3>
+                <ul class="list-group">
+                    <li th:each="feedback : ${course.feedbacks}" class="list-group-item" th:text="${feedback.comment}">
+                    </li>
+                </ul>
 
-        <h3>Giáo viên:</h3>
-        <p><strong>Tên:</strong> <span th:text="${course.teacher.name}"></span></p>
-        <p><strong>Email:</strong> <span th:text="${course.teacher.email}"></span></p>
+                <h3 class="mt-4">Giáo viên:</h3>
+                <p><strong>Tên:</strong> <span th:text="${course.teacher.name}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${course.teacher.email}"></span></p>
 
-        <h3>Bài học:</h3>
-        <ul>
-            <li th:each="lesson : ${course.lessons}" th:text="${lesson.lessonName}"></li>
-        </ul>
+                <h3 class="mt-4">Bài học:</h3>
+                <ul class="list-group">
+                    <li th:each="lesson : ${course.lessons}" class="list-group-item" th:text="${lesson.lessonName}">
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div>
+                <a th:href="@{../update/{courseId}(courseId=${course.courseId})}" class="btn btn-warning">Sửa</a>
+                <a th:href="@{../delete/{courseId}(courseId=${course.courseId})}" class="btn btn-danger">Xóa</a>
+            </div>
+            <div th:unless="${course != null}">
+                <p>Không tìm thấy thông tin khóa học.</p>
+            </div>
+        </div>
     </div>
 
-    <div th:unless="${course != null}">
-        <p>Không tìm thấy thông tin khóa học.</p>
-    </div>
 </body>
 
 </html>
