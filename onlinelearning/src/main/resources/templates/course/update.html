@@ -79,32 +79,41 @@
     </nav>
     <hr>
     <div class="container">
-        <h2>Tạo khóa học</h2>
-        <form th:action="@{create}" th:object="${course}" method="post">
+        <h2>Sửa khóa học</h2>
+        <!-- <form th:action="@{update/{courseId}(courseId=${course.courseId})}" th:object="${course}" method="post"> -->
+        <form th:action="@{/teacher/course/update/{courseId}(courseId=${course.courseId})}" th:object="${course}"
+            method="post">
             <div class="form-group">
                 <label for="courseName">Tên khóa học:</label>
                 <input type="text" class="form-control" id="courseName" placeholder="Nhập tên khóa học"
-                    th:field="*{courseName}" required />
+                    th:field="*{courseName}" />
+                <p th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}" style="color: red;"></p>
             </div>
             <div class="form-group">
                 <label for="description">Mô tả:</label>
                 <textarea class="form-control" id="description" rows="3" placeholder="Nhập mô tả khóa học"
-                    th:field="*{description}" required></textarea>
+                    th:field="*{description}"></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red;"></p>
+
             </div>
             <div class="form-group">
                 <label for="price">Giá:</label>
                 <input type="number" class="form-control" id="price" step="0.01" placeholder="Nhập giá khóa học"
-                    th:field="*{price}" required />
+                    th:field="*{price}" />
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color: red;"></p>
+
             </div>
             <div class="form-group">
                 <label for="topic">Chủ đề:</label>
                 <!-- <select class="form-control" id="topic" th:field="*{topic}"> -->
-                <select class="form-control" id="topic" required>
+                <select class="form-control" id="topic">
                     <option th:each="topic : ${topics}" th:value="${topic}" th:text="${topic.topicName}"></option>
                 </select>
+                <!-- <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></p> -->
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Tạo</button>
+            <button type="submit" class="btn btn-success">Tạo</button>
+            <a th:href="@{../list}" class="btn btn-dark">Hủy</a>
         </form>
     </div>
     <hr>

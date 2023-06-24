@@ -1,8 +1,10 @@
-package group5.swp391.onlinelearning.model;
+package group5.swp391.onlinelearning.model.dto;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 
 import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.Lesson;
@@ -17,16 +19,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseDTO {
-    private int courseId;
+public class CourseDtoAdd {
+    @NotNull(message = "Name must not be empty")
     private String courseName;
-    private int status;
+    @NotNull(message = "Description must not be empty")
     private String description;
+    @NotNull(message = "Price must not be empty")
     private BigDecimal price;
-    private Date date;
+    @NotNull(message = "Topic must not be empty")
     private Topic topic;
-    private long views;
-    private Collection<Feedback> feedbacks;
-    private User teacher;
-    private Collection<Lesson> lessons;
 }
