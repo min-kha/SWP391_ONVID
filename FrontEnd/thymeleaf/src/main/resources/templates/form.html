@@ -1,12 +1,5 @@
 <th:block th:replace="layout.html">
     <th:block th:fragment="main-content">
-        <form action="#" th:action="@{${formAction}}" th:object="${entity}" method="post">
-            <div class="form-group" th:each="field: ${fields}">
-                <label th:text="${field}"></label>
-                <input type="text" th:field="*{__${field}__}" th:attr="id=*{__${field}__}" class="form-control">
-                <span th:if="${#fields.hasErrors('*{__${field}__}')}" th:errors="*{__${field}__}"></span>
-            </div>
-            <button type="submit" class="btn btn-success">Save</button>
-        </form>
+        <h1>hihi</h1>
     </th:block>
 </th:block>

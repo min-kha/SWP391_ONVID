@@ -17,9 +17,9 @@ public class Student {
     private String name;
     private String phone;
     private String email;
-    private String email1;
-    private String email2;
-    private String email3;
-    private String email4;
-    private String email5;
+    private String address;
+    private String teacher;
+    private String choHung;
+    private String Kha;
+    private String Wifes;
 }

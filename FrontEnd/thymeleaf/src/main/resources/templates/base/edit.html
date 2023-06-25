@@ -8,27 +8,30 @@
                             <div class="row justify-content-center">
                                 <div class="d-flex align-items-center">
                                     <div class="card-body py-5 px-4 p-md-5">
+                                        <h2 th:text="'Edit ' + ${entity.class.getSimpleName}"></h2>
+                                        <hr>
                                         <form action="#" th:action="@{${action}}" th:object="${entity}" method="post">
+                                            <!-- Loop fields -->
                                             <div class="form-group mb-3" th:each="field: ${fields}">
-                                                <label th:text="${field.getName()}" style="text-transform: capitalize;"
-                                                    class="form-label"></label>
-                                                <th:block th:switch="${field.getType().getName()}">
+                                                <label th:text="${field.getName}"
+                                                    class="form-label text-capitalize"></label>
+                                                <th:block th:switch="${field.getType.getSimpleName}">
                                                     <th:block th:case="'int'">
-                                                        <input type="number" th:field="*{__${field.getName()}__}"
-                                                            th:attr="id=*{__${field.getName()}__}" class="form-control">
+                                                        <input type="number" th:field="*{__${field.getName}__}"
+                                                            th:attr="id=*{__${field.getName}__}" class="form-control">
                                                     </th:block>
                                                     <th:block th:case="'double'">
                                                         <input type="number" step="0.01"
-                                                            th:field="*{__${field.getName()}__}"
-                                                            th:attr="id=*{__${field.getName()}__}" class="form-control">
+                                                            th:field="*{__${field.getName}__}"
+                                                            th:attr="id=*{__${field.getName}__}" class="form-control">
                                                     </th:block>
                                                     <th:block th:case="*">
-                                                        <input type="text" th:field="*{__${field.getName()}__}"
-                                                            th:attr="id=*{__${field.getName()}__}" class="form-control">
+                                                        <input type="text" th:field="*{__${field.getName}__}"
+                                                            th:attr="id=*{__${field.getName}__}" class="form-control">
                                                     </th:block>
                                                 </th:block>
-                                                <div th:if="${#fields.hasErrors('*{__${field.getName()}__}')}"
-                                                    th:errors="*{__${field.getName()}__}" class="form-text">
+                                                <div th:if="${#fields.hasErrors('*{__${field.getName}__}')}"
+                                                    th:errors="*{__${field.getName}__}" class="form-text">
                                                 </div>
                                             </div>
                                             <div class="text-end">
