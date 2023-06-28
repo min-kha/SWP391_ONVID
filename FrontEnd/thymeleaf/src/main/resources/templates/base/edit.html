@@ -10,7 +10,7 @@
                                     <div class="card-body py-5 px-4 p-md-5">
                                         <h2 th:text="'Edit ' + ${entity.class.getSimpleName}"></h2>
                                         <hr>
-                                        <form action="#" th:action="@{${action}}" th:object="${entity}" method="post">
+                                        <form th:object="${entity}" method="post">
                                             <!-- Loop fields -->
                                             <div class="form-group mb-3" th:each="field: ${fields}">
                                                 <label th:text="${field.getName}"
@@ -35,8 +35,9 @@
                                                 </div>
                                             </div>
                                             <div class="text-end">
-                                                <button type="submit" class="m-2 btn btn-primary">Save</button>
-                                                <button type="reset" class="m-2 btn btn-secondary">Reset</button>
+                                                <button type="submit" class="px-3 btn btn-primary">Save</button>
+                                                <a href="../" class="btn btn-link px-3 " aria-disabled="true">Back
+                                                    to list</a>
                                             </div>
                                         </form>
                                     </div>

@@ -9,7 +9,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="card-body py-5 px-4 p-md-5">
                                         <div class="pb-3">
-                                            <h1 th:text="'Detail ' + ${entity.class.getSimpleName}"></h1>
+                                            <h1 th:text="'Confirm delete ' + ${entity.class.getSimpleName}"></h1>
                                             <div>
                                                 <hr />
                                                 <dl class="row border rounded p-3">
@@ -22,11 +22,11 @@
                                                     </th:block>
                                                 </dl>
                                             </div>
-                                            <div class="text-end">
-                                                <a th:href="'../edit/' + ${entity[fields[0].getName]}"
-                                                    class="btn btn-warning px-3 " aria-disabled="true">Edit</a>
+                                            <form class="text-end" method="post">
+                                                <button type="submit" class="btn btn-danger px-3 "
+                                                    aria-disabled="true">Delete</button>
                                                 <a href="../" class="btn btn-link" aria-disabled="true">Back to list</a>
-                                            </div>
+                                            </form>
 
                                         </div>
                                     </div>

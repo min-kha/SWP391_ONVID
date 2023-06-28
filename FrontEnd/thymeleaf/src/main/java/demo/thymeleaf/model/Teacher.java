@@ -9,14 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Student {
+public class Teacher {
     private int id;
-    private Boolean isStudent;
-    private double salary;
     private String name;
-    private String phone;
-    private String email;
-    private String address;
-    private String teacher;
+    private String description;
 }
