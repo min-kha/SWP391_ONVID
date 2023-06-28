@@ -54,16 +54,16 @@
                     </path>
                   </svg>
                 </div>
-                <form class="text-center" method="post" th:action="@{/login}" th:object="${student}">
+                <form class="text-center" method="post" th:action="@{/student/login}" th:object="${student}">
                   <div class="mb-3">
                     <input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"
                       required />
                     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></p>
                   </div>
                   <div class="mb-3">
-                    <input class="form-control" type="password" name="password" placeholder="Password"
-                      th:field="*{password}" required />
+                    <input class="form-control" type="password" name="password" placeholder="Password" required />
                     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></p>
+                    </p>
                   </div>
                   <div class="mb-3">
                     <button class="btn btn-primary d-block w-100" type="submit" style="
@@ -78,7 +78,9 @@
                   </p>
                   <p>If you don't have account, pls<a href="SignIn.html">Sign in</a></p>
                   <p th:text="${loginError}" style="color: red;"></p>
-                  <p th:text="${EnterFieldError}" style="color: red;"></p>
+                  <p th:text="${invalidAccount}" style="color: red;"></p>
+                  <p th:text="${wrongAccountOrPassword}" style="color: red;"></p>
+                  <p th:text="${EnterFeildError}" style="color: red;"></p>
                 </form>
               </div>
             </div>

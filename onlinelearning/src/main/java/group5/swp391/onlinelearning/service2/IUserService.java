@@ -2,6 +2,7 @@ package group5.swp391.onlinelearning.service2;
 
 import java.util.Collection;
 
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
@@ -17,5 +18,5 @@ public interface IUserService {
 
     public void changeStatus(int id);
 
-    public User loginStudent(UserDTOLoginRequest student, BindingResult bindingResult);
+    public User loginStudent(UserDTOLoginRequest student, Model model);
 }

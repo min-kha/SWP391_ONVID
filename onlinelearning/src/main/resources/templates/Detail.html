@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
   <title>Onvid</title>
-  <link rel="stylesheet" th:href="@{assets/bootstrap/css/bootstrap.min.css}" />
+  <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&amp;display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap" />
   <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
@@ -73,15 +73,15 @@
           </div>
         </div>
         <div class="col-md-5" style="background: rgba(232, 62, 184, 0)">
-          <h1>What is developer</h1>
-          <p>
+          <h1 th:text="${course.courseName}">What is developer</h1>
+          <p th:text="${course.description}">
             A developer, in the context of software development, is a
             professional who designs, creates, tests, and maintains computer
             software.Developers use programming languages, development
             frameworks, and various tools to build software applications,
             websites, mobile apps, or other software systems.
           </p>
-          <a href="#">read more</a>
+
         </div>
       </div>
     </div>
@@ -92,11 +92,14 @@
         <div class="summary">
           <h4></h4>
           <h4 class="text-center">
-            <span class="text">Total:</span><span class="text-primary price">&nbsp; $360</span>
+            <span class="text">Total:</span><span class="text-primary price" th:text="'$' + ${course.price}">&nbsp;
+              $360</span>
           </h4>
-          <!-- <div th:text="${#session.getAttribute('studentSession').getEmail()}"></div> -->
-          <a class="btn btn-primary btn-sm active font-monospace text-nowrap text-truncate text-break fs-5 fw-light text-center bg-primary bg-gradient border-2 border-primary shadow-sm d-flex float-start d-md-flex flex-grow-1 ms-auto justify-content-md-center w-100"
-            role="button" th:href="@{'/student/add-to-cart/'}" style="
+          <form th:action="@{/student/cart}" method="post">
+
+            <input type="submit"
+              class="btn btn-primary btn-sm active font-monospace text-nowrap text-truncate text-break fs-5 fw-light text-center bg-primary bg-gradient border-2 border-primary shadow-sm d-flex float-start d-md-flex flex-grow-1 ms-auto justify-content-md-center w-100"
+              role="button" href="Cart-1.html" style="
                 margin-right: 0px;
                 padding: 5px;
                 color: var(--bs-btn-disabled-color);
@@ -105,7 +108,10 @@
                 border-top-right-radius: 30px;
                 border-bottom-right-radius: 28px;
                 border-bottom-left-radius: 28px;
-              ">Add to c<strong>art</strong></a>
+
+               
+              " value="Add to cart"> </input>
+          </form>
         </div>
       </div>
     </div>
