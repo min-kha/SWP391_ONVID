@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller;
+package group5.swp391.onlinelearning.controller.admin;
 
 import javax.validation.Valid;
 
