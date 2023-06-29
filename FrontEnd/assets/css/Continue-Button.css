@@ -1,0 +1,25 @@
+.fas.fa-greater-than.continue-icon {
+  line-height: 1.7em;
+  font-size: 16px;
+  margin-top: 0px;
+}
+
+.continue-btn {
+  border: 2px solid #5C99C7;
+  background: #5C99C7;
+  font-size: 16px;
+  line-height: 1.7em;
+  width: 125px;
+}
+
+.continue-btn:hover {
+  border: 2px solid #5C99C7;
+  background: #5C99C7;
+}
+
+.fas.fa-greater-than.continue-icon {
+  line-height: 1.7em;
+  font-size: 16px;
+  margin-top: 0px;
+}
+
