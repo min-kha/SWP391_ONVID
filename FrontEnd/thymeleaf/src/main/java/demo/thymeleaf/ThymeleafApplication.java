@@ -3,7 +3,6 @@ package demo.thymeleaf;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -13,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import demo.thymeleaf.model.Course;
 import demo.thymeleaf.model.Student;
 
 @SpringBootApplication
@@ -80,14 +80,19 @@ class HelloController {
 		return "view-sample/detail";
 	}
 
+	// demo list products
+	@GetMapping("home")
+	public String getListProduct(Model model) {
+		model.addAttribute("courses", new Course().toList());
+		return "course/list-products";
+	}
+
 	private void setBaseForEntity(Model model, String title, Object o) {
 		model.addAttribute("entity", o);
 		model.addAttribute("title", title);
 		List<Field> fields = Arrays.asList(o.getClass().getDeclaredFields());
 		model.addAttribute("fields", fields);
 	}
-
-	
 
 	private void setBaseForList(Model model, List<? extends Object> list, String title) {
 		model.addAttribute("title", title);
