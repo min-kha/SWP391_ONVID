@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" style="height: 901px">
+<html data-bs-theme="light" lang="en">
 
 <head>
   <meta charset="utf-8" />
@@ -13,66 +13,71 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light navbar-expand-md"
-    style="background: rgb(227, 175, 184); height: 102px; margin-top: 0px">
+  <nav class="navbar navbar-light navbar-expand-md" style="background: rgb(227, 175, 184)">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html" style="
             background: url('assets/img/logo_transparent.png') center / cover
               no-repeat;
             width: 120px;
             height: 120px;
-          "></a>
+          "></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+        <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-1">
+        <ul class="navbar-nav ms-auto" style="font-family: 'Abril Fatface', serif">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="Detail.html">C<strong>art</strong></a>
+          </li>
+          <li class="nav-item"></li>
+        </ul>
+        <ul class="navbar-nav text-end ms-auto">
+          <li class="nav-item"></li>
+          <li class="nav-item"></li>
+          <li class="nav-item"></li>
+          <li class="nav-item"></li>
+        </ul>
+      </div>
     </div>
   </nav>
   <div>
+    <div></div>
     <section class="py-4 py-xl-5">
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-8 col-xl-6 text-center mx-auto">
-            <h2>Log in</h2>
+            <h2>Sign UP and Start Learning</h2>
+            <p></p>
           </div>
         </div>
         <div class="row d-flex justify-content-center">
           <div class="col-md-6 col-xl-4">
             <div class="card mb-5">
               <div class="card-body d-flex flex-column align-items-center">
-                <div class="bs-icon-xl bs-icon-circle bs-icon-primary bs-icon my-4"
-                  style="background: rgb(227, 175, 184)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                    viewBox="0 0 16 16" class="bi bi-person" style="
-                        font-size: 55px;
-                        color: var(--bs-secondary-bg);
-                        box-shadow: 0px 0px;
-                        border-radius: 50%;
-                        border-top-left-radius: 10px;
-                        border-top-right-radius: 10px;
-                        border-bottom-right-radius: 15px;
-                        border-bottom-left-radius: 15px;
-                      ">
-                    <path
-                      d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z">
-                    </path>
-                  </svg>
-                </div>
                 <form class="text-center" method="post">
                   <div class="mb-3">
-                    <input class="form-control" type="email" name="email" placeholder="Email" />
+                    <input class="form-control" type="email" name="firstname" placeholder="First Name" /><input
+                      class="form-control" type="email" name="email" placeholder="Last Name" style="margin-top: 10px" />
                   </div>
                   <div class="mb-3">
-                    <input class="form-control" type="password" name="password" placeholder="Password" />
+                    <input class="form-control" type="password" name="password" placeholder="Password" /><input
+                      class="form-control" type="password" name="repassword" placeholder="Confirm Password"
+                      style="margin-top: 10px" />
                   </div>
                   <div class="mb-3">
                     <button class="btn btn-primary d-block w-100" type="submit" style="
-                          border-radius: 10px;
-                          background: rgb(227, 175, 184);
+                          background: #f4a0c7;
+                          color: var(--bs-btn-active-border-color);
                         ">
-                      Login
+                      Sign up
                     </button>
                   </div>
                   <p class="text-muted">
-                    Forgot your password?<a href="#">Click here</a>
+                    If you have account&nbsp;<a href="Login.html">Login</a>
                   </p>
-                  <p>If you don't have account, pls<a href="SignIn.html">Sign in</a></p>
                 </form>
               </div>
             </div>
@@ -80,8 +85,15 @@
         </div>
       </div>
     </section>
-  </div>
-  <div>
+    <nav class="navbar navbar-light navbar-expand-md py-3">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#"><span
+            class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"></span></a><button
+          class="navbar-toggler" data-bs-toggle="collapse">
+          <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
     <footer style="background: #edb9c2">
       <div class="row">
         <div class="col-sm-6 col-md-4 footer-navigation">
