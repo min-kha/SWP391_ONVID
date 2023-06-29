@@ -1,15 +1,10 @@
 package group5.swp391.onlinelearning.model.dto;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
-import group5.swp391.onlinelearning.entity.Feedback;
-import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.entity.Topic;
-import group5.swp391.onlinelearning.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

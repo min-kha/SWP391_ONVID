@@ -39,7 +39,7 @@ public class UserMapper {
                 .email(staffDTOCreate.getEmail())
                 .password(staffDTOCreate.getPassword())
                 .role(2)
-                .status(1)
+                .status(true)
                 .build();
         return user;
     }
@@ -50,7 +50,7 @@ public class UserMapper {
                 .email(userDTORegisterRequest.getEmail())
                 .password(userDTORegisterRequest.getPassword())
                 .role(0)
-                .status(1)
+                .status(true)
                 .build();
         return user;
     }

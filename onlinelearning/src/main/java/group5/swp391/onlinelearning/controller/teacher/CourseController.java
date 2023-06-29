@@ -47,8 +47,8 @@ public class CourseController {
         model.addAttribute("course", new Course());
         // TODO: chèn tạm Topic vì chưa có topic CRUD
         model.addAttribute("topics",
-                Arrays.asList(new Topic().builder().id(1).topicName("SQL").build(),
-                        new Topic().builder().id(2).topicName("Python").build()));
+                Arrays.asList(new Topic().builder().id(1).name("SQL").build(),
+                        new Topic().builder().id(2).name("Python").build()));
         return "course/add";
     }
 
@@ -63,8 +63,8 @@ public class CourseController {
         model.addAttribute("course", courseService.getCourseById(id));
         // TODO: chèn tạm Topic vì chưa có topic CRUD
         model.addAttribute("topics",
-                Arrays.asList(new Topic().builder().id(1).topicName("SQL").build(),
-                        new Topic().builder().id(2).topicName("Python").build()));
+                Arrays.asList(new Topic().builder().id(1).name("SQL").build(),
+                        new Topic().builder().id(2).name("Python").build()));
         return "course/update";
     }
 

@@ -34,8 +34,8 @@ public class Lesson {
     @ToString.Exclude
     private Course course;
 
-    @OneToMany(mappedBy = "lession", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<Learn> learn;
+    private Collection<Learn> learns;
 }

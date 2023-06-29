@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
@@ -39,13 +38,13 @@ public class UserService implements IUserService {
         return listUserDTOAccountRequest;
     }
 
-        // TODO: MUST CHANGE, After changes variable type of status from int to Boolean
+    // TODO: MUST CHANGE, After changes variable type of status from int to Boolean
     public void changeStatus(int id) {
         User user = userRepository.findById(id).get();
-        if (user.getStatus() == 1) {
-            user.setStatus(0);
+        if (user.getStatus()) {
+            user.setStatus(false);
         } else {
-            user.setStatus(1);
+            user.setStatus(true);
         }
         userRepository.save(user);
     }
@@ -56,7 +55,7 @@ public class UserService implements IUserService {
     }
 
     private boolean checkValidAccount(User user) {
-        if (user.getStatus() == 0) {
+        if (!user.getStatus()) {
             return true;
         } else {
             return false;

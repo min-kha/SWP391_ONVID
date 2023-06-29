@@ -11,5 +11,5 @@ public class UserDTOAccountRequest {
     private String name;
     private String email;
     private String role;
-    private int status;
+    private boolean status;
 }
