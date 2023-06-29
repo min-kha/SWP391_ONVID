@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.apache.tomcat.jni.Address;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,9 +32,7 @@ public class Cart {
     @JoinColumn(name = "student_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "carts")
     @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JoinTable(name = "cart_detail", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Collection<Course> courses;
 }
