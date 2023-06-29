@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller;
+package group5.swp391.onlinelearning.controller.Student;
 
 import javax.validation.Valid;
 
@@ -38,13 +38,7 @@ public class RegisterController {
             return "Register";
         }
         userService.addUserRegister(userDTORegisterRequest);
-        return "redirect:home-student";
-    }
-
-    @GetMapping("/student/home")
-    public String getHomeStudent() {
-
-        return "home-student";
+        return "redirect:/student/home";
     }
 
 }
