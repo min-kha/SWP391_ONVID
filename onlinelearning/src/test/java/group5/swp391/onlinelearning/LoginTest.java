@@ -9,6 +9,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +19,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import group5.swp391.onlinelearning.controller.LoginController;
+import group5.swp391.onlinelearning.controller.Student.LoginController;
+import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.service2.IUserService;
 
@@ -35,6 +38,9 @@ public class LoginTest {
     @InjectMocks
     private LoginController loginController;
 
+    @Mock
+    private HttpSession session;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -44,9 +50,10 @@ public class LoginTest {
     public void testPostStudentLogin_WithValidCredentials_RedirectToHomeStudent() {
         UserDTOLoginRequest student = new UserDTOLoginRequest("user1@example.com", "Kha123@");
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(userService.loginStudent(student)).thenReturn(true);
+        User user = new User();
+        when(userService.loginStudent(student, model)).thenReturn(user);
 
-        String result = loginController.postStudentLogin(student, bindingResult, model);
+        String result = loginController.postStudentLogin(student, bindingResult, model, session);
 
         assertEquals("redirect:home-student", result);
         verify(model, never()).addAttribute(eq("loginError"), anyString());
@@ -57,8 +64,10 @@ public class LoginTest {
     public void testPostStudentLogin_WithInvalidCredentials_ReturnLoginViewWithErrors() {
         UserDTOLoginRequest student = new UserDTOLoginRequest("123", "123");
         when(bindingResult.hasErrors()).thenReturn(true);
-        when(userService.loginStudent(student)).thenReturn(false);
-        String result = loginController.postStudentLogin(student, bindingResult, model);
+        User user = new User();
+        when(userService.loginStudent(student, model)).thenReturn(null);
+
+        String result = loginController.postStudentLogin(student, bindingResult, model, session);
 
         assertEquals("login", result);
         verify(model, atLeastOnce()).addAttribute("EnterFieldError", "Login failed");
@@ -69,9 +78,11 @@ public class LoginTest {
     public void testPostStudentLogin_WithInvalidLogin_ReturnLoginViewWithErrorMessage() {
         UserDTOLoginRequest student = new UserDTOLoginRequest("abc@example.com", "MatKhauSai123@");
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(userService.loginStudent(student)).thenReturn(false);
+        User user = new User();
 
-        String result = loginController.postStudentLogin(student, bindingResult, model);
+        when(userService.loginStudent(student, model)).thenReturn(null);
+
+        String result = loginController.postStudentLogin(student, bindingResult, model, session);
 
         assertEquals("login", result);
         verify(model, times(1)).addAttribute("loginError", "Login failed");

@@ -5,10 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.user.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
+import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.model.user.mapper.UserMapper;
 import group5.swp391.onlinelearning.repository2.UserRepository;
 import group5.swp391.onlinelearning.service2.IUserService;
@@ -22,13 +26,11 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> getAllUsers() {
-        // TODO Auto-generated method stub
         return userRepository.findAll();
     }
 
     @Override
     public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
-        // TODO Auto-generated method stub
         List<User> list = this.getAllUsers();
         List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<UserDTOAccountRequest>();
         for (User user : list) {
@@ -52,14 +54,46 @@ public class UserService implements IUserService {
         return userRepository.findById(id).get();
     }
 
+    private boolean checkValidAccount(User user) {
+        if (user.getStatus() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
-    public boolean loginStudent(UserDTOLoginRequest student) {
+    public User loginStudent(UserDTOLoginRequest student, Model model) {
         List<User> users = getAllUsers();
+        User userRes = new User();
         for (User user : users) {
             if (student.getEmail().equals(user.getEmail()) && student.getPassword().equals(user.getPassword())) {
-                return true;
+                if (checkValidAccount(user)) {
+                    return user;
+                } else {
+                    model.addAttribute("invalidAccount", "Your account has been locked");
+                }
+            } else {
+                model.addAttribute("wrongAccountOrPassword", "Email or password not true");
             }
         }
-        return false;
+        return null;
     }
+
+    @Override
+    public void addStaff(StaffDTOCreate staffDTOCreate) {
+        User user = mapper.staffDTOCreateToUser(staffDTOCreate);
+        userRepository.save(user);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void addUserRegister(UserDTORegisterRequest userDTORegisterRequest) {
+        User user = mapper.userDTORegisterRequestToUser(userDTORegisterRequest);
+        userRepository.save(user);
+    }
+
 }

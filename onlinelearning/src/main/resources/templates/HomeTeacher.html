@@ -20,7 +20,7 @@
   <div class="float-start" style="background: #ffffff">
     <div>
       <div style="padding: 15px">
-        <img src="assets/img/test-female-pic.jpg" width="97" height="89" />
+        <img th:src="@{/assets/img/test-female-pic.jpg" width="97" height="89" />
         <div>
           <p style="
                 font-family: 'Abril Fatface', serif;
@@ -220,7 +220,7 @@
                 <td>
                   <div>
                     <div class="d-sm-flex justify-content-sm-start align-items-sm-center">
-                      <img src="assets/img/test-woman.jpg" />
+                      <img th:src="@{/assets/img/test-woman.jpg" />
                       <p style="margin-left: 10px">mr.Bean</p>
                     </div>
                   </div>
@@ -264,9 +264,9 @@
       </div>
     </div>
   </div>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/js/script.min.js"></script>
-  <script src="assets/js/chart.min.min.js"></script>
+  <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
+  <script th:src="@{/assets/js/script.min.js}"></script>
+  <script th:src="@{/assets/js/chart.min.min.js}"></script>
 </body>
 
 </html>

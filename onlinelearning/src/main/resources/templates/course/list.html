@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" style="height: 901px">
+<html data-bs-theme="light" lang="en" style="height: 901px" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8" />
@@ -11,7 +11,6 @@
   <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
   <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome5-overrides.min.css}" />
-
 
   <link rel="stylesheet" th:href="@{/assets/fonts/font-awesome.min.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
@@ -69,10 +68,9 @@
         </div>
         <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px">
           <a class="btn btn-primary" role="button" style="
-                border-color: #efb7d3;
-                color: var(--bs-gray-200);
-                background: #efb7d3;
-              "><i class="fa fa-plus"></i>&nbsp;ADD COURSES</a>
+              border-color: #efb7d3;
+              color: var(--bs-gray-200);
+              background: #efb7d3;" href="create"><i class="fa fa-plus"></i>&nbsp;ADD COURSES</a>
         </div>
       </div>
       <div class="card" id="TableSorterCard">
@@ -82,7 +80,9 @@
               <table class="table table-striped table tablesorter">
                 <thead class="thead-dark">
                   <tr>
-                    <th class="text-center" style="color: rgb(255, 255, 255)">Tên khóa học</th>
+                    <th class="text-center" style="color: rgb(255, 255, 255)">
+                      Tên khóa học
+                    </th>
                     <th class="text-center">Trạng thái</th>
                     <th class="text-center">Mô tả</th>
                     <th class="text-center">Giá</th>
@@ -100,8 +100,10 @@
                     <td th:text="${course.description}"></td>
                     <td th:text="${course.price}"></td>
                     <td th:text="${course.date}"></td>
-                    <td th:text="${course.date}"></td>
-                    <td th:text="${course.date}"></td>
+                    <td> <a tH:href="@{update/{courseId}(courseId=${course.courseId})}" class="btn btn-warning">Sửa</a>
+                    </td>
+                    <td> <a th:href="@{delete/{courseId}(courseId=${course.courseId})}" class="btn btn-danger">Xóa</a>
+                    </td>
                   </tr>
                 </tbody>
               </table>

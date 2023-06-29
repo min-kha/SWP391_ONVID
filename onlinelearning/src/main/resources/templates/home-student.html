@@ -42,6 +42,8 @@
                     <li class="nav-item"><a class="nav-link" href="Detail.html">C<strong>art</strong></a></li>
                     <li class="nav-item"></li>
                 </ul>
+
+                <div th:text="${session.studentSession.email}"> </div>
                 <div class="float-start float-md-end mt-5 mt-md-0 search-area"><i
                         class="fas fa-search float-start search-icon"></i><input
                         class="float-start float-sm-end custom-search-input" type="search"
@@ -131,7 +133,7 @@
                     data-bs-slide-to="2"></button> <button type="button" data-bs-target="#carousel-t"
                     data-bs-slide-to="3"></button></div>
         </div>
-        <div class="container">
+        <div class="container" th:each="course: ${courses}">
 
             <div class="row product-list dev">
                 <div class="col-sm-6 col-md-4 product-item animation-element slide-top-left">
@@ -141,20 +143,30 @@
                         </div>
                         <div class="row">
                             <div class="col-8">
-                                <h2><strong>&nbsp;<a href="detail">Python</a></strong></h2>
+                                <h2><strong>&nbsp;<a
+                                            th:href="@{/student/course/detail/{courseId}(courseId=${course.courseId})}"
+                                            th:text="${course.courseName}">Python</a></strong>
+                                </h2>
                             </div>
                         </div>
-                        <div class="product-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half"></i><a
-                                class="small-text" href="#">82 reviews</a></div>
+                        <div class="product-rating">
+
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half"></i>
+                            <a class="small-text" href="#">82 reviews</a>
+                        </div>
                         <div class="row">
                             <div class="col-12">
-                                <p class="product-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                <p class="product-description" th:text="${course.description}">Lorem ipsum dolor sit
+                                    amet, consectetur adipisicing elit.
                                     Error, aliquam? Pariatur sint ex odio tempore reiciendis, fuga eum porro natus qui
                                     repudiandae, ducimus enim deleniti distinctio veritatis soluta ipsam at.</p>
                                 <div class="row">
                                     <div class="col-6">
-                                        <p class="product-price">$599.00 </p>
+                                        <p class="product-price" th:text="${course.price}">$599.00 </p>
                                     </div>
                                 </div>
                             </div>
