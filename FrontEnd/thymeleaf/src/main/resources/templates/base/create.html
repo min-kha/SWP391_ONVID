@@ -8,7 +8,7 @@
                             <div class="row justify-content-center">
                                 <div class="d-flex align-items-center">
                                     <div class="card-body py-5 px-4 p-md-5">
-                                        <h2 th:text="'Edit ' + ${entity.class.getSimpleName}"></h2>
+                                        <h2 th:text="'Create ' + ${entity.class.getSimpleName}"></h2>
                                         <hr>
                                         <form th:object="${entity}" method="post">
                                             <!-- Loop fields -->
@@ -35,7 +35,7 @@
                                                 </div>
                                             </div>
                                             <div class="text-end">
-                                                <button type="submit" class="px-3 btn btn-primary">Save</button>
+                                                <button type="submit" class="px-3 btn btn-success">Save</button>
                                                 <a th:href="'../../' + ${entity.class.getSimpleName} + '/index'"
                                                     class="btn btn-link px-3 " aria-disabled="true">Back
                                                     to list</a>

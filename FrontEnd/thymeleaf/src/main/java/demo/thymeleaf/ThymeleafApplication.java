@@ -39,14 +39,17 @@ public class ThymeleafApplication {
 
 @Controller
 class HelloController {
-	@GetMapping("Student")
+	@GetMapping("Student/index")
 	public String getIndex(Model model) {
 		List<Student> students = Arrays.asList(
 				new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
 				new Student(2, true, 0, "Hung", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
 				new Student(3, true, 0, "Thai", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
 				new Student(4, true, 0, "Dung", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(5, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"));
+				new Student(5, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
+				new Student(6, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
+				new Student(7, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
+				new Student(8, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"));
 		model.addAttribute("title", "List student");
 		model.addAttribute("entities", students);
 		List<Field> fields = Arrays.asList(Student.class.getDeclaredFields());
@@ -66,7 +69,7 @@ class HelloController {
 
 	@GetMapping("Student/edit/{id}")
 	public String getEdit(Model model, @PathVariable int id) {
-		Student student = new Student();
+		Student student = new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA");
 		model.addAttribute("entity", student);
 		model.addAttribute("title", "Edit student");
 
