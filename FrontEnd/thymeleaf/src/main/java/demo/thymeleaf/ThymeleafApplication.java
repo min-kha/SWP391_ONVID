@@ -39,15 +39,18 @@ public class ThymeleafApplication {
 
 @Controller
 class HelloController {
-	@GetMapping("Student")
+	@GetMapping("Student/index")
 	public String getIndex(Model model) {
 		List<Student> students = Arrays.asList(
 				new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
 				new Student(2, true, 0, "Hung", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
 				new Student(3, true, 0, "Thai", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
 				new Student(4, true, 0, "Dung", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(5, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"));
-
+				new Student(5, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
+				new Student(6, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
+				new Student(7, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
+				new Student(8, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"));
+		model.addAttribute("title", "List student");
 		model.addAttribute("entities", students);
 		List<Field> fields = Arrays.asList(Student.class.getDeclaredFields());
 		model.addAttribute("fields", fields);
@@ -58,7 +61,7 @@ class HelloController {
 	public String getCreate(Model model) {
 		Student student = new Student();
 		model.addAttribute("entity", student);
-		model.addAttribute("action", "student/create");
+		model.addAttribute("title", "Create student");
 		List<Field> fields = Arrays.asList(Student.class.getDeclaredFields());
 		model.addAttribute("fields", fields);
 		return "view-sample/create";
@@ -66,9 +69,10 @@ class HelloController {
 
 	@GetMapping("Student/edit/{id}")
 	public String getEdit(Model model, @PathVariable int id) {
-		Student student = new Student();
+		Student student = new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA");
 		model.addAttribute("entity", student);
-		model.addAttribute("action", "student/edit");
+		model.addAttribute("title", "Edit student");
+
 		List<Field> fields = Arrays.asList(Student.class.getDeclaredFields());
 		model.addAttribute("fields", fields);
 		return "view-sample/edit";
@@ -78,7 +82,8 @@ class HelloController {
 	public String getDelete(Model model, @PathVariable int id) {
 		Student student = new Student();
 		model.addAttribute("entity", student);
-		model.addAttribute("action", "student/delete");
+		model.addAttribute("title", "Confirm delete student");
+
 		List<Field> fields = Arrays.asList(Student.class.getDeclaredFields());
 		model.addAttribute("fields", fields);
 		return "view-sample/delete";
@@ -89,7 +94,7 @@ class HelloController {
 		Student student = new Student(1, true, 889, "Kha", "0868636668", "kha@fpt.edu.vn", "kha@fp", "kha@fpt.edu.vn");
 
 		model.addAttribute("entity", student);
-		model.addAttribute("action", "student/detail");
+		model.addAttribute("title", "Detail student");
 		List<Field> fields = Arrays.asList(Student.class.getDeclaredFields());
 		model.addAttribute("fields", fields);
 		return "view-sample/detail";
