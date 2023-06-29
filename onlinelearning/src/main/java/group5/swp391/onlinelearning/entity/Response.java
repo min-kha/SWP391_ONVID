@@ -14,7 +14,7 @@ import lombok.ToString;
 public class Response {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int responseID;
+    private int id;
     private int answer;
 
     @ManyToOne

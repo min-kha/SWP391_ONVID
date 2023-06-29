@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service2;
+package group5.swp391.onlinelearning.service;
 
 import java.util.Collection;
 
@@ -6,10 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.model.user.dto.StaffDTOCreate;
-import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
-import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
-import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
+import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
+import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
+import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
+import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 
 public interface IUserService {
     public Collection<User> getAllUsers();

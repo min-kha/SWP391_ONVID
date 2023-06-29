@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.Student;
+package group5.swp391.onlinelearning.controller.student;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

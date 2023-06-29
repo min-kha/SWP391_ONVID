@@ -22,9 +22,9 @@ import lombok.ToString;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int learnId;
+    private int id;
     private String title;
-    private String lessonName;
+    private String name;
     private String document;
     private String video;
 

@@ -1,6 +1,9 @@
-package group5.swp391.onlinelearning.model.user.dto;
+package group5.swp391.onlinelearning.model.dto;
+
+import java.util.Date;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
@@ -12,15 +15,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTOLoginRequest {
+public class UserDTORegisterRequest {
 
-    @Email(message = "Email is not valid")
+    @Email(message = "Email not true")
     private String email;
-
-    // viết regex với yêu cầu tối thiểu 6 ký tự,
-    // 1 ký tự viết hoa, 1 ký tự đặc biệt,
-    // ít nhất 1 chữ số và các ký tự nằm chỗ nào cũng được
+    @NotBlank(message = "Name must not be empty")
+    private String name;
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}$", message = "Password must contain at least 6 characters, 1 uppercase character, 1 special character and at least 1 number")
     private String password;
-
+    @NotBlank(message = "rePassword must not be empty")
+    private String rePassword;
 }

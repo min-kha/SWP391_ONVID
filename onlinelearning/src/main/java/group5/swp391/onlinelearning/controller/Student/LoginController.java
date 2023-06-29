@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.Student;
+package group5.swp391.onlinelearning.controller.student;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
-import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
-import group5.swp391.onlinelearning.service2.IUserService;
+import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
+import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
+import group5.swp391.onlinelearning.service.IUserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;

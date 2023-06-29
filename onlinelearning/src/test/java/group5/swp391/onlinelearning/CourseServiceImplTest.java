@@ -22,9 +22,9 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
-import group5.swp391.onlinelearning.repository2.CourseRepository;
-import group5.swp391.onlinelearning.service2.Impl.CourseServiceImpl;
-import group5.swp391.onlinelearning.service2.Impl.UserService;
+import group5.swp391.onlinelearning.repository.CourseRepository;
+import group5.swp391.onlinelearning.service.Impl.CourseService;
+import group5.swp391.onlinelearning.service.Impl.UserService;
 
 public class CourseServiceImplTest {
     @Mock
@@ -34,7 +34,7 @@ public class CourseServiceImplTest {
     private UserService userService;
 
     @InjectMocks
-    private CourseServiceImpl courseService;
+    private CourseService courseService;
 
     @BeforeEach
     public void setUp() {
@@ -45,12 +45,12 @@ public class CourseServiceImplTest {
     public void testGetAllCourses() {
         // Arrange
         Course course1 = new Course();
-        course1.setCourseId(1);
-        course1.setCourseName("Course 1");
+        course1.setId(1);
+        course1.setName("Course 1");
 
         Course course2 = new Course();
-        course2.setCourseId(1);
-        course2.setCourseName("Course 2");
+        course2.setId(1);
+        course2.setName("Course 2");
 
         List<Course> courses = new ArrayList<>();
         courses.add(course1);
@@ -63,8 +63,8 @@ public class CourseServiceImplTest {
 
         // Assert
         assertEquals(2, result.size());
-        assertEquals("Course 1", result.get(0).getCourseName());
-        assertEquals("Course 2", result.get(1).getCourseName());
+        assertEquals("Course 1", result.get(0).getName());
+        assertEquals("Course 2", result.get(1).getName());
     }
 
     @Test
@@ -72,8 +72,8 @@ public class CourseServiceImplTest {
         // Arrange
         int courseId = 1;
         Course course = new Course();
-        course.setCourseId(courseId);
-        course.setCourseName("Course 1");
+        course.setId(courseId);
+        course.setName("Course 1");
         course.setStatus(1);
         // Set other properties for the course
 
@@ -94,20 +94,20 @@ public class CourseServiceImplTest {
     public void testCreateCourse() {
         // Arrange
         Course course = new Course();
-        course.setCourseName("New Course");
+        course.setName("New Course");
         course.setDescription("Course Description");
         course.setPrice(BigDecimal.valueOf(99.99));
         course.setTopic(new Topic().builder().id(1).build());
 
         // Mocking the userService.getUserById(2) call
         User teacher = new User();
-        teacher.setUserId(2);
+        teacher.setId(2);
         when(userService.getUserById(2)).thenReturn(teacher);
 
         // Mocking the courseRepository.save(course) call
         Course savedCourse = new Course();
-        savedCourse.setCourseId(1);
-        savedCourse.setCourseName("New Course");
+        savedCourse.setId(1);
+        savedCourse.setName("New Course");
         savedCourse.setDescription("Course Description");
         savedCourse.setPrice(BigDecimal.valueOf(99.99));
         savedCourse.setTopic(new Topic().builder().id(1).build());
@@ -120,8 +120,8 @@ public class CourseServiceImplTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(savedCourse.getCourseId(), result.getCourseId());
-        assertEquals(savedCourse.getCourseName(), result.getCourseName());
+        assertEquals(savedCourse.getId(), result.getId());
+        assertEquals(savedCourse.getName(), result.getName());
         assertEquals(savedCourse.getDescription(), result.getDescription());
         assertEquals(savedCourse.getPrice(), result.getPrice());
         assertEquals(savedCourse.getTopic(), result.getTopic());
@@ -142,8 +142,8 @@ public class CourseServiceImplTest {
         updatedCourse.setTopic(new Topic().builder().id(1).build());
 
         Course existingCourse = new Course();
-        existingCourse.setCourseId(courseId);
-        existingCourse.setCourseName("Original Course");
+        existingCourse.setId(courseId);
+        existingCourse.setName("Original Course");
         existingCourse.setDescription("Original Description");
         existingCourse.setPrice(BigDecimal.valueOf(123));
         existingCourse.setTopic(new Topic().builder().id(1).build());
@@ -154,7 +154,7 @@ public class CourseServiceImplTest {
         Course result = courseService.updateCourse(courseId, updatedCourse);
         // Assert
         assertNotNull(result);
-        assertEquals(updatedCourse.getCourseName(), result.getCourseName());
+        assertEquals(updatedCourse.getCourseName(), result.getName());
         assertEquals(updatedCourse.getDescription(), result.getDescription());
         assertEquals(updatedCourse.getPrice(), result.getPrice());
         assertEquals(updatedCourse.getTopic(), result.getTopic());

@@ -24,7 +24,7 @@ import lombok.ToString;
 public class MyOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

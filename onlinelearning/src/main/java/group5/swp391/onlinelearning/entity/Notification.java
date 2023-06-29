@@ -17,9 +17,9 @@ public class Notification {
     // linkDirect: Varchar(200)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int notificationID;
+    private int id;
     private String message;
-    private String linkDirect;
+    private String linkRedirect;
 
     @ManyToOne
     @JoinColumn(name = "notification_id")

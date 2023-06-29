@@ -15,7 +15,7 @@ public class AnswerChoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int answerChoiceID;
+    private int id;
     private String answer;
 
     @ManyToOne

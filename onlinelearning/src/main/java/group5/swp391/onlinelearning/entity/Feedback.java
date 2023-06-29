@@ -24,7 +24,7 @@ public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int feedbackId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

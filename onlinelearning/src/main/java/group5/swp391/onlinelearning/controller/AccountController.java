@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import group5.swp391.onlinelearning.model.user.dto.StaffDTOCreate;
-import group5.swp391.onlinelearning.service2.IUserService;
-import group5.swp391.onlinelearning.service2.Impl.UserService;
+import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
+import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.Impl.UserService;
 
 @Controller
 public class AccountController {

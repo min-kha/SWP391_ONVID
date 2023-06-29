@@ -20,7 +20,7 @@ import lombok.ToString;
 public class CourseReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int CourseReviewId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "staff_id")

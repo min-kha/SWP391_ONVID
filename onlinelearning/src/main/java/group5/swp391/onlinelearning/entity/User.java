@@ -26,13 +26,13 @@ import lombok.ToString;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private int id;
     private String name;
 
     @Column(unique = true)
     private String email;
     private int role;
-    private int status;
+    private Boolean status;
     private String password;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
@@ -53,7 +53,7 @@ public class User {
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<CourseReview> courseReview;
+    private Collection<CourseReview> courseReviews;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
@@ -63,7 +63,7 @@ public class User {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<WithdrawalDetail> WithdrawalsStudent;
+    private Collection<WithdrawalDetail> withdrawalsStudents;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
@@ -73,6 +73,6 @@ public class User {
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<WithdrawalDetail> WithdrawalsStaff;
+    private Collection<WithdrawalDetail> withdrawalsStaffs;
 
 }

@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 public class CV {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cvId;
+    private int id;
 
     private Date date;
     private String pdfLink;

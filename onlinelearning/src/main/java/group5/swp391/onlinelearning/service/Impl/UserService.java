@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service2.Impl;
+package group5.swp391.onlinelearning.service.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.model.user.dto.StaffDTOCreate;
-import group5.swp391.onlinelearning.model.user.dto.UserDTOAccountRequest;
-import group5.swp391.onlinelearning.model.user.dto.UserDTOLoginRequest;
-import group5.swp391.onlinelearning.model.user.dto.UserDTORegisterRequest;
-import group5.swp391.onlinelearning.model.user.mapper.UserMapper;
-import group5.swp391.onlinelearning.repository2.UserRepository;
-import group5.swp391.onlinelearning.service2.IUserService;
+import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
+import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
+import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
+import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
+import group5.swp391.onlinelearning.model.mapper.UserMapper;
+import group5.swp391.onlinelearning.repository.UserRepository;
+import group5.swp391.onlinelearning.service.IUserService;
 
 @Service
 public class UserService implements IUserService {
@@ -39,6 +39,7 @@ public class UserService implements IUserService {
         return listUserDTOAccountRequest;
     }
 
+        // TODO: MUST CHANGE, After changes variable type of status from int to Boolean
     public void changeStatus(int id) {
         User user = userRepository.findById(id).get();
         if (user.getStatus() == 1) {

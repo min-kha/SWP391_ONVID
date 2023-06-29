@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller;
+package group5.swp391.onlinelearning.controller.teacher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
-import group5.swp391.onlinelearning.service2.Impl.CourseServiceImpl;
+import group5.swp391.onlinelearning.service.Impl.CourseService;
 
 @RequestMapping("/teacher/course")
 @Controller
 public class CourseController {
     // CRUD
     @Autowired
-    CourseServiceImpl courseService;
+    CourseService courseService;
 
     @GetMapping("/detail/{id}")
     public String getCourse(Model model, @PathVariable @NotNull Integer id) {

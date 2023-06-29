@@ -19,7 +19,7 @@ public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderDetailId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

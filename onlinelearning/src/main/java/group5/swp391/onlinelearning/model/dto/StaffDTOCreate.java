@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.model.user.dto;
+package group5.swp391.onlinelearning.model.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

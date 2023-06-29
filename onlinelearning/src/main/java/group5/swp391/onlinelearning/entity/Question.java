@@ -18,7 +18,7 @@ import lombok.ToString;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int questionID;
+    private int id;
     private String question;
 
     @ManyToOne

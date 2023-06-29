@@ -20,12 +20,12 @@ import lombok.ToString;
 public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int walletId;
+    private int id;
     private double revenue;
 
     @OneToOne
     @JoinColumn(name = "teacher_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private User user;
+    private User teacher;
 }

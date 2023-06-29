@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.Student;
+package group5.swp391.onlinelearning.controller.student;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.service2.Impl.CourseServiceImpl;
+import group5.swp391.onlinelearning.service.Impl.CourseService;
 
 @Controller
 @RequestMapping("/student")
 public class HomeController {
     @Autowired
-    CourseServiceImpl courseService;
+    CourseService courseService;
 
     @GetMapping("/home")
     public String getStudentHome(Model model) {

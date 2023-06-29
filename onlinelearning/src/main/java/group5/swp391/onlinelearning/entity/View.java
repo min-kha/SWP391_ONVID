@@ -25,7 +25,7 @@ import lombok.ToString;
 public class View {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int viewId;
+    private int id;
     private long viewNumber;
     @ManyToOne
     @JoinColumn(name = "course_id")

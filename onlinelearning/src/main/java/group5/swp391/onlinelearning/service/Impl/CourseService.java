@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service2.Impl;
+package group5.swp391.onlinelearning.service.Impl;
 
 import java.util.Date;
 import java.util.List;
@@ -11,10 +11,10 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.View;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
-import group5.swp391.onlinelearning.repository2.CourseRepository;
+import group5.swp391.onlinelearning.repository.CourseRepository;
 
 @Service
-public class CourseServiceImpl {
+public class CourseService {
     @Autowired
     CourseRepository courseRepository;
     @Autowired
@@ -30,8 +30,8 @@ public class CourseServiceImpl {
             Course course = courseOptional.get();
             CourseDtoDetail courseDTO = new CourseDtoDetail();
             // copy course to courseDto
-            courseDTO.setCourseId(course.getCourseId());
-            courseDTO.setCourseName(course.getCourseName());
+            courseDTO.setCourseId(course.getId());
+            courseDTO.setCourseName(course.getName());
             courseDTO.setStatus(course.getStatus());
             courseDTO.setDescription(course.getDescription());
             courseDTO.setPrice(course.getPrice());
@@ -66,7 +66,7 @@ public class CourseServiceImpl {
         Optional<Course> courseOptional = courseRepository.findById(id);
         if (courseOptional.isPresent()) {
             Course existingCourse = courseOptional.get();
-            existingCourse.setCourseName(updatedCourse.getCourseName());
+            existingCourse.setName(updatedCourse.getCourseName());
             existingCourse.setDescription(updatedCourse.getDescription());
             existingCourse.setPrice(updatedCourse.getPrice());
             existingCourse.setDate(new Date());

@@ -22,7 +22,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 
 @Entity
 @Data
@@ -33,11 +32,12 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseId;
+    private int id;
 
-    private String courseName;
+    private String name;
     private int status;
     private String description;
+    private String imageLink;
     private BigDecimal price;
     private Date date;
 

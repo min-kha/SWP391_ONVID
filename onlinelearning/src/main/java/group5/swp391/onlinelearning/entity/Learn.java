@@ -18,7 +18,7 @@ import lombok.ToString;
 public class Learn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int learnid;
+    private int id;
 
     private boolean status;
 
@@ -29,9 +29,9 @@ public class Learn {
     private User student;
 
     @ManyToOne
-    @JoinColumn(name = "lession_id")
+    @JoinColumn(name = "lesson_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Lesson lession;
+    private Lesson lesson;
 
 }

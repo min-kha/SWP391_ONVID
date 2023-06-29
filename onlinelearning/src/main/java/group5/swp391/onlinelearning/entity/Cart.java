@@ -18,7 +18,6 @@ import org.apache.tomcat.jni.Address;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Builder
 @Entity
@@ -26,7 +25,7 @@ import lombok.ToString;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartId;
+    private int id;
 
     @OneToOne
     @JoinColumn(name = "student_id")

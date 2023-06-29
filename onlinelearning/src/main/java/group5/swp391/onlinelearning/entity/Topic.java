@@ -26,7 +26,7 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String topicName;
+    private String name;
     private String hashtag;
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)

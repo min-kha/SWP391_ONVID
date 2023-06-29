@@ -20,7 +20,7 @@ import lombok.ToString;
 public class ContentSite {
     @Id
     @GeneratedValue
-    private int webContentId;
+    private int id;
     private String title;
     private String image;
 

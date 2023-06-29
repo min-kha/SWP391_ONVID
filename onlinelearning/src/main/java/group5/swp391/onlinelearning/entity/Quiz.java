@@ -1,6 +1,7 @@
 package group5.swp391.onlinelearning.entity;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,11 +21,11 @@ import lombok.ToString;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int quizID;
-    private String quizName;
+    private int id;
+    private String nam;
     private int numberQuestion;
     private int timeRange;
-    private int time;
+    private Date time;
     private int score;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)

@@ -20,12 +20,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
-import group5.swp391.onlinelearning.controller.CourseController;
+import group5.swp391.onlinelearning.controller.teacher.CourseController;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
-import group5.swp391.onlinelearning.repository2.CourseRepository;
-import group5.swp391.onlinelearning.service2.Impl.CourseServiceImpl;
-import group5.swp391.onlinelearning.service2.Impl.UserService;
+import group5.swp391.onlinelearning.repository.CourseRepository;
+import group5.swp391.onlinelearning.service.Impl.CourseService;
+import group5.swp391.onlinelearning.service.Impl.UserService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -42,7 +42,7 @@ public class CourseTest {
     @Autowired
     private UserService userService;
     @Autowired
-    private CourseServiceImpl courseService;
+    private CourseService courseService;
 
     @Test
     public void testGetCourse() throws Exception {

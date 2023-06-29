@@ -21,7 +21,7 @@ import lombok.ToString;
 public class WithdrawalDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int withdrawalDetailId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
