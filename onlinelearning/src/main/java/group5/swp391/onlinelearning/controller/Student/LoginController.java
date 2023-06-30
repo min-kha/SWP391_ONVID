@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/student")
@@ -25,17 +26,19 @@ public class LoginController {
     private IUserService userService;
 
     @GetMapping("/login")
-    public String getStudentLogin(Model model) {
-        model.addAttribute("student", new UserDTORegisterRequest());
-        return "login";
+    public String getStudentLogin(Model model, RedirectAttributes redirectAttributes) {
+        if (model.getAttribute("student") == null) {
+            model.addAttribute("student", new UserDTOLoginRequest());
+        }
+        return "/student/login/loginAccount";
     }
 
     @PostMapping("login")
     public String postStudentLogin(@Valid @ModelAttribute("student") UserDTOLoginRequest student,
             BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("EnterFieldError", "Login failed");
-            return "login";
+
+            return "/student/login/loginAccount";
         } else {
             User studentRes = userService.loginStudent(student, model);
             if (studentRes != null) {
@@ -43,7 +46,7 @@ public class LoginController {
                 return "redirect:/student/home";
             } else {
                 model.addAttribute("loginError", "Login failed");
-                return "login";
+                return "redirect:/student/login";
             }
         }
     }

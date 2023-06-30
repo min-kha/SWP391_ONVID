@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.service.Impl.CourseService;
 
 @Controller
@@ -19,8 +19,8 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getStudentHome(Model model) {
-        List<Course> courses = courseService.getAllCourses();
+        List<CourseDtoHomeDetail> courses = courseService.getAllCourseDtoHomeDetails();
         model.addAttribute("courses", courses);
-        return "home-student";
+        return "/student/home/list-products";
     }
 }
