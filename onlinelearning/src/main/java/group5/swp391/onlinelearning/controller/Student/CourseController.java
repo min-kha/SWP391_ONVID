@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
+import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.service.Impl.CourseService;
 
 @Controller(value = "CourseStudentController")
@@ -18,8 +19,8 @@ public class CourseController {
 
     @GetMapping("/detail/{courseId}")
     public String detail(Model model, @PathVariable Integer courseId) {
-        CourseDtoDetail course = courseServiceImpl.getCourseById(courseId);
+        CourseDtoDetailStudent course = courseServiceImpl.getCourseDetailForStudentById(courseId);
         model.addAttribute("course", course);
-        return "Detail";
+        return "/student/course/detail";
     }
 }
