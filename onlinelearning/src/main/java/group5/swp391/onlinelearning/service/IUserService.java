@@ -23,7 +23,7 @@ public interface IUserService {
 
     public User getUserByEmail(String email);
 
-    public void addUserRegister(UserDTORegisterRequest userDTORegisterRequest);
+    public User addUserRegister(UserDTORegisterRequest userDTORegisterRequest);
 
     public User loginStudent(UserDTOLoginRequest student, Model model);
 
