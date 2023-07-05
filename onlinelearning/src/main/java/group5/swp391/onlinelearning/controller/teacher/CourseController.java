@@ -1,8 +1,15 @@
 package group5.swp391.onlinelearning.controller.teacher;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -16,16 +23,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.service.ICourseTeacherService;
 import group5.swp391.onlinelearning.service.admin.ITopicService;
-import group5.swp391.onlinelearning.service.admin.Impl.TopicService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-import group5.swp391.onlinelearning.service.impl.CourseTeacherService;
 
 @RequestMapping("/teacher/course")
 @Controller
@@ -34,9 +37,9 @@ public class CourseController {
     @Autowired
     CourseService courseService;
     @Autowired
-    ICourseTeacherService courseTeacherService = new CourseTeacherService();
+    ICourseTeacherService courseTeacherService;
     @Autowired
-    ITopicService topicService = new TopicService();
+    ITopicService topicService;
 
     @GetMapping("/detail/{id}")
     public String getCourse(Model model, @PathVariable @NotNull Integer id) {
@@ -55,14 +58,23 @@ public class CourseController {
     @GetMapping("/create")
     public String getCreateCourse(Model model) {
         model.addAttribute("course", new CourseDTOAdd());
-        // TODO: chèn tạm Topic vì chưa có topic CRUD
         model.addAttribute("topics", topicService.getTopics());
         return "teacher/teacher-course-add";
     }
 
     @PostMapping("/create")
-    public String postCreateCourse(@ModelAttribute Course course) {
-        courseService.createCourse(course);
+    public String addCourse(@ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req)
+            throws IOException, ServletException {
+        String fileName = ("");
+        Part filePart = req.getPart("image");
+        fileName = filePart.getSubmittedFileName();
+        String path = "onlinelearning\\src\\main\\resources\\static\\image" + fileName;
+        InputStream inputStream = filePart.getInputStream();
+        Files.copy(inputStream, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+        courseDTOAdd.setImageLink(fileName);
+        int topic_id = Integer.parseInt(req.getParameter("topic"));
+        courseDTOAdd.setTopic_id(topic_id);
+        courseService.createCourse(courseDTOAdd);
         return "teacher/teacher-course-add";
     }
 
