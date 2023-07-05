@@ -9,7 +9,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="card-body py-5 px-4 p-md-5">
                                         <div class="pb-3">
-                                            <h1 th:text="'Detail ' + ${entity.class.getSimpleName}"></h1>
+                                            <h1 th:text="${title}"></h1>
                                             <div>
                                                 <hr />
                                                 <dl class="row border rounded p-3">
@@ -18,9 +18,10 @@
                                                             th:if="${field.getType.getSimpleName == 'Collection'}">
                                                             <dt th:text="${field.getName}"
                                                                 class="col-sm-3 fw-bold text-capitalize"></dt>
-                                                            <dd th:each="e : ${entity[field.getName]}" class="col-sm-9">
-                                                                <li th:text="${e.name}"></li>
-                                                            </dd>
+                                                            <ol class="col-sm-9">
+                                                                <li th:each="e : ${entity[field.getName]}"
+                                                                    th:text="${e.name}"></li>
+                                                            </ol>
                                                             <hr style="color: #aaaaaa" />
                                                         </th:block>
                                                         <th:block

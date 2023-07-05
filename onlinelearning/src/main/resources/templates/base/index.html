@@ -30,8 +30,8 @@
 
 <div class="container-fluid px-4">
     <div class="card mb-4">
-        <div class="card-header" th:text="'List ' + ${entities[0].class.getSimpleName}">
-        </div>
+        <h1 class="card-header" th:text="${title}">
+        </h1>
         <div class="card-body table-responsive">
 
             <table id="datatablesSimple" class="table table-hover">

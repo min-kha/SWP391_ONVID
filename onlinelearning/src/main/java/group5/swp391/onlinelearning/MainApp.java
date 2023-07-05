@@ -11,8 +11,6 @@ public class MainApp {
 
 	public static void main(String[] args) {
 		var context = SpringApplication.run(MainApp.class, args);
-		CourseService courseService = context.getBean(CourseService.class);
-		System.out.println(courseService.getAllCourses());
 	}
 
 }
