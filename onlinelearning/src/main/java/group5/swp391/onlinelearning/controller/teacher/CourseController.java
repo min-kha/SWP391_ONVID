@@ -19,7 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
-import group5.swp391.onlinelearning.service.Impl.CourseService;
+import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
+import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
+import group5.swp391.onlinelearning.service.ICourseTeacherService;
+import group5.swp391.onlinelearning.service.admin.ITopicService;
+import group5.swp391.onlinelearning.service.admin.Impl.TopicService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
+import group5.swp391.onlinelearning.service.impl.CourseTeacherService;
 
 @RequestMapping("/teacher/course")
 @Controller
@@ -27,6 +33,10 @@ public class CourseController {
     // CRUD
     @Autowired
     CourseService courseService;
+    @Autowired
+    ICourseTeacherService courseTeacherService = new CourseTeacherService();
+    @Autowired
+    ITopicService topicService = new TopicService();
 
     @GetMapping("/detail/{id}")
     public String getCourse(Model model, @PathVariable @NotNull Integer id) {
@@ -37,34 +47,30 @@ public class CourseController {
 
     @GetMapping("/list")
     public String getCourseList(Model model) {
-        List<Course> courses = courseService.getAllCourses();
+        List<CourseDTOTeacher> courses = courseTeacherService.getCourseDTOTeacherList();
         model.addAttribute("courses", courses);
-        return "course/list";
+        return "teacher/teacher-course";
     }
 
     @GetMapping("/create")
     public String getCreateCourse(Model model) {
-        model.addAttribute("course", new Course());
+        model.addAttribute("course", new CourseDTOAdd());
         // TODO: chèn tạm Topic vì chưa có topic CRUD
-        model.addAttribute("topics",
-                Arrays.asList(new Topic().builder().id(1).name("SQL").build(),
-                        new Topic().builder().id(2).name("Python").build()));
-        return "course/add";
+        model.addAttribute("topics", topicService.getTopics());
+        return "teacher/teacher-course-add";
     }
 
     @PostMapping("/create")
     public String postCreateCourse(@ModelAttribute Course course) {
         courseService.createCourse(course);
-        return "redirect:list";
+        return "teacher/teacher-course-add";
     }
 
     @GetMapping("/update/{id}")
     public String getUpdateCourse(Model model, @PathVariable @NotNull Integer id) {
         model.addAttribute("course", courseService.getCourseById(id));
         // TODO: chèn tạm Topic vì chưa có topic CRUD
-        model.addAttribute("topics",
-                Arrays.asList(new Topic().builder().id(1).name("SQL").build(),
-                        new Topic().builder().id(2).name("Python").build()));
+        model.addAttribute("topics", topicService.getTopics());
         return "course/update";
     }
 

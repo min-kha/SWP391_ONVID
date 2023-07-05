@@ -24,8 +24,8 @@ import group5.swp391.onlinelearning.controller.teacher.CourseController;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.repository.CourseRepository;
-import group5.swp391.onlinelearning.service.Impl.CourseService;
-import group5.swp391.onlinelearning.service.Impl.UserService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
+import group5.swp391.onlinelearning.service.impl.UserService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
