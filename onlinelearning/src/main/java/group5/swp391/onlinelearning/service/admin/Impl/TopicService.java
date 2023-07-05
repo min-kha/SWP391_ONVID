@@ -23,12 +23,12 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public void addTopics(Topic topic) throws Exception {
+    public void addTopic(Topic topic) throws Exception {
         Topic topicTmp = topicRepository.findByHashtag(topic.getHashtag());
         if (topicTmp != null) {
             throw new Exception("Duplicate topic hashtag");
         }
-        topicRepository.save(topicTmp);
+        topicRepository.save(topic);
     }
 
     @Override
@@ -38,12 +38,9 @@ public class TopicService implements ITopicService {
 
     @Override
     public void updateTopic(Topic topic) throws Exception {
-        Optional<Topic> _topic = topicRepository.findById(topic.getId());
-        Topic exitTopic;
-        if (_topic.isPresent()) {
-            exitTopic = _topic.get();
-            exitTopic.setName(topic.getName());
-            exitTopic.setHashtag(topic.getHashtag());
+        Optional<Topic> topicTmp = topicRepository.findById(topic.getId());
+        if (topicTmp.isPresent()) {
+            topicRepository.save(topic);
         } else {
             throw new Exception("Topic not found");
         }

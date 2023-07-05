@@ -9,13 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Component
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class TopicDTO {
+public class TopicDto {
     @NotBlank(message = "Topic Name must not blank")
     private String name;
     @NotBlank(message = "Topic Hashtag must not blank")

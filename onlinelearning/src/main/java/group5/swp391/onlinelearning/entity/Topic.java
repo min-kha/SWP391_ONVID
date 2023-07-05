@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +28,10 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Tên topic không được để trống")
     private String name;
+
+    @NotNull
     private String hashtag;
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)

@@ -12,7 +12,7 @@ import group5.swp391.onlinelearning.entity.Topic;
 public interface ITopicService {
     public List<Topic> getTopics();
 
-    public void addTopics(Topic topic) throws Exception;
+    public void addTopic(Topic topic) throws Exception;
 
     public void deleteTopic(int id);
 
