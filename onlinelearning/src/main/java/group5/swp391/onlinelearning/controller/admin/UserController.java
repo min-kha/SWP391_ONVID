@@ -19,9 +19,9 @@ import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 @Controller
 public class UserController {
     @Autowired
-    ThymeleafBaseCRUD thymeleafBaseCRUD;
+    private ThymeleafBaseCRUD thymeleafBaseCRUD;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("/index")
     public String getIndex(Model model) {

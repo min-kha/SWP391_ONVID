@@ -1,5 +1,7 @@
 package group5.swp391.onlinelearning.controller.admin;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +14,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.Topic;
-import group5.swp391.onlinelearning.repository.TopicRepository;
+import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.service.admin.ITopicService;
-import group5.swp391.onlinelearning.service.admin.Impl.TopicService;
+import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admin/topics")
 public class TopicController {
 
     @Autowired
-    private final ITopicService topicService = new TopicService();
+    private ITopicService topicService;
+    @Autowired
+    private ThymeleafBaseCRUD thymeleafBaseCRUD;
+
+    @GetMapping("/index")
+    public String getIndex(Model model) {
+        List<Topic> topics = topicService.getTopics();
+        String title = "List topics - Admin";
+        thymeleafBaseCRUD.setBaseForList(model, topics, title);
+        return "sample/index";
+    }
 
     @GetMapping(value = "/topic")
     public String getMethodTopic(Model model) {
@@ -30,8 +42,7 @@ public class TopicController {
     }
 
     @PostMapping(value = "/topic")
-    public String postMethodTopic(@Valid @ModelAttribute("topic") Topic topic,
-            BindingResult bindingResult,
+    public String postMethodTopic(@Valid @ModelAttribute("topic") Topic topic, BindingResult bindingResult,
             Model model) {
         if (!topicService.addTopics(topic)) {
             model.addAttribute("topic", topic);
