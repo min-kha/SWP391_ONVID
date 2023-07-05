@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.service.Impl.UserService;
+import group5.swp391.onlinelearning.service.impl.UserService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
 @RequestMapping("/admin/users")
