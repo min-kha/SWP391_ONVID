@@ -14,19 +14,31 @@
                                                 <hr />
                                                 <dl class="row border rounded p-3">
                                                     <th:block th:each="field : ${fields}">
-                                                        <dt th:text="${field.getName}"
-                                                            class="col-sm-3 fw-bold text-capitalize"></dt>
-                                                        <dd th:text="${entity[field.getName]}" class="col-sm-9">
-                                                        </dd>
-                                                        <hr style="color: #aaaaaa" />
+                                                        <th:block
+                                                            th:if="${field.getType.getSimpleName == 'Collection'}">
+                                                            <dt th:text="${field.getName}"
+                                                                class="col-sm-3 fw-bold text-capitalize"></dt>
+                                                            <dd th:each="e : ${entity[field.getName]}" class="col-sm-9">
+                                                                <li th:text="${e.name}"></li>
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                        </th:block>
+                                                        <th:block
+                                                            th:if="${field.getType.getSimpleName != 'Collection'}">
+                                                            <dt th:text="${field.getName}"
+                                                                class="col-sm-3 fw-bold text-capitalize"></dt>
+                                                            <dd th:text="${entity[field.getName]}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                        </th:block>
                                                     </th:block>
                                                 </dl>
                                             </div>
                                             <div class="text-end">
                                                 <a th:href="'../edit/' + ${entity[fields[0].getName]}"
                                                     class="btn btn-warning px-3 " aria-disabled="true">Edit</a>
-                                                <a th:href="'../../' + ${entity.class.getSimpleName} + '/index'"
-                                                    class="btn btn-link px-3 " aria-disabled="true">Back
+                                                <a th:href="'../' + 'index'" class="btn btn-link px-3 "
+                                                    aria-disabled="true">Back
                                                     to list</a>
                                             </div>
 

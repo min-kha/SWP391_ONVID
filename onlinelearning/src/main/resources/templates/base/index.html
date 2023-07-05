@@ -48,7 +48,13 @@
                 </thead>
                 <tbody>
                     <tr th:each="entity : ${entities}">
-                        <td th:each="field : ${fields}" th:text="${entity[field.getName]}"></td>
+                        <th:block th:each="field : ${fields}">
+                            <td th:if="${field.getType.getSimpleName == 'Collection'}"
+                                th:text="${entity[field.getName].size}"></td>
+                            <td th:if="${field.getType.getSimpleName != 'Collection'}"
+                                th:text="${entity[field.getName]}"></td>
+                        </th:block>
+
                         <td>
                             <a th:href="'details/' + ${entity[fields[0].getName]}" class="btn btn-secondary btn-sm "
                                 tabindex="-1" aria-disabled="true">Details</a>

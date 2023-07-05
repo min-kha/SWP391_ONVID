@@ -19,7 +19,7 @@ public class ThymeleafBaseCRUD {
      * @param title  The title of the web page.
      * @param object The specific object (entity) to be displayed or updated.
      */
-    public void setBaseForEntity(Model model, String title, Object object) {
+    public void setBaseForEntity(Model model, Object object, String title) {
         model.addAttribute("entity", object);
         model.addAttribute("title", title);
         List<Field> fields = Arrays.asList(object.getClass().getDeclaredFields());
