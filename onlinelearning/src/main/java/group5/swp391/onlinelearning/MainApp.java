@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
-import group5.swp391.onlinelearning.service.Impl.CourseService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
 
 @SpringBootApplication
 public class MainApp {

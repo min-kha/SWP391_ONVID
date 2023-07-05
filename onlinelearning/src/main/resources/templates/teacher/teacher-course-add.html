@@ -1,0 +1,29 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <h2>Add New Course</h2>
+        <form th:action="@{/courses/add}" th:object="${course}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="courseName">Course Name:</label>
+                <input type="text" class="form-control" id="courseName" name="courseName" required th:field="*{name}">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="text" class="form-control" id="price" name="price" required th:field="*{price}">
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+            </div>
+            <div class="form-group">
+                <label for="topic">Topic:</label>
+                <select class="form-control" id="topic" name="topic">
+                    <option th:each="topic : ${topics}" th:value="${topic.name}" th:text="${topic.name}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" class="form-control-file" id="image" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Course</button>
+        </form>
+
+    </th:block>
+</th:block>

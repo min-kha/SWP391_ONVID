@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
-import group5.swp391.onlinelearning.service.Impl.CourseService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
 
 @Controller(value = "CourseStudentController")
 @RequestMapping("/student/course")
