@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service.Impl;
+package group5.swp391.onlinelearning.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,28 +54,30 @@ public class UserService implements IUserService {
         return userRepository.findById(id).get();
     }
 
-    private boolean checkValidAccount(User user) {
-        if (!user.getStatus()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     public User loginStudent(UserDTOLoginRequest student, Model model) {
+        boolean checkInvalidAccount = false;
+        boolean checkWrongAccountOrPassword = false;
         List<User> users = getAllUsers();
         User userRes = new User();
         for (User user : users) {
             if (student.getEmail().equals(user.getEmail()) && student.getPassword().equals(user.getPassword())) {
-                if (checkValidAccount(user)) {
+                if (user.getStatus()) {
                     return user;
                 } else {
-                    model.addAttribute("invalidAccount", "Your account has been locked");
+                    checkWrongAccountOrPassword = false;
+                    checkInvalidAccount = true;
+                    break;
                 }
             } else {
-                model.addAttribute("wrongAccountOrPassword", "Email or password not true");
+                checkWrongAccountOrPassword = true;
             }
+        }
+        if (checkInvalidAccount) {
+            model.addAttribute("invalidAccount", "Your account has been locked");
+        }
+        if (checkWrongAccountOrPassword) {
+            model.addAttribute("wrongAccountOrPassword", "Email or password not true");
         }
         return null;
     }

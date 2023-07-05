@@ -1,5 +1,6 @@
-package group5.swp391.onlinelearning.service.Impl;
+package group5.swp391.onlinelearning.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,9 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.View;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
+import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
+import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
+import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.repository.CourseRepository;
 
 @Service
@@ -79,5 +83,26 @@ public class CourseService {
 
     public void deleteCourse(int id) {
         courseRepository.deleteById(id);
+    }
+
+    public List<CourseDtoHomeDetail> getAllCourseDtoHomeDetails() {
+        List<Course> courses = getAllCourses();
+        List<CourseDtoHomeDetail> courseDtoHomeDetails = new ArrayList<>();
+
+        for (Course course : courses) {
+            courseDtoHomeDetails.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+        }
+        return courseDtoHomeDetails;
+    }
+
+    public Course getCourseAllById(int id) {
+        Course course = courseRepository.findById(id).get();
+        return course;
+    }
+
+    public CourseDtoDetailStudent getCourseDetailForStudentById(int id) {
+        Course course = getCourseAllById(id);
+        CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
+        return courseRes;
     }
 }

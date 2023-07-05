@@ -22,7 +22,7 @@ public class RegisterController {
     @GetMapping("/register")
     public String getMethodRegister(Model model) {
         model.addAttribute("user", new UserDTORegisterRequest());
-        return "Register";
+        return "student/Register";
     }
 
     @PostMapping("/register")
@@ -35,7 +35,7 @@ public class RegisterController {
             bindingResult.rejectValue("rePass", "error.repass.notSam", "Repassword is not same with password");
         }
         if (bindingResult.hasErrors()) {
-            return "Register";
+            return "student/Register";
         }
         userService.addUserRegister(userDTORegisterRequest);
         return "redirect:/student/home";
