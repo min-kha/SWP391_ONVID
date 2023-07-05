@@ -12,16 +12,24 @@
               <!-- <span class="text-decoration-line-through" th:text="${course.price}">$45.00</span> -->
               <span th:text="${course.price}"> $40.00</span>
             </div>
-            <p class="lead" th:text="${course.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Praesentium at dolorem quidem modi.
-              Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea
-              iste laborum vero?</p>
-            <div class="d-flex">
-              <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                <i class="bi-cart-fill me-1"></i>
-                Add to cart
-              </button>
-            </div>
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            <span th:text="${view}"></span>
+            <p class="lead" th:text="${course.description}"></p>
+            <form th:if="${textCart == 'add to cart'}" th:action="@{/student/addToCart}" method="post">
+              <div class="d-flex">
+                <input th:value="${course.id}" type="hidden" name="courseId">
+                <button class=" btn btn-outline-dark flex-shrink-0" type="submit" th:text="${textCart}">
+                  <i class="bi-cart-fill me-1"></i>
+                  Add to cart
+                </button>
+              </div>
+            </form>
+
+            <button th:if="${textCart == 'already in cart'}" class=" btn btn-outline-dark flex-shrink-0"
+              th:text="${textCart}">
+              <i class="bi-cart-fill me-1"></i>
+              Add to cart
+            </button>
           </div>
         </div>
       </div>
