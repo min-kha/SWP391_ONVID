@@ -20,10 +20,10 @@ public class ThymeleafBaseCRUD {
      * @param object The specific object (entity) to be displayed or updated.
      */
     public void setBaseForEntity(Model model, Object object, String title) {
-        model.addAttribute("entity", object);
         model.addAttribute("title", title);
         List<Field> fields = Arrays.asList(object.getClass().getDeclaredFields());
         model.addAttribute("fields", fields);
+        model.addAttribute("entity", object);
     }
 
     /**

@@ -40,6 +40,9 @@ public class TopicService implements ITopicService {
     public void updateTopic(Topic topic) throws Exception {
         Optional<Topic> topicTmp = topicRepository.findById(topic.getId());
         if (topicTmp.isPresent()) {
+            if (topicRepository.findByHashtag(topic.getHashtag()) != null) {
+                throw new Exception("Duplicate topic hashtag");
+            }
             topicRepository.save(topic);
         } else {
             throw new Exception("Topic not found");

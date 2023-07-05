@@ -49,18 +49,20 @@ public class TopicController {
     }
 
     @PostMapping("/create")
-    public String postCreate(@Valid @ModelAttribute("topic") TopicDto topicDto, BindingResult bindingResult,
+    public String postCreate(@Valid @ModelAttribute TopicDto topicDto, BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
             thymeleafBaseCRUD.setBaseForEntity(model, topicDto, "Create Topic - Admin");
             return "/sample/create";
         }
+        Topic topic = modelMapper.map(topicDto, Topic.class);
         try {
-            Topic topic = modelMapper.map(topicDto, Topic.class);
             topicService.addTopic(topic);
         } catch (Exception e) {
-            model.addAttribute("topic", topicDto);
             bindingResult.rejectValue("name", "error.duplicate", "Name is exit in systerm");
+            thymeleafBaseCRUD.setBaseForEntity(model, topic, "Edit Topic - Admin");
+            return "/sample/create";
+
         }
         return "redirect:/admin/topics/index";
     }
@@ -82,14 +84,23 @@ public class TopicController {
         try {
             topicService.updateTopic(topic);
         } catch (Exception e) {
-            model.addAttribute("topic", topic);
             bindingResult.rejectValue("name", "error.duplicate", "Name is exit in systerm");
+            thymeleafBaseCRUD.setBaseForEntity(model, topic, "Edit Topic - Admin");
+            return "/sample/edit";
+
         }
         return "redirect:/admin/topics/index";
     }
 
     @GetMapping("/delete/{id}")
     public String getDelete(Model model, @PathVariable @NotNull int id) {
+        Topic topic = topicService.getTopicById(id);
+        thymeleafBaseCRUD.setBaseForEntity(model, topic, "Confirm delete topic - Admin");
+        return "sample/delete";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String postDelete(Model model, @PathVariable @NotNull int id) {
         Topic topic = topicService.getTopicById(id);
         thymeleafBaseCRUD.setBaseForEntity(model, topic, "Confirm delete topic - Admin");
         return "sample/delete";
