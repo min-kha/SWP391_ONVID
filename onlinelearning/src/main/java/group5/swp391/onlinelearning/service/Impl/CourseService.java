@@ -31,6 +31,10 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public Course getCourseByCourseId(int id) {
+        return courseRepository.findById(id).get();
+    }
+
     public CourseDtoDetail getCourseById(int id) {
         Optional<Course> courseOptional = courseRepository.findById(id);
         if (courseOptional.isPresent()) {

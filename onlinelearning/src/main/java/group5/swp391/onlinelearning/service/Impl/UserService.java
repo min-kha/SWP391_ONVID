@@ -93,9 +93,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void addUserRegister(UserDTORegisterRequest userDTORegisterRequest) {
+    public User addUserRegister(UserDTORegisterRequest userDTORegisterRequest) {
         User user = mapper.userDTORegisterRequestToUser(userDTORegisterRequest);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
-
 }
