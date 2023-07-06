@@ -18,9 +18,6 @@ import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.Impl.CourseService;
 
-import group5.swp391.onlinelearning.service.impl.CourseService;
-
-
 @Controller(value = "CourseStudentController")
 @RequestMapping("/student/course")
 public class CourseController {

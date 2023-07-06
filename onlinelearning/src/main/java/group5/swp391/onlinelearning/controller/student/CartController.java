@@ -49,7 +49,6 @@ public class CartController {
         }
         model.addAttribute("total", total);
         model.addAttribute("size", courses.size());
-
         return "student/cart/cart";
     }
 
