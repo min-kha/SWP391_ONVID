@@ -22,6 +22,6 @@ public class CourseController {
                 model.addAttribute("entities", courses);
                 List<Field> fields = Arrays.asList(Course.class.getDeclaredFields());
                 model.addAttribute("fields", fields);
-                return "course/index";
+                return "course/list-products";
         }
 }

@@ -1,6 +1,5 @@
 package group5.swp391.onlinelearning.controller.teacher;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,15 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.service.ICourseTeacherService;
+import group5.swp391.onlinelearning.service.Impl.CourseService;
 import group5.swp391.onlinelearning.service.admin.ITopicService;
-import group5.swp391.onlinelearning.service.admin.Impl.TopicService;
-import group5.swp391.onlinelearning.service.impl.CourseService;
-import group5.swp391.onlinelearning.service.impl.CourseTeacherService;
 
 @RequestMapping("/teacher/course")
 @Controller
@@ -34,9 +30,9 @@ public class CourseController {
     @Autowired
     CourseService courseService;
     @Autowired
-    ICourseTeacherService courseTeacherService = new CourseTeacherService();
+    ICourseTeacherService courseTeacherService;
     @Autowired
-    ITopicService topicService = new TopicService();
+    ITopicService topicService;
 
     @GetMapping("/detail/{id}")
     public String getCourse(Model model, @PathVariable @NotNull Integer id) {
