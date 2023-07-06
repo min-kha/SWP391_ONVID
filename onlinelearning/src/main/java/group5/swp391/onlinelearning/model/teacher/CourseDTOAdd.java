@@ -20,7 +20,7 @@ public class CourseDTOAdd {
     private String description;
     @NotNull(message = "Price must not be empty")
     private BigDecimal price;
-    @NotNull(message = "Topic must not be empty")
+
     private int topic_id;
-    private String image;
+    private String imageLink;
 }
