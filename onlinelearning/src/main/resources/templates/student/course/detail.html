@@ -30,6 +30,12 @@
               <i class="bi-cart-fill me-1"></i>
               Add to cart
             </button>
+
+            <button th:if="${textCart == 'you already bought'}" class=" btn btn-outline-dark flex-shrink-0"
+              th:text="${textCart}">
+              <i class="bi-cart-fill me-1"></i>
+              Add to cart
+            </button>
           </div>
         </div>
       </div>

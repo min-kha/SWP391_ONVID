@@ -108,4 +108,8 @@ public class CourseService {
         CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
         return courseRes;
     }
+
+    public List<Course> getMyCourse(int studentId) {
+        return courseRepository.getMyCourse(studentId);
+    }
 }
