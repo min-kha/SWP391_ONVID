@@ -27,4 +27,6 @@ public interface IUserService {
 
     public User loginStudent(UserDTOLoginRequest student, Model model);
 
+    public User changePassword(User user);
+
 }
