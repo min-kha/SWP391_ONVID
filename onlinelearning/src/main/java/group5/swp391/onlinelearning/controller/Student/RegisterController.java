@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.controller.student;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,6 +17,7 @@ import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.service.ICartService;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.OtpService;
 
 @Controller
 public class RegisterController {
@@ -24,6 +26,8 @@ public class RegisterController {
     private IUserService userService;
     @Autowired
     ICartService cartService;
+    @Autowired
+    OtpService otpService;
 
     @GetMapping("/register")
     public String getMethodRegister(Model model) {
@@ -32,8 +36,8 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String postMethodRegister(@Valid @ModelAttribute("user") UserDTORegisterRequest userDTORegisterRequest,
-            BindingResult bindingResult, HttpSession session) {
+    public String checkValidAccount(@Valid @ModelAttribute("user") UserDTORegisterRequest userDTORegisterRequest,
+            BindingResult bindingResult, HttpServletRequest request) {
         if (userService.getUserByEmail(userDTORegisterRequest.getEmail()) != null) {
             bindingResult.rejectValue("email", "error.email.exist", "Email address is duplicated");
         }
@@ -43,11 +47,17 @@ public class RegisterController {
         if (bindingResult.hasErrors()) {
             return "student/register/Register";
         }
-        User user = userService.addUserRegister(userDTORegisterRequest);
-        System.out.println(user.getId());
-        Cart cart = cartService.createCart(user);
-
-        return "redirect:/student/login";
+        request.setAttribute("userDTORegisterRequest", userDTORegisterRequest);
+        return "forward:/send-email/true";
     }
 
+    @PostMapping("/store-account")
+    public String storeAccount(HttpSession session) {
+        UserDTORegisterRequest userDTORegisterRequest = (UserDTORegisterRequest) session
+                .getAttribute("userRegisterSession");
+        User user = userService.addUserRegister(userDTORegisterRequest);
+        Cart cart = cartService.createCart(user);
+        session.invalidate();
+        return "redirect:/student/login";
+    }
 }

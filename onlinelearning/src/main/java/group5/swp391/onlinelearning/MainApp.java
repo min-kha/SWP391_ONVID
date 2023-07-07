@@ -7,7 +7,7 @@ import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 
 import group5.swp391.onlinelearning.repository.CartRepository;
 import group5.swp391.onlinelearning.repository.CourseRepository;
-import group5.swp391.onlinelearning.service.Impl.CourseService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
 
 
 @SpringBootApplication

@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service.Impl;
+package group5.swp391.onlinelearning.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.View;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;

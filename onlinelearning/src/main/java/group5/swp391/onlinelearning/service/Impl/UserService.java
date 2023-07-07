@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service.Impl;
+package group5.swp391.onlinelearning.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +95,11 @@ public class UserService implements IUserService {
     @Override
     public User addUserRegister(UserDTORegisterRequest userDTORegisterRequest) {
         User user = mapper.userDTORegisterRequestToUser(userDTORegisterRequest);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User changePassword(User user) {
         return userRepository.save(user);
     }
 }

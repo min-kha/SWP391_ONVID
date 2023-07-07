@@ -22,7 +22,7 @@ import group5.swp391.onlinelearning.entity.MyOrder;
 import group5.swp391.onlinelearning.entity.OrderDetail;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.service.IOrderService;
-import group5.swp391.onlinelearning.service.Impl.OrderDetailService;
+import group5.swp391.onlinelearning.service.impl.OrderDetailService;
 
 @Controller
 @RequestMapping("/student")

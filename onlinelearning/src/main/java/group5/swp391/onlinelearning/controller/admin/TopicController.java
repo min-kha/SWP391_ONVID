@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.repository.TopicRepository;
 import group5.swp391.onlinelearning.service.admin.ITopicService;
-import group5.swp391.onlinelearning.service.admin.Impl.TopicService;
+import group5.swp391.onlinelearning.service.admin.impl.TopicService;
 
 @Controller
 @RequestMapping(value = "/admin")
