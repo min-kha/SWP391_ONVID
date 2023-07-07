@@ -1,23 +1,22 @@
 package group5.swp391.onlinelearning.model.admin;
 
-import javax.validation.constraints.NotBlank;
-
-import org.springframework.stereotype.Component;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Component
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class TopicDTO {
-    @NotBlank(message = "Topic Name must not blank")
+public class TopicDto {
+    @NotEmpty(message = "Topic Name must not blank")
     private String name;
-    @NotBlank(message = "Topic Hashtag must not blank")
+
+    @NotEmpty(message = "Topic Hashtag must not blank")
     private String hashtag;
 }

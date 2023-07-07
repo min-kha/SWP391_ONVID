@@ -27,8 +27,8 @@ import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.service.ICourseTeacherService;
-import group5.swp391.onlinelearning.service.Impl.CourseService;
 import group5.swp391.onlinelearning.service.admin.ITopicService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
 
 @RequestMapping("/teacher/course")
 @Controller
