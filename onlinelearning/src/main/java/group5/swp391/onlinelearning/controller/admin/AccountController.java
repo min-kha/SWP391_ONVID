@@ -20,7 +20,6 @@ public class AccountController {
 
     @Autowired
     private IUserService userService;
-    private IUserService userService;
 
     @GetMapping("/account")
     public String getAccountManage(Model model) {
