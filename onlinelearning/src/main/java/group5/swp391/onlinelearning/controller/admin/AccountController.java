@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.service.IUserService;
-import group5.swp391.onlinelearning.service.Impl.UserService;
 
 @Controller
 public class AccountController {
 
     @Autowired
-    private IUserService userService = new UserService();
+    private IUserService userService;
 
     @GetMapping("/account")
     public String getAccountManage(Model model) {

@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service.admin.Impl;
+package group5.swp391.onlinelearning.service.admin.impl;
 
 import java.util.List;
 import java.util.Optional;

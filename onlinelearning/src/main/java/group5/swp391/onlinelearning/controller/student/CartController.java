@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import group5.swp391.onlinelearning.entity.Cart;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.service.Impl.CartService;
-import group5.swp391.onlinelearning.service.Impl.CourseService;
+import group5.swp391.onlinelearning.service.impl.CartService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
 
 @Controller
 @RequestMapping("/student")
