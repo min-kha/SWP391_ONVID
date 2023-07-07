@@ -9,7 +9,6 @@ import group5.swp391.onlinelearning.repository.CartRepository;
 
 @SpringBootApplication
 public class MainApp {
-
 	public static void main(String[] args) {
 		var context = SpringApplication.run(MainApp.class, args);
 		// context.getBean(CartRepository.class).deleteCourseFromCart(1, 1);
@@ -19,5 +18,4 @@ public class MainApp {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-
 }

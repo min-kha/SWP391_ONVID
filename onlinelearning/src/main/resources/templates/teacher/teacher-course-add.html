@@ -1,7 +1,7 @@
 <th:block th:replace="/layout.html">
     <th:block th:fragment="main-content">
         <h2>Add New Course</h2>
-        <form th:action="@{/courses/add}" th:object="${course}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/teacher/course/create}" th:object="${course}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="courseName">Course Name:</label>
                 <input type="text" class="form-control" id="courseName" name="courseName" required th:field="*{name}">
@@ -15,13 +15,22 @@
             <div class="form-group">
                 <label for="topic">Topic:</label>
                 <select class="form-control" id="topic" name="topic">
-                    <option th:each="topic : ${topics}" th:value="${topic.name}" th:text="${topic.name}"></option>
+                    <option th:each="topic : ${topics}" th:value="${topic.id}" th:text="${topic.name}"></option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" class="form-control-file" id="image" name="image">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="4" required
+                    th:field="*{description}"></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
             </div>
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" class="form-control-file" id="image" name="image" required>
+            </div>
+            <input type="hidden" class="form-control" id="topicfake" name="topicfake" th:field="*{topic_id}" value="1">
+            <input type="hidden" class="form-control" id="imageLink" name="imageLink" th:field="*{imageLink}"
+                value="ahihi">
             <button type="submit" class="btn btn-primary">Add Course</button>
         </form>
 

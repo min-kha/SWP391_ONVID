@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.service.impl;
+package group5.swp391.onlinelearning.service.Impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +15,7 @@ import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
+import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.repository.CourseRepository;
 
 @Service
@@ -23,9 +24,15 @@ public class CourseService {
     CourseRepository courseRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    CourseMapper courseMapper;
 
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
+    }
+
+    public Course getCourseByCourseId(int id) {
+        return courseRepository.findById(id).get();
     }
 
     public CourseDtoDetail getCourseById(int id) {
@@ -57,12 +64,8 @@ public class CourseService {
         return null;
     }
 
-    public Course createCourse(Course course) {
-        course.setDate(new Date());
-        // TODO: get teacher from session
-        course.setTeacher(userService.getUserById(2));
-        // TODO: chưa có CRUD topic nên làm tạm
-        course.setTopic(new Topic().builder().id(1).build());
+    public Course createCourse(CourseDTOAdd courseDTOAdd) {
+        Course course = courseMapper.courseDTOAddtoCourse(courseDTOAdd);
         return courseRepository.save(course);
     }
 
@@ -104,5 +107,9 @@ public class CourseService {
         Course course = getCourseAllById(id);
         CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
         return courseRes;
+    }
+
+    public List<Course> getMyCourse(int studentId) {
+        return courseRepository.getMyCourse(studentId);
     }
 }
