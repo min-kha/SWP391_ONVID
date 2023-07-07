@@ -3,6 +3,8 @@ package group5.swp391.onlinelearning.service.admin.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,12 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public boolean addTopics(Topic topic) {
-        Topic _topic = topicRepository.findByName(topic.getName());
-        if (_topic != null) {
-            return false;
+    public void addTopic(Topic topic) throws Exception {
+        Topic topicTmp = topicRepository.findByHashtag(topic.getHashtag());
+        if (topicTmp != null) {
+            throw new Exception("Duplicate topic hashtag");
         }
         topicRepository.save(topic);
-        return true;
     }
 
     @Override
@@ -36,15 +37,21 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public void updateTopic(Topic topic) {
-        Optional<Topic> _topic = topicRepository.findById(topic.getId());
-        Topic exitTopic;
-        if (_topic.isPresent()) {
-            exitTopic = _topic.get();
-            exitTopic.setName(topic.getName());
-            exitTopic.setHashtag(topic.getHashtag());
+    public void updateTopic(Topic topic) throws Exception {
+        Optional<Topic> topicTmp = topicRepository.findById(topic.getId());
+        if (topicTmp.isPresent()) {
+            if (topicRepository.findByHashtag(topic.getHashtag()) != null) {
+                throw new Exception("Duplicate topic hashtag");
+            }
+            topicRepository.save(topic);
         } else {
-            // throw new NotFoundException("Topic not found");
+            throw new Exception("Topic not found");
         }
     }
+
+    @Override
+    public Topic getTopicById(int id) {
+        return topicRepository.findById(id).get();
+    }
+
 }
