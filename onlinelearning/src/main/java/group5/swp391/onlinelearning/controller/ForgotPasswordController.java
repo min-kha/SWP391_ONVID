@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.service.IUserService;
-import group5.swp391.onlinelearning.service.impl.UserService;
 
 @Controller
 public class ForgotPasswordController {
@@ -25,7 +24,7 @@ public class ForgotPasswordController {
 
     @PostMapping("/check-valid-email")
     public String checkValidEmail(@RequestParam("email") String email, Model model, HttpSession session) {
-        User user = (User) userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(email);
         if (user != null) {
             session.setAttribute("userForgotPassword", user);
             return "forward:/send-email/false";

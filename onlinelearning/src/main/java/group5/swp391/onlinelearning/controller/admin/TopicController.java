@@ -9,7 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,8 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.Topic;
+import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.admin.TopicDto;
-import group5.swp391.onlinelearning.service.admin.ITopicService;
+import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
 @Controller
@@ -49,20 +49,23 @@ public class TopicController {
     }
 
     @PostMapping("/create")
-    public String postCreate(@Valid @ModelAttribute TopicDto topicDto, BindingResult bindingResult,
+    public String postCreate(@Valid @ModelAttribute("entity") TopicDto topicDto, BindingResult bindingResult,
             Model model) {
-        if (bindingResult.hasErrors()) {
-            thymeleafBaseCRUD.setBaseForEntity(model, topicDto, "Create Topic - Admin");
-            return "/sample/create";
-        }
-        Topic topic = modelMapper.map(topicDto, Topic.class);
+        final String title = "Create Topic - Admin";
+        Topic topic = new Topic();
         try {
+            if (bindingResult.hasErrors()) {
+                thymeleafBaseCRUD.setBaseForEntity(model, topicDto, title);
+                return "/sample/create";
+            }
+            topic = modelMapper.map(topicDto, Topic.class);
             topicService.addTopic(topic);
-        } catch (Exception e) {
-            bindingResult.rejectValue("name", "error.duplicate", "Name is exit in systerm");
-            thymeleafBaseCRUD.setBaseForEntity(model, topic, "Edit Topic - Admin");
+        } catch (InvalidInputException e) {
+            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode());
+            thymeleafBaseCRUD.setBaseForEntity(model, topicDto, title);
             return "/sample/create";
-
+        } catch (Exception e) {
+            return "/error";
         }
         return "redirect:/admin/topics/index";
     }
@@ -75,19 +78,21 @@ public class TopicController {
     }
 
     @PostMapping("/edit/{id}")
-    public String postEdit(@Valid @ModelAttribute("topic") Topic topic, BindingResult bindingResult,
+    public String postEdit(@Valid @ModelAttribute("entity") Topic topic, BindingResult bindingResult,
             Model model) {
-        if (bindingResult.hasErrors()) {
-            thymeleafBaseCRUD.setBaseForEntity(model, topic, "Edit Topic - Admin");
-            return "/sample/edit";
-        }
+        final String title = "Edit Topic - Admin";
         try {
+            if (bindingResult.hasErrors()) {
+                thymeleafBaseCRUD.setBaseForEntity(model, topic, title);
+                return "/sample/edit";
+            }
             topicService.updateTopic(topic);
-        } catch (Exception e) {
-            bindingResult.rejectValue("name", "error.duplicate", "Name is exit in systerm");
-            thymeleafBaseCRUD.setBaseForEntity(model, topic, "Edit Topic - Admin");
+        } catch (InvalidInputException e) {
+            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getMessage());
+            thymeleafBaseCRUD.setBaseForEntity(model, topic, title);
             return "/sample/edit";
-
+        } catch (Exception e) {
+            return "/error";
         }
         return "redirect:/admin/topics/index";
     }
@@ -101,9 +106,8 @@ public class TopicController {
 
     @PostMapping("/delete/{id}")
     public String postDelete(Model model, @PathVariable @NotNull int id) {
-        Topic topic = topicService.getTopicById(id);
-        thymeleafBaseCRUD.setBaseForEntity(model, topic, "Confirm delete topic - Admin");
-        return "sample/delete";
+        topicService.deleteTopic(id);
+        return "redirect:/admin/topics/index";
     }
 
     @GetMapping("/details/{id}")

@@ -30,13 +30,15 @@
                                                             th:id="${field.name}" class="form-control">
                                                     </th:block>
                                                 </th:block>
-                                                <!-- <div th:text="*{#fields.hasErrors('__${field.getName()}__')}"></div>
-                                                <div th:errors="*{__${field.name}__}" class="form-text"></div> -->
-                                                <!-- <div th:text="${#fields.hasErrors('__${field.name}__')}"
-                                                    class="form-text"></div> -->
-                                                <!-- <div th:errors="${__${field.getName}__}" class="form-text"></div> -->
-                                                <div th:if="${#fields.hasErrors('__${field.name}__')}"
-                                                    th:errors="${__${field.getName}__}" class="form-text"></div>
+                                                <label th:if="${#fields.hasErrors('__${field.name}__')}"
+                                                    th:errors="*{__${field.getName}__}" class="form-text text-danger">
+                                                </label>
+                                            </div>
+                                            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                                                <ul>
+                                                    <li th:each="error : ${#fields.globalErrors()}" th:text="${error}"></li>
+                                                    </li>
+                                                </ul>
                                             </div>
                                             <div class="text-end">
                                                 <button type="submit" class="px-3 btn btn-success">Save</button>

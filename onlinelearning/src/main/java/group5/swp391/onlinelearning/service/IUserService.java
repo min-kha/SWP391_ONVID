@@ -29,4 +29,5 @@ public interface IUserService {
 
     public User changePassword(User user);
 
+    public void addStaff(User user);
 }
