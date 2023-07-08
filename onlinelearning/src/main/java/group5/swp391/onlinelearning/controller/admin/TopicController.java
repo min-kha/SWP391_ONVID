@@ -62,7 +62,6 @@ public class TopicController {
             bindingResult.rejectValue("name", "error.duplicate", "Name is exit in systerm");
             thymeleafBaseCRUD.setBaseForEntity(model, topic, "Edit Topic - Admin");
             return "/sample/create";
-
         }
         return "redirect:/admin/topics/index";
     }

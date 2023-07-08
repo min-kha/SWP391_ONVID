@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Topic;
 
-@Service
 public interface ITopicService {
     public List<Topic> getTopics();
 
