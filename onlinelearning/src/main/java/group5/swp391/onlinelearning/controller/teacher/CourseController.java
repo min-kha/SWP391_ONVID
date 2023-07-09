@@ -34,7 +34,7 @@ import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
-import group5.swp391.onlinelearning.service.ILessionService;
+import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
@@ -50,7 +50,7 @@ public class CourseController {
     ITopicService topicService;
 
     @Autowired
-    ILessionService lessionService;
+    ILessonService lessionService;
 
     @Autowired
     CourseMapper mapper;
