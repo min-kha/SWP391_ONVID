@@ -28,7 +28,7 @@ public class CourseMapper {
     }
     // TODO: 0: Unsubmit 1: Submit 2: Reject 3 Published 4 DeActive
 
-    public CourseDtoHomeDetail courseToCourseDtoHomeDetail(Course course) {
+    public static CourseDtoHomeDetail courseToCourseDtoHomeDetail(Course course) {
         CourseDtoHomeDetail courseDtoHomeDetail = CourseDtoHomeDetail.builder()
                 .id(course.getId())
                 .name(course.getName())
@@ -41,7 +41,7 @@ public class CourseMapper {
         return courseDtoHomeDetail;
     }
 
-    public CourseDtoDetailStudent courseToCourseDtoDetailStudent(Course course) {
+    public static CourseDtoDetailStudent courseToCourseDtoDetailStudent(Course course) {
         CourseDtoDetailStudent courseDtoDetailStudent = CourseDtoDetailStudent.builder()
                 .id(course.getId())
                 .name(course.getName())
