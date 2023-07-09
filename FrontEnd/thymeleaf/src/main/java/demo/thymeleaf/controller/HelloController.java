@@ -21,14 +21,16 @@ public class HelloController {
 	@GetMapping("Student/index")
 	public String getIndex(Model model) {
 		List<Student> students = Arrays.asList(
-				new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(2, true, 0, "Hung", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(3, true, 0, "Thai", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(4, true, 0, "Dung", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(5, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(6, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(7, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"),
-				new Student(8, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA"));
+				new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", null, Arrays.asList(
+						new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", null, null),
+						new Student(2, true, 0, "Hung", "0889899292", "kha@gmail.com", "Hanoi", null))),
+				new Student(2, true, 0, "Hung", "0889899292", "kha@gmail.com", "Hanoi", null),
+				new Student(3, true, 0, "Thai", "0889899292", "kha@gmail.com", "Hanoi", null),
+				new Student(4, true, 0, "Dung", "0889899292", "kha@gmail.com", "Hanoi", null),
+				new Student(5, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", null),
+				new Student(6, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", null),
+				new Student(7, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", null),
+				new Student(8, true, 0, "Nguyen", "0889899292", "kha@gmail.com", "Hanoi", null));
 		String title = "List student";
 		thymeleafBaseCRUD.setBaseForList(model, students, title);
 		return "view-sample/index";
@@ -43,21 +45,23 @@ public class HelloController {
 
 	@GetMapping("Student/edit/{id}")
 	public String getEdit(Model model, @PathVariable int id) {
-		Student student = new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA");
+		Student student = new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", null);
 		thymeleafBaseCRUD.setBaseForEntity(model, "Edit student", student);
 		return "view-sample/edit";
 	}
 
 	@GetMapping("Student/delete/{id}")
 	public String getDelete(Model model, @PathVariable int id) {
-		Student student = new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", "JohnHA");
+		Student student = new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", "Hanoi", null);
 		thymeleafBaseCRUD.setBaseForEntity(model, "Confirm delete student", student);
 		return "view-sample/delete";
 	}
 
 	@GetMapping("Student/details/{id}")
 	public String getDetail(Model model, @PathVariable int id) {
-		Student student = new Student(1, true, 889, "Kha", "0868636668", "kha@fpt.edu.vn", "kha@fp", "kha@fpt.edu.vn");
+		Student student = new Student(1, true, 889, "Kha", "0868636668", "kha@fpt.edu.vn", "kha@fp", Arrays.asList(
+				new Student(1, true, 0, "Kha", "0889899292", "kha@gmail.com", null, null),
+				new Student(2, true, 0, "Hung", "0889899292", "kha@gmail.com", "Hanoi", null)));
 		thymeleafBaseCRUD.setBaseForEntity(model, "Detail student", student);
 		return "view-sample/detail";
 	}

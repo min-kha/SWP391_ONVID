@@ -65,6 +65,12 @@ public class CartService implements ICartService {
         }
     }
 
+    public void deleteAllCourseInCart(List<Course> courses, int cartId) {
+        for (Course course : courses) {
+            deleteCourseInCartByCourseId(course.getId(), cartId);
+        }
+    }
+
     public Course getCourseByCourseId(List<Course> courses, int courseId) {
         for (Course c : courses) {
             if (c.getId() == courseId) {

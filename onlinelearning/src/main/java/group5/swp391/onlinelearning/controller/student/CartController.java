@@ -49,7 +49,6 @@ public class CartController {
         }
         model.addAttribute("total", total);
         model.addAttribute("size", courses.size());
-
         return "student/cart/cart";
     }
 
@@ -62,5 +61,16 @@ public class CartController {
         session.setAttribute("cartStudentSession",
                 cartService.getCoursebyCartId(cart.getId()));
         return "redirect:/student/cart/detail";
+    }
+
+    @PostMapping("/cart/pay")
+    public String deleteAllCourseInCart(HttpSession session) {
+        User student = (User) session.getAttribute("studentSession");
+        Cart cart = cartService.getCartByStudentId(student.getId());
+        List<Course> courses = (List<Course>) session.getAttribute("cartStudentSession");
+        cartService.deleteAllCourseInCart(courses, cart.getId());
+        session.setAttribute("cartStudentSession",
+                cartService.getCoursebyCartId(cart.getId()));
+        return "forward:/student/my-course";
     }
 }

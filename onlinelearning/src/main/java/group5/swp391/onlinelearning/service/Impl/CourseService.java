@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
+
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
+
 import group5.swp391.onlinelearning.entity.View;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
@@ -139,10 +141,22 @@ public class CourseService {
         return course;
     }
 
+
     // public CourseDtoDetailStudent getCourseDetailForStudentById(int id) {
     // Course course = getCourseAllById(id);
     // CourseDtoDetailStudent courseRes =
     // CourseMapper.courseToCourseDtoDetailStudent(course);
     // return courseRes;
     // }
+
+    public CourseDtoDetailStudent getCourseDetailForStudentById(int id) {
+        Course course = getCourseAllById(id);
+        CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
+        return courseRes;
+    }
+
+    public List<Course> getMyCourse(int studentId) {
+        return courseRepository.getMyCourse(studentId);
+    }
+
 }

@@ -97,4 +97,9 @@ public class UserService implements IUserService {
         User user = mapper.userDTORegisterRequestToUser(userDTORegisterRequest);
         return userRepository.save(user);
     }
+
+    @Override
+    public User changePassword(User user) {
+        return userRepository.save(user);
+    }
 }

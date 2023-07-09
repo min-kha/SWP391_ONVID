@@ -9,24 +9,37 @@
                                 <div class="d-flex align-items-center">
                                     <div class="card-body py-5 px-4 p-md-5">
                                         <div class="pb-3">
-                                            <h1 th:text="'Confirm delete ' + ${entity.class.getSimpleName}"></h1>
+                                            <h1 th:text="${title}"></h1>
                                             <div>
                                                 <hr />
                                                 <dl class="row border rounded p-3">
                                                     <th:block th:each="field : ${fields}">
-                                                        <dt th:text="${field.getName}"
-                                                            class="col-sm-3 fw-bold text-capitalize"></dt>
-                                                        <dd th:text="${entity[field.getName]}" class="col-sm-9">
-                                                        </dd>
-                                                        <hr style="color: #aaaaaa" />
+                                                        <th:block
+                                                            th:if="${field.getType.getSimpleName == 'Collection'}">
+                                                            <dt th:text="${field.getName}"
+                                                                class="col-sm-3 fw-bold text-capitalize"></dt>
+                                                            <ol class="col-sm-9">
+                                                                <li th:each="e : ${entity[field.getName]}"
+                                                                    th:text="${e.name}"></li>
+                                                            </ol>
+                                                            <hr style="color: #aaaaaa" />
+                                                        </th:block>
+                                                        <th:block
+                                                            th:if="${field.getType.getSimpleName != 'Collection'}">
+                                                            <dt th:text="${field.getName}"
+                                                                class="col-sm-3 fw-bold text-capitalize"></dt>
+                                                            <dd th:text="${entity[field.getName]}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                        </th:block>
                                                     </th:block>
                                                 </dl>
                                             </div>
                                             <form class="text-end" method="post">
                                                 <button type="submit" class="btn btn-danger px-3 "
                                                     aria-disabled="true">Delete</button>
-                                                <a th:href="'../../' + ${entity.class.getSimpleName} + '/index'"
-                                                    class="btn btn-link px-3 " aria-disabled="true">Back
+                                                <a th:href="'../' + 'index'" class="btn btn-link px-3 "
+                                                    aria-disabled="true">Back
                                                     to list</a>
                                             </form>
 

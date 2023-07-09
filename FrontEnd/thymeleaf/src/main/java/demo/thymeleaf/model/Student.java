@@ -1,5 +1,8 @@
 package demo.thymeleaf.model;
 
+import java.util.Collection;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +21,5 @@ public class Student {
     private String phone;
     private String email;
     private String address;
-    private String teacher;
+    private Collection<Student> teacher;
 }

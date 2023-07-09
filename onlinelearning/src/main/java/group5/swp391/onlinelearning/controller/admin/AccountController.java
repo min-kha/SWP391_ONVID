@@ -19,7 +19,7 @@ import group5.swp391.onlinelearning.service.impl.UserService;
 public class AccountController {
 
     @Autowired
-    private IUserService userService = new UserService();
+    private IUserService userService;
 
     @GetMapping("/account")
     public String getAccountManage(Model model) {
