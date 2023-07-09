@@ -43,13 +43,14 @@
                         </svg>
                         <span class="fs-5 fw-semibold">All lession</span>
                     </div>
-                    <div class="list-group list-group-flush border-bottom scrollarea">
-                        <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight"
-                            aria-current="true">
+                    <div class="list-group list-group-flush border-bottom scrollarea"
+                        th:each="lessonDtoDetail : ${lessonDtoDetails}">
+                        <a th:href="'/student/course/lesson/' + ${courseId} + '/' + ${lessonDtoDetail.id}"
+                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
                             <div class="d-flex w-100 align-items-center justify-content-between">
-                                <strong class="mb-1">lession 1</strong>
+                                <strong class="mb-1" th:text="'lesson' + ${lessonDtoDetail.id}">lession 1</strong>
                             </div>
-                            <div class="col-10 mb-1 small">learning</div>
+                            <div class="col-10 mb-1 small" th:text="${lessonDtoDetail.status}">learning</div>
                         </a>
                     </div>
                     <div class="list-group list-group-flush border-bottom scrollarea">
@@ -73,28 +74,26 @@
                     </div>
                 </div>
                 <div class="col-sm-9">
-                    <div>
+                    <div th:if="${isVideo == true}">
                         <video controls preload="auto" width="100%">
-                            <source src="/video/Khá Bảnh Quẩy Tà Răng Ta Răng Ta Răng Nhạc ke huyền thoại.mp4">
+                            <source th:src="@{'/video/' + ${lesson.video}}">
                         </video>
-                        <h2>I Love Food</h2>
-                        <h5><span class="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
+                        <h2 th:text="${lesson.title}">I Love Food</h2>
+                        <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span> Post by Jane Dane,
+                            Sep 27, 2015.</h5>
                         <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
                             Mark as done
                         </button>
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <div>
-                        <h2>I Love Food</h2>
-                        <h5><span class="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
-                        <h5><span class="label label-danger">Food</span> <span class="label label-primary">Ipsum</span>
+
+                    <div th:if="${isVideo == false}">
+                        <h2 th:text="${lesson.title}">I Love Food</h2>
+
+                        <h5><span class="label label-danger" th:text="${lesson.name}">Food</span> <span
+                                class="label label-primary">Ipsum</span>
                         </h5><br>
-                        <p>Food is my passion. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        <p th:text="${lesson.document}">Food is my passion. Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
                             occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est

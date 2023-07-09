@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import group5.swp391.onlinelearning.entity.Lesson;
 
 @Repository
-public interface LessionRepository extends JpaRepository<Lesson, Integer> {
-    @Query(value = "SELECT * FROM Lession where course_id = ?1", nativeQuery = true)
+public interface LessonRepository extends JpaRepository<Lesson, Integer> {
+    @Query(value = "SELECT * FROM lesson where course_id = ?1", nativeQuery = true)
     public List<Lesson> findAllByCourseId(int courseId);
 }

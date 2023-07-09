@@ -7,14 +7,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Learn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +36,5 @@ public class Learn {
     @JoinColumn(name = "lesson_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-
     private Lesson lesson;
 }

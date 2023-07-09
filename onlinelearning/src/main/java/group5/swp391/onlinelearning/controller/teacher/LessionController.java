@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.model.teacher.LessionDtoAdd;
-import group5.swp391.onlinelearning.service.ILessionService;
+import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 
 @RequestMapping(value = "/teacher")
@@ -19,7 +19,7 @@ public class LessionController {
     @Autowired
     CourseService courseService;
     @Autowired
-    ILessionService lessionService;
+    ILessonService lessionService;
 
     @GetMapping("/create/lession/{courseid}")
     public String getCreateLession(@PathVariable Integer courseid, Model model) {

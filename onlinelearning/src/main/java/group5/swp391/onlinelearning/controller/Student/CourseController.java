@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.entity.Learn;
+import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
-
+import group5.swp391.onlinelearning.service.ILearnService;
+import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-
 
 import group5.swp391.onlinelearning.service.impl.CourseService;
 
@@ -29,7 +31,6 @@ public class CourseController {
 
     @Autowired
     IViewService viewService;
-
 
     @GetMapping("/course/detail/{courseId}")
     public String detail(Model model, @PathVariable Integer courseId, HttpSession session) {

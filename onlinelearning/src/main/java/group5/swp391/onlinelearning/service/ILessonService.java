@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import group5.swp391.onlinelearning.entity.Lesson;
 
 @Service
-public interface ILessionService {
-    public List<Lesson> getLessionsByCourseId(int courseId);
+public interface ILessonService {
+    public List<Lesson> getLessonsByCourseId(int courseId);
+
+    
 }
