@@ -51,7 +51,7 @@ public class UserService implements IUserService {
 
     @Override
     public User getUserById(int id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -85,6 +85,7 @@ public class UserService implements IUserService {
     @Override
     public void addStaff(StaffDTOCreate staffDTOCreate) {
         User user = mapper.staffDTOCreateToUser(staffDTOCreate);
+        // TODO: what is role of staff?
         userRepository.save(user);
     }
 
@@ -101,5 +102,12 @@ public class UserService implements IUserService {
     @Override
     public User changePassword(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public void addStaff(User user) {
+        // TODO: what is role of staff?
+        user.setRole(3);
+        userRepository.save(user);
     }
 }

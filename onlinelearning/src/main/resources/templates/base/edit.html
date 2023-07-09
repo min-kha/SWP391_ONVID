@@ -40,10 +40,9 @@
                                                         </th:block>
                                                     </th:block>
                                                 </th:block>
-                                                <!-- <hr>
-                                                <span th:text="'__${field.getName()}__: ' + ${#fields.errors}"></span>
-                                                <div th:if="${#fields.hasErrors('__${field.getName()}__')}"
-                                                    th:errors="*{__${field.getName()}__}" class="form-text"></div> -->
+                                                <label th:if="${#fields.hasErrors('__${field.name}__')}"
+                                                    th:errors="*{__${field.getName}__}" class="form-text text-danger">
+                                                </label>
                                             </div>
                                             <div class="text-end">
                                                 <button type="submit" class="px-3 btn btn-primary">Save</button>

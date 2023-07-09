@@ -35,8 +35,8 @@ import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.service.ILessionService;
+import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.IUserService;
-import group5.swp391.onlinelearning.service.admin.ITopicService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
