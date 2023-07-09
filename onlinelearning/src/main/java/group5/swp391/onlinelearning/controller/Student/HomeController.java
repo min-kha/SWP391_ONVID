@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getStudentHome(Model model) {
-        List<CourseDtoHomeDetail> courses = null;
+        List<CourseDtoHomeDetail> courses = courseService.getAllCourseDtoHomeDetails();
         model.addAttribute("courses", courses);
         return "student/home/list-products";
     }
