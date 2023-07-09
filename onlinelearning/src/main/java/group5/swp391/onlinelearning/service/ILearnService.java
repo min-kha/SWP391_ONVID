@@ -11,5 +11,7 @@ public interface ILearnService {
 
     public void setLearnDefault(List<Course> courses, User student);
 
+    public void changeLearnStatus(boolean status, int lessonId, int studentId);
+
     public List<Learn> getListLearnByLessonIdAndStudentId(List<Lesson> lessons, User student);
 }
