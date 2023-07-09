@@ -80,17 +80,6 @@ public class CourseController {
         return "teacher/course/add";
     }
 
-    @GetMapping("/create/lession/{courseid}")
-    public String getCreateLession(@PathVariable Integer courseid, Model model) {
-        if (courseid == null || courseService.isCourse(courseid)) {
-            return "404";
-        }
-        if (!courseService.checkCourseOwner(courseid))
-            return "AccessDenied";
-        model.addAttribute("lessions", lessionService.getLessionsByCourseId(courseid));
-        return "teacher/teacher-lession";
-    }
-
     @PostMapping("/create")
     public String addCourse(@Valid @ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req,
             @RequestParam("image") MultipartFile image, BindingResult result)
