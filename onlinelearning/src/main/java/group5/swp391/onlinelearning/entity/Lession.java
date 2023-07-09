@@ -19,7 +19,7 @@ import lombok.ToString;
 @Entity
 @Data
 @Builder
-public class Lesson {
+public class Lession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -59,7 +59,7 @@ public class UserService implements IUserService {
         boolean checkInvalidAccount = false;
         boolean checkWrongAccountOrPassword = false;
         List<User> users = getAllUsers();
-        User userRes = new User();
+        // TODO: CHECK BẰNG SQL BY MINH KHA
         for (User user : users) {
             if (student.getEmail().equals(user.getEmail()) && student.getPassword().equals(user.getPassword())) {
                 if (user.getStatus()) {
