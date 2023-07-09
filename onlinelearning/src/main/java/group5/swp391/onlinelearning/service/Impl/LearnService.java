@@ -3,6 +3,8 @@ package group5.swp391.onlinelearning.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,11 @@ public class LearnService implements ILearnService {
             learns.add(l);
         }
         return learns;
+    }
+
+    @Override
+    @Transactional
+    public void changeLearnStatus(boolean status, int lessonId, int studentId) {
+        learnRepository.changeLearnStatus(status, lessonId, studentId);
     }
 }

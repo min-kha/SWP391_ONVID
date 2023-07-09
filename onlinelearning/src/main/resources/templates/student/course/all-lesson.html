@@ -33,6 +33,8 @@
         </style>
         <div class="container-fluid">
             <h4><small>Course name</small></h4>
+            <label for="file" th:text="'Progress(' + ${progress} + '%):' "></label>
+            <progress th:value="${progress}" max="100"></progress>
             <hr>
             <div class="row content" style="display: flex;">
                 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 350px;">
@@ -53,17 +55,16 @@
                             <div class="col-10 mb-1 small" th:text="${lessonDtoDetail.status}">learning</div>
                         </a>
                     </div>
-                    <div class="list-group list-group-flush border-bottom scrollarea">
-                        <a th:href="'/student/course/feedback/' + ${courseId}"
-                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
+                    <div class="list-group list-group-flush border-bottom scrollarea" th:if="${isDone == 'false'}">
+                        <a class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
                             style="background-color:  red;">
                             <div class="d-flex w-100 align-items-center justify-content-between">
                                 <strong class="mb-1">feedback</strong>
                             </div>
-                            <div class="col-10 mb-1 small">not available</div>
+                            <div class="col-10 mb-1 small">Not available</div>
                         </a>
                     </div>
-                    <div class="list-group list-group-flush border-bottom scrollarea">
+                    <div class="list-group list-group-flush border-bottom scrollarea" th:if="${isDone == 'true'}">
                         <a th:href="'/student/course/feedback/' + ${courseId}"
                             class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
                             <div class="d-flex w-100 align-items-center justify-content-between">
@@ -75,34 +76,49 @@
                 </div>
                 <div class="col-sm-9">
                     <div th:if="${isVideo == true}">
-                        <video controls preload="auto" width="100%">
-                            <source th:src="@{'/video/' + ${lesson.video}}">
-                        </video>
-                        <h2 th:text="${lesson.title}">I Love Food</h2>
-                        <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span> Post by Jane Dane,
-                            Sep 27, 2015.</h5>
-                        <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
-                            Mark as done
-                        </button>
+                        <form th:action="@{/student/course/lesson/change-learn-status}" method="post">
+                            <input type="hidden" th:value="${courseId}" name="courseId">
+                            <input type="hidden" th:value="${lesson.id}" name="lessonId">
+                            <video controls preload="auto" width="100%">
+                                <source th:src="@{'/video/' + ${lesson.video}}">
+                            </video>
+                            <h2 th:text="${lesson.title}">I Love Food</h2>
+                            <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span> Post by Jane
+                                Dane,
+                                Sep 27, 2015.</h5>
+                            <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
+                                Mark as done
+                            </button>
+                        </form>
                     </div>
-
                     <div th:if="${isVideo == false}">
-                        <h2 th:text="${lesson.title}">I Love Food</h2>
-
-                        <h5><span class="label label-danger" th:text="${lesson.name}">Food</span> <span
-                                class="label label-primary">Ipsum</span>
-                        </h5><br>
-                        <p th:text="${lesson.document}">Food is my passion. Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
-                            occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                            aliquip ex ea commodo consequat.</p>
-                        <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
-                            Mark as done
-                        </button>
+                        <form th:action="@{/student/course/lesson/change-learn-status}" method="post">
+                            <h2 th:text="${lesson.title}">I Love Food</h2>
+                            <input type="hidden" th:value="${courseId}" name="courseId">
+                            <input type="hidden" th:value="${lesson.id}" name="lessonId">
+                            <h5>
+                                <span class="label label-danger" th:text="${lesson.name}">
+                                    Food
+                                </span>
+                                <span class="label label-primary">
+                                    Ipsum
+                                </span>
+                            </h5>
+                            <br>
+                            <p th:text="${lesson.document}">Food is my passion. Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
+                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+                                laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                dolore
+                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                aliquip ex ea commodo consequat.</p>
+                            <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
+                                Mark as done
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
