@@ -14,6 +14,7 @@ import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
+
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
@@ -139,7 +140,7 @@ public class CourseService {
 
     public CourseDtoDetailStudent getCourseDetailForStudentById(int id) {
         Course course = getCourseAllById(id);
-        CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
+        CourseDtoDetailStudent courseRes = courseMapper.courseToCourseDtoDetailStudent(course);
         return courseRes;
     }
 
