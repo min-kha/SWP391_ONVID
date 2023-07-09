@@ -1,0 +1,113 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <style>
+            /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+            .row.content {
+                height: 1500px
+            }
+
+            /* Set gray background color and 100% height */
+            .sidenav {
+                background-color: #f1f1f1;
+                height: 100%;
+            }
+
+            /* Set black background color, white text and some padding */
+            footer {
+                background-color: #ffffff;
+                color: white;
+                padding: 15px;
+            }
+
+            /* On small screens, set height to 'auto' for sidenav and grid */
+            @media screen and (max-width: 767px) {
+                .sidenav {
+                    height: auto;
+                    padding: 15px;
+                }
+
+                .row.content {
+                    height: auto;
+                }
+            }
+        </style>
+        <div class="container-fluid">
+            <h4><small>Course name</small></h4>
+            <hr>
+            <div class="row content" style="display: flex;">
+                <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 350px;">
+                    <div
+                        class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                        <svg class="bi me-2" width="30" height="24">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                        <span class="fs-5 fw-semibold">All lession</span>
+                    </div>
+                    <div class="list-group list-group-flush border-bottom scrollarea">
+                        <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight"
+                            aria-current="true">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">lession 1</strong>
+                            </div>
+                            <div class="col-10 mb-1 small">learning</div>
+                        </a>
+                    </div>
+                    <div class="list-group list-group-flush border-bottom scrollarea">
+                        <a th:href="'/student/course/feedback/' + ${courseId}"
+                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
+                            style="background-color:  red;">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">feedback</strong>
+                            </div>
+                            <div class="col-10 mb-1 small">not available</div>
+                        </a>
+                    </div>
+                    <div class="list-group list-group-flush border-bottom scrollarea">
+                        <a th:href="'/student/course/feedback/' + ${courseId}"
+                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">feedback</strong>
+                            </div>
+                            <div class="col-10 mb-1 small">Available</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div>
+                        <video controls preload="auto" width="100%">
+                            <source src="/video/Khá Bảnh Quẩy Tà Răng Ta Răng Ta Răng Nhạc ke huyền thoại.mp4">
+                        </video>
+                        <h2>I Love Food</h2>
+                        <h5><span class="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
+                        <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
+                            Mark as done
+                        </button>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div>
+                        <h2>I Love Food</h2>
+                        <h5><span class="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
+                        <h5><span class="label label-danger">Food</span> <span class="label label-primary">Ipsum</span>
+                        </h5><br>
+                        <p>Food is my passion. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
+                            occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+                            laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                            aliquip ex ea commodo consequat.</p>
+
+                        <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
+                            Mark as done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</th:block>
