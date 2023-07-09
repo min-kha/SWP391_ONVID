@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import group5.swp391.onlinelearning.entity.Feedback;
-import group5.swp391.onlinelearning.entity.Lession;
+import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import lombok.AllArgsConstructor;
@@ -29,5 +29,5 @@ public class CourseDtoDetail {
     private String image;
     private Collection<Feedback> feedbacks;
     private User teacher;
-    private Collection<Lession> lessions;
+    private Collection<Lesson> lessions;
 }

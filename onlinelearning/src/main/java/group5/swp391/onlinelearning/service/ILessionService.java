@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import group5.swp391.onlinelearning.entity.Lession;
+import group5.swp391.onlinelearning.entity.Lesson;
 
 @Service
 public interface ILessionService {
-    public List<Lession> getLessionsByCourseId(int courseId);
+    public List<Lesson> getLessionsByCourseId(int courseId);
 }

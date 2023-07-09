@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import group5.swp391.onlinelearning.entity.Lession;
+import group5.swp391.onlinelearning.entity.Lesson;
 
 @Repository
-public interface LessionRepository extends JpaRepository<Lession, Integer> {
+public interface LessionRepository extends JpaRepository<Lesson, Integer> {
     @Query(value = "SELECT * FROM Lession where course_id = ?1", nativeQuery = true)
-    public List<Lession> findAllByCourseId(int courseId);
+    public List<Lesson> findAllByCourseId(int courseId);
 }

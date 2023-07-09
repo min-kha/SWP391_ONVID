@@ -81,5 +81,5 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<Lession> lessons;
+    private Collection<Lesson> lessons;
 }

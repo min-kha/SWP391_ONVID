@@ -140,7 +140,7 @@ public class CourseService {
 
     public CourseDtoDetailStudent getCourseDetailForStudentById(int id) {
         Course course = getCourseAllById(id);
-        CourseDtoDetailStudent courseRes = courseMapper.courseToCourseDtoDetailStudent(course);
+        CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
         return courseRes;
     }
 
