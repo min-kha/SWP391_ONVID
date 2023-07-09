@@ -60,6 +60,9 @@
                                                         <p th:text="${course.description}"
                                                             class="card-text text-secondary"></p>
                                                         <div class="d-flex">
+                                                            <a th:href="'/student/course/all-lesson/' + ${course.id}">
+                                                                <button type="button"
+                                                                    class="btn btn-primary">Learn</button></a>
                                                         </div>
                                                     </div>
                                                 </div>

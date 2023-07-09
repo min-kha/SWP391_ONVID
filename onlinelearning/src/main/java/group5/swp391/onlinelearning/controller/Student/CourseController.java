@@ -9,12 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 
 import group5.swp391.onlinelearning.service.IViewService;
@@ -43,7 +41,6 @@ public class CourseController {
                 break;
             }
         }
-
         User student = (User) session.getAttribute("studentSession");
         List<Course> myCourses = courseService.getMyCourse(student.getId());
         boolean checkBought = false;
@@ -60,16 +57,14 @@ public class CourseController {
         } else {
             model.addAttribute("textCart", "add to cart");
         }
-
         return "/student/course/detail";
     }
 
-    @PostMapping("/my-course")
+    @GetMapping("/my-course")
     public String getMyCourse(HttpSession session, Model model) {
         User student = (User) session.getAttribute("studentSession");
         List<Course> courses = courseService.getMyCourse(student.getId());
         model.addAttribute("courses", courses);
         return "student/course/my-course";
     }
-
 }

@@ -1,0 +1,35 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="py-4 py-xl-5">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-8 col-xl-6 text-center mx-auto">
+                        <form th:action="@{#}" method="post">
+                            <h2>Feedback Course: ............</h2>
+                            <p>Let us know how you feel about this course, your suggestions will help us improve </p>
+                            <textarea name="" id="" cols="30" rows="10" placeholder="Comment"
+                                style="width: 100%; height: 40px;"></textarea>
+                            <br>
+                            <select name="vote" style="width: 100%; height: 40px;">
+                                <option value="0" disabled>Please select star</option>
+                                <option value="1">one star</option>
+                                <option value="2">two star</option>
+                                <option value="3">three star</option>
+                                <option value="4">four star</option>
+                                <option value="5">five star</option>
+                            </select>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary d-block w-100" type="submit" style="width: 20px;">
+                                Submit
+                            </button>
+                            <input type="hidden" th:value="${courseId}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+        </section>
+    </th:block>
+</th:block>

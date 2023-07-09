@@ -33,5 +33,4 @@ public class Learn {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Lesson lesson;
-
 }
