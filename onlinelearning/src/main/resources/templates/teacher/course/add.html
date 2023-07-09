@@ -19,8 +19,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description" rows="4" required
+                <label for="descriptionfake">Description:</label>
+                <textarea class="form-control" id="descriptionfake" name="descriptionfake" rows="4" required
                     th:field="*{description}"></textarea>
                 <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
             </div>
@@ -28,11 +28,19 @@
                 <label for="image">Image:</label>
                 <input type="file" class="form-control-file" id="image" name="image" required>
             </div>
+            <input type="hidden" class="form-control" id="description" name="description" th:value="*{description}">
             <input type="hidden" class="form-control" id="topicfake" name="topicfake" th:field="*{topic_id}" value="1">
             <input type="hidden" class="form-control" id="imageLink" name="imageLink" th:field="*{imageLink}"
                 value="ahihi">
-            <button type="submit" class="btn btn-primary">Add Course</button>
+            <button type="submit" class="btn btn-primary" th:onclick="submit1()">Add Course</button>
         </form>
+        <script th:inline="javascript">
+            function submit1() {
+                var text = document.getElementById("descriptionfake").value;
 
+                document.getElementById("description").value = text;
+
+            }
+        </script>
     </th:block>
 </th:block>

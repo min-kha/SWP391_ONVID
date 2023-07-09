@@ -13,19 +13,20 @@ import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
+import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.repository.TopicRepository;
 
 @Component
 public class CourseMapper {
     @Autowired
-    private static TopicRepository topicRepository;
-    private static HttpSession session;
+    private TopicRepository topicRepository;
+    private HttpSession session;
 
-    @Autowired
     public CourseMapper(HttpSession session) {
         this.session = session;
     }
+    // TODO: 0: Unsubmit 1: Submit 2: Reject 3 Published 4 DeActive
 
     public static CourseDtoHomeDetail courseToCourseDtoHomeDetail(Course course) {
         CourseDtoHomeDetail courseDtoHomeDetail = CourseDtoHomeDetail.builder()
@@ -52,20 +53,22 @@ public class CourseMapper {
         return courseDtoDetailStudent;
     }
 
-    public static CourseDTOTeacher courseToCourseDTOTeacher(Course course) {
+    public CourseDTOTeacher courseToCourseDTOTeacher(Course course) {
         CourseDTOTeacher courseDTOTeacher = CourseDTOTeacher.builder()
+                .id(course.getId())
                 .name(course.getName())
                 .date(course.getDate())
                 .image(course.getImageLink())
-                .status(course.getStatus())
                 .price(course.getPrice())
+                .status(course.getStatus())
                 .topic(course.getTopic().getName())
+                .description(course.getDescription())
                 // TODO:Thêm star
                 .build();
         return courseDTOTeacher;
     }
 
-    public static Course courseDTOAddtoCourse(CourseDTOAdd courseDTOAdd) {
+    public Course courseDTOAddtoCourse(CourseDTOAdd courseDTOAdd) {
         Topic topic = topicRepository.findById(courseDTOAdd.getTopic_id()).get();
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
@@ -78,8 +81,22 @@ public class CourseMapper {
                 .price(courseDTOAdd.getPrice())
                 .topic(topic)
                 .teacher(teacher)
+                .description(courseDTOAdd.getDescription())
                 // TODO:Thêm star
                 .build();
         return course;
+    }
+
+    public CourseDTOEdit courseToCourseDtoEdit(Course course) {
+        CourseDTOEdit courseDTOEdit = CourseDTOEdit.builder()
+                .id(course.getId())
+                .name(course.getName())
+                .imageLink(course.getImageLink())
+                .price(course.getPrice())
+                .topic_id(course.getTopic().getId())
+                .description(course.getDescription())
+                // TODO:Thêm star
+                .build();
+        return courseDTOEdit;
     }
 }

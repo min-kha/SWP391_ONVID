@@ -18,6 +18,9 @@ import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 
+
+import group5.swp391.onlinelearning.service.impl.CourseService;
+
 @Controller(value = "CourseStudentController")
 @RequestMapping("/student")
 public class CourseController {
@@ -26,6 +29,32 @@ public class CourseController {
 
     @Autowired
     IViewService viewService;
+
+
+    @GetMapping("/detail/{courseId}")
+    public String detail(Model model, @PathVariable Integer courseId, HttpSession
+    session) {
+    CourseDtoDetailStudent course =
+    courseService.getCourseDetailForStudentById(courseId);
+    model.addAttribute("course", course);
+    long view = viewService.addView(courseId);
+    model.addAttribute("view", view);
+    List<Course> courses = (List<Course>)
+    session.getAttribute("cartStudentSession");
+    boolean checkCart = false;
+    for (Course c : courses) {
+    if (c.getId() == courseId) {
+    checkCart = true;
+    break;
+    }
+    }
+    if (checkCart) {
+    model.addAttribute("textCart", "already in cart");
+    } else {
+    model.addAttribute("textCart", "add to cart");
+    }
+    return "/student/course/detail";
+    }
 
     @GetMapping("/course/detail/{courseId}")
     public String detail(Model model, @PathVariable Integer courseId, HttpSession session) {

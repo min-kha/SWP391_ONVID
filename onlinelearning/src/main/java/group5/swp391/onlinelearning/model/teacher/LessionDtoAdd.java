@@ -1,7 +1,8 @@
 package group5.swp391.onlinelearning.model.teacher;
 
 import java.math.BigDecimal;
-import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,14 +13,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseDTOTeacher {
-    private int id;
+public class LessionDtoAdd {
+    @NotNull(message = "Title must not be empty")
+    private String title;
+    @NotNull(message = "Name must not be empty")
     private String name;
-    private int status;
-    private String image;
-    private BigDecimal price;
-    private String topic;
-    private Date date;
+
     private String description;
-    // TODO:Thêm star
+
+    private String image;
+
+    private int topic_id;
+    private String imageLink;
 }

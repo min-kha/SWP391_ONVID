@@ -1,14 +1,17 @@
 package group5.swp391.onlinelearning.controller.teacher;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,13 +25,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
+import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
+import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
-import group5.swp391.onlinelearning.service.ICourseTeacherService;
+import group5.swp391.onlinelearning.service.ILessionService;
 import group5.swp391.onlinelearning.service.ITopicService;
+import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
+import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
 @RequestMapping("/teacher/course")
 @Controller
@@ -37,68 +47,120 @@ public class CourseController {
     @Autowired
     CourseService courseService;
     @Autowired
-    ICourseTeacherService courseTeacherService;
-    @Autowired
     ITopicService topicService;
 
-    @GetMapping("/detail/{id}")
-    public String getCourse(Model model, @PathVariable @NotNull Integer id) {
-        CourseDtoDetail course = courseService.getCourseById(id);
-        model.addAttribute("course", course);
-        return "course/detail";
-    }
+    @Autowired
+    ILessionService lessionService;
+
+    @Autowired
+    CourseMapper mapper;
+    @Autowired
+    ThymeleafBaseCRUD thymeleafBaseCRUD;
+
+    // TODO: remove req nhá
+    @Autowired
+    IUserService userService;
 
     @GetMapping("/list")
-    public String getCourseList(Model model) {
-        List<CourseDTOTeacher> courses = courseTeacherService.getCourseDTOTeacherList();
-        model.addAttribute("courses", courses);
-        return "teacher/teacher-course";
+    public String getCourseList(Model model, HttpSession req) {
+        // TODO: remove user service
+        User user = userService.getUserById(70);
+        req.setAttribute("studentSession", user);
+        List<CourseDTOTeacher> courses = courseService.getCourseDTOTeacherList();
+        String title = "Course List";
+        thymeleafBaseCRUD.setBaseForList(model, courses, title);
+
+        return "teacher/course/list";
     }
 
     @GetMapping("/create")
     public String getCreateCourse(Model model) {
         model.addAttribute("course", new CourseDTOAdd());
         model.addAttribute("topics", topicService.getTopics());
-        return "teacher/teacher-course-add";
+        return "teacher/course/add";
     }
 
     @PostMapping("/create")
-    public String addCourse(@ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req)
+    public String addCourse(@Valid @ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req,
+            @RequestParam("image") MultipartFile image, BindingResult result)
             throws IOException, ServletException {
-        String fileName = ("");
+        if (result.hasErrors()) {
+            return "teacher/course/add";
+        }
+        // String fileName = ("");
+        // Part filePart = req.getPart("image");
+        // fileName = filePart.getSubmittedFileName();
+        // Resource resource = new ClassPathResource("static/image/");
+        // String absolutePath = resource.getFile().getAbsolutePath();
+        // String filePath = absolutePath + "\\" + fileName;
+        // Path path = Paths.get(filePath);
+        // InputStream inputStream = filePart.getInputStream();
+        // Files.copy(inputStream, path,
+        // StandardCopyOption.REPLACE_EXISTING);
+        // SWP391_ONVID\onlinelearning\target\classes\static\image
+        // SWP391_ONVID\onlinelearning\src\main\resources\static\image
+        String projectPath = System.getProperty("user.dir");
+        String fileName = "";
         Part filePart = req.getPart("image");
         fileName = filePart.getSubmittedFileName();
-        String path = "onlinelearning\\src\\main\\resources\\static\\image" + fileName;
+        String relativePath = "\\onlinelearning\\src\\main\\resources\\static\\image";
+
+        String filePath = projectPath + relativePath + File.separator + fileName;
+        Path path = Paths.get(filePath);
         InputStream inputStream = filePart.getInputStream();
-        Files.copy(inputStream, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+
         courseDTOAdd.setImageLink(fileName);
         int topic_id = Integer.parseInt(req.getParameter("topic"));
         courseDTOAdd.setTopic_id(topic_id);
         courseService.createCourse(courseDTOAdd);
-        return "teacher/teacher-course-add";
+        return "redirect:/teacher/course/list";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/edit/{id}")
     public String getUpdateCourse(Model model, @PathVariable @NotNull Integer id) {
-        model.addAttribute("course", courseService.getCourseById(id));
-        // TODO: chèn tạm Topic vì chưa có topic CRUD
+        Course course = courseService.getCourseById(id);
+        CourseDTOEdit courseDTEdit = mapper.courseToCourseDtoEdit(course);
+        model.addAttribute("course", courseDTEdit);
         model.addAttribute("topics", topicService.getTopics());
-        return "course/update";
+        return "teacher/course/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String postUpdateCourse(@Valid @ModelAttribute CourseDtoDetail course, @PathVariable @NotNull Integer id,
-            BindingResult bindingResult) {
+    @PostMapping("/edit")
+    public String postUpdateCourse(@Valid @ModelAttribute CourseDTOEdit course, HttpServletRequest req,
+            BindingResult bindingResult) throws IOException, ServletException {
         if (bindingResult.hasErrors()) {
-            return "course/update";
+            return "redirect:/teacher/course/edit/" + course.getId();
         }
-        courseService.updateCourse((int) id, course);
-        return "redirect:../detail/" + id;
+        String projectPath = System.getProperty("user.dir");
+        String fileName = "";
+        Part filePart = req.getPart("image");
+        fileName = filePart.getSubmittedFileName();
+        if (!fileName.equals("")) {
+            String relativePath = "\\onlinelearning\\src\\main\\resources\\static\\image";
+
+            String filePath = projectPath + relativePath + File.separator + fileName;
+            Path path = Paths.get(filePath);
+            InputStream inputStream = filePart.getInputStream();
+            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            course.setImageLink(fileName);
+        }
+        int topic_id = Integer.parseInt(req.getParameter("topic"));
+        course.setTopic_id(topic_id);
+        courseService.updateCourse(course);
+        return "redirect:/teacher/course/detail/" + course.getId();
     }
 
     @GetMapping("/delete/{id}")
-    public String getDeleteCourse(Model model, @PathVariable @NotNull Integer id) {
+    public String getDeleteCourse(@PathVariable @NotNull Integer id) {
         courseService.deleteCourse((int) id);
         return "redirect:../list";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String getDetail(@PathVariable @NotNull Integer id, Model model) {
+        Course course = courseService.getCourseById(id);
+        model.addAttribute("course", course);
+        return "teacher/course/detail";
     }
 }
