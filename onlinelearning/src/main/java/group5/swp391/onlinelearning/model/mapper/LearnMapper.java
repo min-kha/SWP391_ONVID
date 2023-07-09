@@ -7,15 +7,15 @@ import group5.swp391.onlinelearning.model.dto.LessonDtoDetail;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 
 public class LearnMapper {
-    public static LessonDtoDetail lessonToLessonDtoDetail(Lesson lesson, Learn learn) {
+    public static LessonDtoDetail lessonToLessonDtoDetail(Lesson lesson, Learn learn, int index) {
         if (learn.isStatus()) {
             LessonDtoDetail lessonDtoDetail = LessonDtoDetail.builder()
-                    .id(lesson.getId()).status("done")
+                    .id(lesson.getId()).status("done").index(index)
                     .build();
             return lessonDtoDetail;
         } else {
             LessonDtoDetail lessonDtoDetail = LessonDtoDetail.builder()
-                    .id(lesson.getId()).status("learning")
+                    .id(lesson.getId()).status("learning").index(index)
                     .build();
             return lessonDtoDetail;
         }

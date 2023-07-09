@@ -48,7 +48,7 @@
                         <a th:href="'/student/course/lesson/' + ${courseId} + '/' + ${lessonDtoDetail.id}"
                             class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
                             <div class="d-flex w-100 align-items-center justify-content-between">
-                                <strong class="mb-1" th:text="'lesson' + ${lessonDtoDetail.id}">lession 1</strong>
+                                <strong class="mb-1" th:text="'lesson ' + ${lessonDtoDetail.index}"></strong>
                             </div>
                             <div class="col-10 mb-1 small" th:text="${lessonDtoDetail.status}">learning</div>
                         </a>
@@ -100,7 +100,6 @@
                             laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
                             magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                             aliquip ex ea commodo consequat.</p>
-
                         <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
                             Mark as done
                         </button>

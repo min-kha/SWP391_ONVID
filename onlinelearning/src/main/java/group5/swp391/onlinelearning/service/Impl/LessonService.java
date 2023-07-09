@@ -20,4 +20,9 @@ public class LessonService implements ILessonService {
         return list;
     }
 
+    @Override
+    public Lesson getLessonById(int lessonId) {
+        return lessonRepository.findById(lessonId).get();
+    }
+
 }

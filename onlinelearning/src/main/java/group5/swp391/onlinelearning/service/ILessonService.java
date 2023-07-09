@@ -10,5 +10,6 @@ import group5.swp391.onlinelearning.entity.Lesson;
 public interface ILessonService {
     public List<Lesson> getLessonsByCourseId(int courseId);
 
-    
+    public Lesson getLessonById(int lessonId);
+
 }

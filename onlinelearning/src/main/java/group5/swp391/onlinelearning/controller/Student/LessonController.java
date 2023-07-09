@@ -2,6 +2,8 @@ package group5.swp391.onlinelearning.controller.student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpSession;
 
@@ -31,7 +33,10 @@ public class LessonController {
 
     @GetMapping("/all-lesson/{courseId}")
     public String getAllLessonInCourse(@PathVariable String courseId, Model model, HttpSession session) {
-        return "redirect:/student/course/lesson/" + courseId + "/" + 1;
+        int courseIdInt = Integer.parseInt(courseId);
+        List<Lesson> listLesson = lessonService.getLessonsByCourseId(courseIdInt);
+        int firstLessonId = listLesson.get(0).getId();
+        return "redirect:/student/course/lesson/" + courseId + "/" + firstLessonId;
     }
 
     @GetMapping("/lesson/{courseId}/{leassonId}")
@@ -41,7 +46,8 @@ public class LessonController {
         List<Lesson> listLesson = lessonService.getLessonsByCourseId(courseIdInt);
         model.addAttribute("courseId", courseId);
         model.addAttribute("listLesson", listLesson);
-        Lesson lesson = listLesson.get(Integer.parseInt(leassonId) - 1);
+        int leassonIdInt = Integer.parseInt(leassonId);
+        Lesson lesson = lessonService.getLessonById(leassonIdInt);
         if (lesson.getDocument() == null || lesson.getDocument().equals("")) {
             model.addAttribute("isVideo", true);
         } else {
@@ -52,9 +58,13 @@ public class LessonController {
         List<Learn> learns = learnService.getListLearnByLessonIdAndStudentId(listLesson, student);
         List<LessonDtoDetail> lessonDtoDetails = new ArrayList<>();
         for (int i = 0; i < listLesson.size(); i++) {
-            LessonDtoDetail lessonDtoDetail = LearnMapper.lessonToLessonDtoDetail(listLesson.get(i), learns.get(i));
+            LessonDtoDetail lessonDtoDetail = LearnMapper.lessonToLessonDtoDetail(listLesson.get(i), learns.get(i),
+                    i + 1);
             lessonDtoDetails.add(lessonDtoDetail);
         }
+
+        List<Integer> numberList = IntStream.range(1, listLesson.size() + 1).boxed().collect(Collectors.toList());
+        model.addAttribute("numberList", numberList);
 
         model.addAttribute("lessonDtoDetails", lessonDtoDetails);
         return "/student/course/all-lesson";
