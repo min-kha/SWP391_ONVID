@@ -1,0 +1,115 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <div class="pb-3">
+                                                    <h1 th:text="'Detail ' + ${course.class.getSimpleName}"></h1>
+                                                    <div>
+                                                        <hr />
+                                                        <dl class="row border rounded p-3">
+                                                            <th:block>
+                                                                <dt class="col-sm-3 fw-bold text-capitalize"> Name
+                                                                </dt>
+                                                                <dd th:text="${course.name}" class="col-sm-9">
+                                                                </dd>
+                                                                <hr style="color: #aaaaaa" />
+                                                            </th:block>
+                                                            <th:block>
+                                                                <dt class="col-sm-3 fw-bold text-capitalize"> Status
+                                                                </dt>
+                                                                <div>
+                                                                    <div th:switch="${course.status}">
+                                                                        <div th:case="0">
+                                                                            <div class="btn btn-secondary btn-sm"
+                                                                                th:text="Unsubmit"></div>
+                                                                        </div>
+                                                                        <div th:case="1">
+                                                                            <div class="btn btn-info btn-sm"
+                                                                                th:text="Submited"></div>
+                                                                        </div>
+                                                                        <div th:case="2">
+                                                                            <div class="btn btn-danger btn-sm"
+                                                                                th:text="Reject"></div>
+                                                                        </div>
+                                                                        <dd th:case="3">
+                                                                            <div class="btn btn-success btn-sm"
+                                                                                th:text="Published"></div>
+                                                                        </dd>
+                                                                        <div th:case="*">
+                                                                            <div class="btn btn-dark btn-sm"
+                                                                                th:text="DeActive"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <hr style="color: #aaaaaa" />
+                                                            </th:block>
+                                                            <th:block>
+                                                                <dt class="col-sm-3 fw-bold text-capitalize"> Topic
+                                                                </dt>
+                                                                <dd th:text="${course.Topic.getName}" class="col-sm-9">
+                                                                </dd>
+                                                                <hr style="color: #aaaaaa" />
+                                                            </th:block>
+                                                            <th:block>
+                                                                <dt class="col-sm-3 fw-bold text-capitalize"> By Teacher
+                                                                </dt>
+                                                                <dd th:text="${course.Teacher.getName}"
+                                                                    class="col-sm-9">
+                                                                </dd>
+                                                                <hr style="color: #aaaaaa" />
+                                                            </th:block>
+                                                            <th:block>
+                                                                <dt class="col-sm-3 fw-bold text-capitalize"> Price
+                                                                </dt>
+                                                                <dd th:text="${course.Price}" class="col-sm-9">
+                                                                </dd>
+                                                                <hr style="color: #aaaaaa" />
+                                                            </th:block>
+                                                            <th:block>
+                                                                <dt class="col-sm-3 fw-bold text-capitalize"> Date
+                                                                </dt>
+                                                                <dd th:text="${course.Date}" class="col-sm-9">
+                                                                </dd>
+                                                                <hr style="color: #aaaaaa" />
+                                                            </th:block>
+                                                            <th:block>
+                                                                <dt class="col-sm-3 fw-bold text-capitalize"> Image
+                                                                </dt>
+                                                                <img class="img-fluid"
+                                                                    th:src="@{'/image/' + ${course.imageLink} }"
+                                                                    alt="..." />
+                                                                <hr style="color: #aaaaaa" />
+                                                            </th:block>
+                                                        </dl>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <a th:href="'../edit/' + ${course.getId()}"
+                                                            class="btn btn-warning px-3 " aria-disabled="true">Edit</a>
+                                                        <div style="margin-top: 5px;">
+                                                            <a class="btn btn-dark px-3"
+                                                                href="/teacher/course/list">Back to list</a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </th:block>
+</th:block>

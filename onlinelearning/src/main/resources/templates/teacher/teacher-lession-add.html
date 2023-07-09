@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thêm form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 th:text="${lession}"></h1>
+        <h2>Thêm form</h2>
+        <form id="form-container">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="file">File:</label>
+                <input type="file" class="form-control-file" id="file" name="file" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div id="form-wrapper"></div>
+        <button id="add-form" class="btn btn-success mt-3">+</button>
+    </div>
+
+    <script>
+        var formCount = 1;
+
+        // Thêm form mới khi nhấn vào dấu "+"
+        document.getElementById("add-form").addEventListener("click", function (e) {
+            e.preventDefault();
+            var formWrapper = document.getElementById("form-wrapper");
+
+            var newForm = document.createElement("div");
+            newForm.innerHTML = `
+        <hr>
+        <form id="form-container-${formCount}">
+          <div class="form-group">
+            <label for="title-${formCount}">Title:</label>
+            <input type="text" class="form-control" id="title-${formCount}" name="title" required>
+          </div>
+          <div class="form-group">
+            <label for="file-${formCount}">File:</label>
+            <input type="file" class="form-control-file" id="file-${formCount}" name="file" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      `;
+            formWrapper.appendChild(newForm);
+            formCount++;
+        });
+
+        // Xử lý sự kiện submit của form
+        document.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var formData = new FormData(e.target);
+            var title = formData.get("title");
+            var file = formData.get("file");
+
+            // Xử lý dữ liệu form theo ý của bạn ở đây
+            console.log("Title: " + title);
+            console.log("File: " + file);
+
+            // Reset form sau khi submit
+            e.target.reset();
+        });
+    </script>
+</body>
+
+</html>

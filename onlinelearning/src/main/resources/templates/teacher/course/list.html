@@ -1,0 +1,107 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <style>
+            table {
+                width: 100%;
+            }
+
+            .datatable-search {
+                position: relative;
+            }
+
+            .datatable-input,
+            .datatable-selector {
+                padding: 8px 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+
+            .datatable-input:focus,
+            .datatable-selector:focus {
+                outline: none;
+                border-color: #5c7cfa;
+                box-shadow: 0 0 0 2px rgba(92, 124, 250, 0.5);
+            }
+
+            th {
+                color: #5c7cfa;
+            }
+        </style>
+
+        <div class="container-fluid px-4">
+            <div class="card mb-4">
+                <div class="card-header" th:text="'List ' + ${entities[0].class.getSimpleName}">
+                </div>
+                <div class="card-body table-responsive">
+
+                    <table id="datatablesSimple" class="table table-hover">
+                        <a href="/teacher/course/create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
+
+                        <thead>
+                            <tr>
+                                <th th:text="Name" class="text-capitalize"></th>
+                                <th th:text="Image" class="text-capitalize"></th>
+                                <th>Topic</th>
+                                <th>Status</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="entity : ${entities}">
+                                <td th:text="${entity.name}"></td>
+                                <td> <img class="img-fluid" th:src="@{'/image/' + ${entity.image} }" alt="..." />
+                                </td>
+                                <td th:text="${entity.topic}"></td>
+                                <td>
+                                    <div th:switch="${entity.status}">
+                                        <div th:case="0">
+                                            <div class="btn btn-secondary btn-sm" th:text="Unsubmit"></div>
+                                        </div>
+                                        <div th:case="1">
+                                            <div class="btn btn-info btn-sm" th:text="Submited"></div>
+                                        </div>
+                                        <div th:case="2">
+                                            <div class="btn btn-danger btn-sm" th:text="Reject"></div>
+                                        </div>
+                                        <div th:case="3">
+                                            <div class="btn btn-success btn-sm" th:text="Published"></div>
+                                        </div>
+                                        <div th:case="*">
+                                            <div class="btn btn-dark btn-sm" th:text="DeActive"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:text="${entity.price}" class="card-title"></span><small>vnđ</small>
+                                </td>
+                                <td>
+                                    <a th:href="'detail/' + ${entity.id}" class="btn btn-secondary btn-sm "
+                                        tabindex="-1" aria-disabled="true">Details</a>
+
+                                    <a th:href="'edit/' + ${entity.id}" class="btn btn-warning btn-sm px-3"
+                                        tabindex="-1" aria-disabled="true">Edit</a>
+                                </td>
+                                <td>
+                                    <div th:if="${entity.status != 4}">
+                                        <a th:href="'delete/' + ${entity.id}" class="btn btn-danger btn-sm"
+                                            tabindex="-1" aria-disabled="true">Deactive</a>
+                                    </div>
+                                    <div th:if="${entity.status == 4}">
+                                        <a th:href="'delete/' + ${entity.id}" class="btn btn-danger btn-sm"
+                                            tabindex="-1" aria-disabled="true">Active</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
+    </th:block>
+</th:block>

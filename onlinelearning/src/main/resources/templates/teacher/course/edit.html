@@ -1,0 +1,84 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <h2 th:text="'Edit' + ${course.class.getSimpleName}"></h2>
+                                                <hr>
+                                                <form th:action="@{/teacher/course/edit}" th:object="${course}"
+                                                    method="post" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <label for="courseName">Course Name:</label>
+                                                        <input type="text" class="form-control" id="courseName"
+                                                            name="courseName" required th:field="*{name}"
+                                                            value="course.name">
+                                                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="price">Price:</label>
+                                                        <input type="number" class="form-control" id="price"
+                                                            name="price" required th:field="*{price}"
+                                                            value="course.name">
+                                                        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="topic">Topic:</label>
+                                                        <select class="form-control" id="topic" name="topic">
+                                                            <option th:each="topic : ${topics}" th:value="${topic.id}"
+                                                                th:text="${topic.name}"
+                                                                th:selected="${topic.id == course.topic_id}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description">Description:</label>
+                                                        <textarea class="form-control" id="description"
+                                                            name="description" rows="4" required
+                                                            th:field="*{description}"></textarea>
+                                                        <p th:if="${#fields.hasErrors('description')}"
+                                                            th:errors="*{description}"></p>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <img class="img-fluid"
+                                                            th:src="@{'/image/' + ${course.imageLink} }" alt="..." />
+                                                        <label for="image">Image:</label>
+                                                        <input type="file" class="form-control-file" id="image"
+                                                            name="image">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control-file" id="id" name="id"
+                                                            th:field="*{id}" th:value="${course.id}">
+                                                        <input type="hidden" class="form-control-file" id="id"
+                                                            name="id1" th:field="*{imageLink}"
+                                                            th:value="${course.imageLink}">
+                                                    </div>
+                                                    <!--<input type="hidden" class="form-control" id="description"
+                                                        name="description" th:value="*{description}">
+                                                    <input type="hidden" class="form-control" id="topicfake"
+                                                        name="topicfake" th:field="*{topic_id}" value="1">
+                                                    <input type="hidden" class="form-control" id="imageLink"
+                                                        name="imageLink" th:field="*{imageLink}" value="ahihi"> -->
+                                                    <button type="submit" class="btn btn-primary">Update Course</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </th:block>
+</th:block>
