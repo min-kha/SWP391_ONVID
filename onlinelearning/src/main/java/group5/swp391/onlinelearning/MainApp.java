@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class MainApp {
+
 	public static void main(String[] args) {
 		var context = SpringApplication.run(MainApp.class, args);
 	}
