@@ -15,6 +15,7 @@ import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.model.mapper.UserMapper;
 import group5.swp391.onlinelearning.repository.UserRepository;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.utils.SHA1;
 
 @Service
 public class UserService implements IUserService {
@@ -61,7 +62,8 @@ public class UserService implements IUserService {
         List<User> users = getAllUsers();
         // TODO: CHECK BẰNG SQL BY MINH KHA
         for (User user : users) {
-            if (student.getEmail().equals(user.getEmail()) && student.getPassword().equals(user.getPassword())) {
+            if (student.getEmail().equals(user.getEmail())
+                    && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
                 if (user.getStatus()) {
                     return user;
                 } else {
@@ -95,6 +97,7 @@ public class UserService implements IUserService {
 
     @Override
     public User addUserRegister(UserDTORegisterRequest userDTORegisterRequest) {
+        userDTORegisterRequest.setPassword(SHA1.toSHA1(userDTORegisterRequest.getPassword()));
         User user = mapper.userDTORegisterRequestToUser(userDTORegisterRequest);
         return userRepository.save(user);
     }

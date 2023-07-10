@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import group5.swp391.onlinelearning.utils.SHA1;
+
 @Service
 public class OtpService {
     @Autowired
     private HttpSession session;
+
+    private String secretKey = "onVid896@2$";
 
     public boolean checkValidOtp(String userInputOTP, Model model) {
         long otpCreationTime = (long) session.getAttribute("otpCreationTime");
@@ -24,7 +28,9 @@ public class OtpService {
             return false;
         } else {
             String otpCode = session.getAttribute("otp").toString();
-            if (otpCode != null && otpCode.equals(userInputOTP)) {
+            String userInputOTPEncrypt = SHA1.toSHA1(userInputOTP);
+            System.out.println("2sss: " + userInputOTPEncrypt);
+            if (otpCode != null && otpCode.equals(userInputOTPEncrypt)) {
                 return true;
             } else {
                 model.addAttribute("OtpCodeNotTrue", "OTP code is incorrect");

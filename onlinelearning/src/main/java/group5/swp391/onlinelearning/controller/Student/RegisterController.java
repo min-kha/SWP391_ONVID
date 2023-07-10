@@ -18,6 +18,7 @@ import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.service.ICartService;
 import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.service.OtpService;
+import group5.swp391.onlinelearning.utils.SHA1;
 
 @Controller
 public class RegisterController {
@@ -57,8 +58,10 @@ public class RegisterController {
     public String storeAccount(HttpSession session) {
         UserDTORegisterRequest userDTORegisterRequest = (UserDTORegisterRequest) session
                 .getAttribute("userRegisterSession");
+
+        
         User user = userService.addUserRegister(userDTORegisterRequest);
-        Cart cart = cartService.createCart(user);
+        cartService.createCart(user);
         session.invalidate();
         return "redirect:/student/login";
     }
