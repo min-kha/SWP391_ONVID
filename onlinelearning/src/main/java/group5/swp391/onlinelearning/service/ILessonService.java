@@ -2,9 +2,12 @@ package group5.swp391.onlinelearning.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Lesson;
+import group5.swp391.onlinelearning.model.teacher.LessonDtoAdd;
 
 @Service
 public interface ILessonService {
@@ -12,4 +15,7 @@ public interface ILessonService {
 
     public Lesson getLessonById(int lessonId);
 
+    public Lesson addLessonVideo(@Valid LessonDtoAdd lessonDtoAdd, String fileName);
+
+    public Lesson addLessonDocument(@Valid LessonDtoAdd lessonDtoAdd, String document);
 }
