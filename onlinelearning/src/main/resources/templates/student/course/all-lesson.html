@@ -15,7 +15,7 @@
             /* Set black background color, white text and some padding */
             footer {
                 background-color: #ffffff;
-                color: white;
+                color: rgb(255, 255, 255);
                 padding: 15px;
             }
 
@@ -45,10 +45,11 @@
                         </svg>
                         <span class="fs-5 fw-semibold">All lession</span>
                     </div>
-                    <div class="list-group list-group-flush border-bottom scrollarea"
+                    <div class="list-group list-group-flush border-bottom scrollarea "
                         th:each="lessonDtoDetail : ${lessonDtoDetails}">
                         <a th:href="'/student/course/lesson/' + ${courseId} + '/' + ${lessonDtoDetail.id}"
-                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
+                            th:style="'background-color: ' + ${lessonDtoDetail.id == leassonId ? 'pink' : 'black'} + ';'">
                             <div class="d-flex w-100 align-items-center justify-content-between">
                                 <strong class="mb-1" th:text="'lesson ' + ${lessonDtoDetail.index}"></strong>
                             </div>
@@ -82,10 +83,11 @@
                             <video controls preload="auto" width="100%">
                                 <source th:src="@{'/video/' + ${lesson.video}}">
                             </video>
-                            <h2 th:text="${lesson.title}">I Love Food</h2>
-                            <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span> Post by Jane
-                                Dane,
-                                Sep 27, 2015.</h5>
+                            <h2 th:text="${lesson.title}"></h2>
+                            <h5 th:text="${lesson.name}">
+                                <span class="glyphicon glyphicon-time">
+                                </span>
+                            </h5>
                             <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
                                 Mark as done
                             </button>
@@ -93,28 +95,15 @@
                     </div>
                     <div th:if="${isVideo == false}">
                         <form th:action="@{/student/course/lesson/change-learn-status}" method="post">
-                            <h2 th:text="${lesson.title}">I Love Food</h2>
+                            <h2 th:text="${lesson.title}"></h2>
                             <input type="hidden" th:value="${courseId}" name="courseId">
                             <input type="hidden" th:value="${lesson.id}" name="lessonId">
                             <h5>
                                 <span class="label label-danger" th:text="${lesson.name}">
-                                    Food
-                                </span>
-                                <span class="label label-primary">
-                                    Ipsum
                                 </span>
                             </h5>
                             <br>
-                            <p th:text="${lesson.document}">Food is my passion. Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                                laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat.</p>
+                            <p th:text="${lesson.document}"></p>
                             <button class="btn btn-primary d-block" type="submit" style="width: 150px;">
                                 Mark as done
                             </button>

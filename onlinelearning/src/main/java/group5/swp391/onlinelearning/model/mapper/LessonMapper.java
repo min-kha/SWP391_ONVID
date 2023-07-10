@@ -45,4 +45,13 @@ public class LessonMapper {
         return lesson;
     }
 
+    public LessonDtoAdd lessonToLessonDtoAdd(Lesson lesson) {
+        LessonDtoAdd lessonDtoAdd = LessonDtoAdd.builder()
+                .title(lesson.getTitle())
+                .name(lesson.getName())
+                .courseId(lesson.getCourse().getId())
+                .build();
+        return lessonDtoAdd;
+    }
+
 }

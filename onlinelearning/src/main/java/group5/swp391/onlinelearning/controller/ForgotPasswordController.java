@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.utils.SHA1;
 
 @Controller
 public class ForgotPasswordController {
@@ -47,7 +48,7 @@ public class ForgotPasswordController {
             return "/student/enter-new-password";
         } else {
             User user = (User) session.getAttribute("userForgotPassword");
-            user.setPassword(password);
+            user.setPassword(SHA1.toSHA1(password));
             userService.changePassword(user);
             session.invalidate();
             return "redirect:/student/login";

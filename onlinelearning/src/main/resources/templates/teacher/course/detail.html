@@ -90,13 +90,20 @@
                                                             </th:block>
                                                         </dl>
                                                     </div>
-                                                    <div class="text-end">
-                                                        <a th:href="'../edit/' + ${course.getId()}"
-                                                            class="btn btn-warning px-3 " aria-disabled="true">Edit</a>
-                                                        <div style="margin-top: 5px;">
-                                                            <a class="btn btn-dark px-3"
-                                                                href="/teacher/course/list">Back to list</a>
+                                                    <div class="text-end"
+                                                        style="display: flex; justify-content: space-between;">
+                                                        <div>
+                                                            <a th:href="'../edit/' + ${course.getId()}"
+                                                                class="btn btn-warning px-3 " aria-disabled="true"
+                                                                style="display: inline-block;">Edit</a>
+
+                                                            <a class="btn btn-success px-3"
+                                                                th:href="'/teacher/lesson/list/' + ${course.getId()}"
+                                                                style="display: inline-block;">View List Lesson</a>
                                                         </div>
+
+                                                        <a class="btn btn-dark px-3" href="/teacher/course/list"
+                                                            style="display: inline-block;">Back To List</a>
                                                     </div>
 
                                                 </div>
