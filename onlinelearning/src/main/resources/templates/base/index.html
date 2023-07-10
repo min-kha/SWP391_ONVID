@@ -1,4 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <style>
     table {
         width: 100%;
@@ -27,13 +29,20 @@
         color: #5c7cfa;
     }
 </style>
-
+<!-- Alert when have message -->
+<div class="row no-gutters fixed-top justify-content-end m-3">
+    <div class="col-lg-5 col-md-12 ml-auto">
+        <div class="alert alert-success fade show" role="alert">
+            <h4 class="alert-heading">Success!</h4>
+            <p>This is an alert within a column. The column can be made any size at different viewpoints.</p>
+        </div>
+    </div>
+</div>
 <div class="container-fluid px-4">
     <div class="card mb-4">
         <h1 class="card-header" th:text="${title}">
         </h1>
         <div class="card-body table-responsive">
-
             <table id="datatablesSimple" class="table table-hover">
                 <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
 
@@ -73,5 +82,13 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        // show the alert
+        setTimeout(function () {
+            $(".alert").alert('close');
+        }, 2000);
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
