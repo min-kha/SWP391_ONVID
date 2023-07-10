@@ -42,7 +42,9 @@ public class RegisterController {
             bindingResult.rejectValue("email", "error.email.exist", "Email address is duplicated");
         }
         if (!userDTORegisterRequest.getPassword().equals(userDTORegisterRequest.getRePassword())) {
-            bindingResult.rejectValue("repassword", "error.repass.notSam", "Repassword is not same with password");
+
+            bindingResult.rejectValue("rePassword", "error.repass.notSam", "Repassword is not same with password");
+
         }
         if (bindingResult.hasErrors()) {
             return "student/register/Register";
