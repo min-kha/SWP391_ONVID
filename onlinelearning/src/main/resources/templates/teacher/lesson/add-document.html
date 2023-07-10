@@ -1,0 +1,26 @@
+<th:block th:replace="/layout-no-cart.html">
+    <th:block th:fragment="main-content">
+        <h2>Add New Lesson</h2>
+        <form th:action="@{'/teacher/lesson/create/document' + '/'+ ${id}}" th:object="${lesson}" method="post"
+            enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required th:field="*{title}">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required th:field="*{name}">
+                <p th:if="${#fields.hasErrors('Name')}" th:errors="*{name}"></p>
+            </div>
+            <div class="form-group">
+                <label for="document">Document</label>
+                <textarea class="form-control" id="document" name="document" rows="4" required></textarea>
+            </div>
+
+            <input type="hidden" class="form-control" id="course_id" name="course_id" th:value="${id}">
+
+            <button type="submit" class="btn btn-primary">Add Lesson</button>
+        </form>
+    </th:block>
+</th:block>
