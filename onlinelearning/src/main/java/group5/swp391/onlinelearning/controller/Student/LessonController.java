@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Learn;
 import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.LessonDtoDetail;
 import group5.swp391.onlinelearning.model.mapper.LearnMapper;
+import group5.swp391.onlinelearning.service.ICourseTeacherService;
 import group5.swp391.onlinelearning.service.ILearnService;
 import group5.swp391.onlinelearning.service.ILessonService;
+import group5.swp391.onlinelearning.service.impl.CourseService;
 
 @Controller
 @RequestMapping("/student/course")
@@ -30,6 +33,8 @@ public class LessonController {
     ILessonService lessonService;
     @Autowired
     ILearnService learnService;
+    @Autowired
+    CourseService courseService;
 
     @GetMapping("/all-lesson/{courseId}")
     public String getAllLessonInCourse(@PathVariable String courseId, Model model, HttpSession session) {
@@ -66,7 +71,6 @@ public class LessonController {
                 countDone++;
             }
         }
-
         float progress = ((float) countDone / listLesson.size()) * 100;
         model.addAttribute("progress", progress);
         if (progress == 100.0) {
@@ -78,6 +82,9 @@ public class LessonController {
         model.addAttribute("numberList", numberList);
 
         model.addAttribute("lessonDtoDetails", lessonDtoDetails);
+        Course course = courseService.getCourseById(courseIdInt);
+        model.addAttribute("course", course);
+
         return "/student/course/all-lesson";
     }
 }
