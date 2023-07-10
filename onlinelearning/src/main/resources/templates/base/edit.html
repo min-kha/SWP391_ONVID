@@ -31,11 +31,11 @@
                                                                 class="form-control">
                                                         </th:block>
                                                         <th:block th:case="Collection">
-                                                            <input readonly th:field="*{__${field.getName}__}"
+                                                            <input readonly th:placeholder="*{__${field.getName}__}"
                                                                 th:id="${field.name}" class="form-control">
                                                         </th:block>
                                                         <th:block th:case="*">
-                                                            <input type="text" th:field="*{__${field.getName}__}"
+                                                            <input th:field="*{__${field.getName}__}"
                                                                 th:id="${field.name}" class="form-control">
                                                         </th:block>
                                                     </th:block>

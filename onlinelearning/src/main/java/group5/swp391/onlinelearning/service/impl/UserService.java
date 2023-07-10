@@ -2,12 +2,18 @@ package group5.swp391.onlinelearning.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
@@ -108,9 +114,36 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void addStaff(User user) {
-        // TODO: what is role of staff?
-        user.setRole(3);
+    public void addStaff(@NotNull User user) throws Exception {
+        if (userRepository.findById(user.getId()).isPresent()) {
+            throw new InvalidInputException("", "user.duplicate", "User is already exists");
+        }
+        if (isDuplicateEmail(user)) {
+            throw new InvalidInputException("email", "email.duplicate", "Duplicate user email");
+        }
         userRepository.save(user);
+    }
+
+    @Override
+    public void updateUser(@NotNull User user) throws Exception {
+        Optional<User> userTmp = userRepository.findById(user.getId());
+        if (userTmp.isPresent()) {
+            // Duplicate and had changed
+            if (isDuplicateEmail(user) && !user.getEmail().equals(userTmp.get().getEmail())) {
+                throw new InvalidInputException("email", "email.duplicate", "Duplicate user email");
+            }
+            userRepository.save(user);
+        } else {
+            throw new InvalidInputException("id", "user.notfound", "User not found");
+        }
+    }
+
+    @Override
+    public void deleteUser(@NotNull int id) {
+        userRepository.deleteById(id);
+    }
+
+    private boolean isDuplicateEmail(User user) {
+        return userRepository.findByEmail(user.getEmail()) != null;
     }
 }
