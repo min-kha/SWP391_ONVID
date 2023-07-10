@@ -42,6 +42,7 @@
 
 
         <section class="py-5 text-center container">
+            <h3 th:if="${student != null}" th:text="'Xin chào, ' + ${student.name}"></h3>
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
                     <h1 class="fw-light">Banner image hear</h1>
