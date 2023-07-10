@@ -43,7 +43,7 @@
         <h1 class="card-header" th:text="${title}">
         </h1>
         <div class="card-body table-responsive">
-            <table id="datatablesSimple" class="table table-hover">
+            <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
                 <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
 
                 <thead>
@@ -55,7 +55,7 @@
                         <th>Delete</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody th:unless="${entities.isEmpty}">
                     <tr th:each="entity : ${entities}">
                         <th:block th:each="field : ${fields}">
                             <td th:if="${field.getType.getSimpleName == 'Collection'}"

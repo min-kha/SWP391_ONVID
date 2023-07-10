@@ -42,7 +42,8 @@ public class TopicService implements ITopicService {
     public void updateTopic(@NotNull Topic topic) throws Exception {
         Optional<Topic> topicTmp = topicRepository.findById(topic.getId());
         if (topicTmp.isPresent()) {
-            if (isDuplicateHashtag(topic)) {
+            // Duplicate and had changed
+            if (isDuplicateHashtag(topic) && !topic.getHashtag().equals(topicTmp.get().getHashtag())) {
                 throw new InvalidInputException("hashtag", "hashtag.duplicate", "Duplicate topic hashtag");
             }
             topicRepository.save(topic);
