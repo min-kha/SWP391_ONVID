@@ -16,22 +16,22 @@
                   <form class="text-center" method="post" th:action="@{/register}" th:object="${user}">
                     <div class="mb-3">
                       <input class="form-control" type="email" placeholder="Email" required th:field="*{email}" />
-                      <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                      <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></p>
                     </div>
                     <div class="mb-3">
                       <input class="form-control" type="text" placeholder="Name" th:field="*{name}" required
                         style="margin-top: 10px" />
-                      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></p>
                     </div>
                     <div class="mb-3">
                       <input class="form-control" type="password" name="password" th:field="*{password}" required
                         placeholder="Password" />
-                      <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                      <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></p>
                     </div>
                     <div class="mb-3">
                       <input class="form-control" type="password" name="rePassword" th:field="*{rePassword}" required
                         placeholder="Confirm Password" style="margin-top: 10px" />
-                      <p th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"></p>
+                      <p th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}" style="color: red;"></p>
                     </div>
                     <div class="mb-3">
                       <button class="btn btn-primary d-block w-100" type="submit">
