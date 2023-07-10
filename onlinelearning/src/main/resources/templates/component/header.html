@@ -23,7 +23,7 @@
                 <a href="/register">
                     <button type="button" class="btn btn-warning">Sign-up</button>
                 </a>
-                <a href="/student/cart/detail">
+                <a th:if="${session.cartStudentSession != null}" href="/student/cart/detail">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     <span th:with="cartStudentSession = ${session.cartStudentSession}">
                         <span th:text="${#lists.size(cartStudentSession)}"></span>
