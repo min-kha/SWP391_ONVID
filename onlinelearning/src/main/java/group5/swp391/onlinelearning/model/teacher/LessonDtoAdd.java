@@ -16,6 +16,6 @@ public class LessonDtoAdd {
     private String title;
     @NotNull(message = "Name must not be empty")
     private String name;
-    @NotNull(message = "courseId must not be empty")
+
     private int courseId;
 }

@@ -1,8 +1,6 @@
 package group5.swp391.onlinelearning.model.admin;
 
-
 import javax.validation.constraints.NotEmpty;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

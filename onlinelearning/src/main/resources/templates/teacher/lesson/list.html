@@ -1,0 +1,153 @@
+<th:block th:replace="/layout-no-cart.html">
+    <th:block th:fragment="main-content">
+        <style>
+            /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+            .row.content {
+                height: 1500px
+            }
+
+            /* Set gray background color and 100% height */
+            .sidenav {
+                background-color: #f1f1f1;
+                height: 100%;
+            }
+
+            /* Set black background color, white text and some padding */
+            footer {
+                background-color: #ffffff;
+                color: white;
+                padding: 15px;
+            }
+
+            /* On small screens, set height to 'auto' for sidenav and grid */
+            @media screen and (max-width: 767px) {
+                .sidenav {
+                    height: auto;
+                    padding: 15px;
+                }
+
+                .row.content {
+                    height: auto;
+                }
+            }
+        </style>
+        <div th:if="${empty == 0}">
+            <h1>Course Has 0 Lesson</h1>
+        </div>
+        <div th:if="${empty == 1}" class="container-fluid">
+            <div style="display: flex; justify-content: space-between;">
+                <h4 th:text="${lesson.course.name}"></h4>
+                <div>
+                    <a th:href="'/teacher/lesson/create/' + ${lesson.course.id}" style="display: inline-block;"><button
+                            class="btn btn-primary d-block">Add
+                            New
+                            Lesson</button></a>
+                    <a th:href="'/teacher/course/list'" style="display: inline-block;"><button
+                            class="btn btn-primary d-block">Back To List
+                            Course</button></a>
+
+                </div>
+
+            </div>
+
+            <hr>
+            <div class="row content" style="display: flex;">
+                <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 350px;">
+                    <div
+                        class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                        <svg class="bi me-2" width="30" height="24">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                        <span class="fs-5 fw-semibold">All lesson</span>
+                    </div>
+                    <div class="list-group list-group-flush border-bottom scrollarea" th:each="item : ${lessons}">
+                        <a th:href="'/teacher/lesson/detail/' + ${courseId} + '/' + ${item.id}"
+                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
+                            th:style="'background-color :' + ${item.id == lesson.id ? 'grey' : 'orange'} + ';'">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1" th:text="${item.title}"></strong>
+                            </div>
+                            <!-- <div class="col-10 mb-1 small" th:text="${lessonDtoDetail.status}">learning</div> -->
+                        </a>
+                    </div>
+                    <!-- <div class="list-group list-group-flush border-bottom scrollarea">
+                        <a class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
+                            style="background-color:  red;">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">feedback</strong>
+                            </div>
+                            <div class="col-10 mb-1 small">Not available</div>
+                        </a>
+                    </div>
+                    <div class="list-group list-group-flush border-bottom scrollarea">
+                        <a th:href="'/student/course/feedback/' + ${courseId}"
+                            class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">feedback</strong>
+                            </div>
+                            <div class="col-10 mb-1 small">Available</div>
+                        </a>
+                    </div> -->
+                </div>
+                <div class="col-sm-9">
+                    <div th:if="${!lesson.video.isEmpty()}">
+                        <video controls preload="auto" autoplay width="100%">
+                            <source th:src="@{'/video/' + ${lesson.video}}">
+                        </video>
+                        <h2 th:text="${lesson.title}"></h2>
+                        <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span></h5>
+
+                        <button onclick="showOptions()" class="btn btn-labeled btn-info">Edit Lesson</button>
+                        <div id="optionsDiv" style="display: none; margin-top: 10px;">
+                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/0'"
+                                style="display: inline-block;">
+                                <button class="btn btn-secondary" style="width: 150px;">
+                                    Edit lession with video
+                                </button>
+                            </a>
+
+                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/1'"
+                                style="display: inline-block;">
+                                <button class="btn btn-secondary" style="width: 150px;">
+                                    Edit lession with document
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div th:if="${lesson.video.isEmpty()}">
+                        <h2 th:text="${lesson.title}"></h2>
+                        <h5>
+                            <span class="label label-danger" th:text="${lesson.name}">
+                            </span>
+                            <span class="label label-primary">
+                                Ipsum
+                            </span>
+                        </h5>
+                        <br>
+                        <p th:text="${lesson.document}"></p>
+                        <button onclick="showOptions()">Edit Lesson</button>
+
+                        <div id="optionsDiv" style="display: none;">
+                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/0'">
+                                <button class="btn btn-primary d-block" style="width: 150px;">
+                                    Edit lession with video
+                                </button>
+                            </a>
+
+                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/1'">
+                                <button class="btn btn-primary d-block" style="width: 150px;">
+                                    Edit lession with document
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function showOptions() {
+                    var optionsDiv = document.getElementById("optionsDiv");
+                    optionsDiv.style.display = "block";
+                }
+            </script>
+    </th:block>
+</th:block>

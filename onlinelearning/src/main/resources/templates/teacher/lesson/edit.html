@@ -1,0 +1,94 @@
+<th:block th:replace="/layout-no-cart.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <h2 th:text="'Edit' + ${lesson.class.getSimpleName}"></h2>
+                                                <hr>
+                                                <div th:if="${options == 1}">
+                                                    <form
+                                                        th:action="@{'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id}}"
+                                                        th:object="${lesson}" method="post"
+                                                        enctype="multipart/form-data">
+                                                        <div class="form-group">
+                                                            <label for="title">Title :</label>
+                                                            <input type="text" class="form-control" id="title"
+                                                                name="title" required th:field="*{title}"
+                                                                value="lesson.title">
+                                                            <p th:if="${#fields.hasErrors('title')}"
+                                                                th:errors="*{title}">
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="name">Name :</label>
+                                                            <input type="number" class="form-control" id="name"
+                                                                name="name" required th:field="*{name}"
+                                                                value="lesson.name">
+                                                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="document"> document:</label>
+                                                            <textarea class="form-control" id="document" name="document"
+                                                                rows="4" required th:field="*{document}"></textarea>
+                                                            <p th:if="${#fields.hasErrors('document')}"
+                                                                th:errors="*{document}"></p>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Update
+                                                            Lesson</button>
+                                                    </form>
+                                                </div>
+                                                <div th:if="${options == 0}">
+                                                    <form
+                                                        th:action="@{'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id}}"
+                                                        th:object="${lesson}" method="post">
+                                                        <div class="form-group">
+                                                            <label for="title">Title :</label>
+                                                            <input type="text" class="form-control" id="title"
+                                                                name="title" required th:field="*{title}"
+                                                                value="lesson.title">
+                                                            <p th:if="${#fields.hasErrors('title')}"
+                                                                th:errors="*{title}">
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="name">Name :</label>
+                                                            <input type="number" class="form-control" id="name"
+                                                                name="name" required th:field="*{name}"
+                                                                value="lesson.name">
+                                                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <img class="img-fluid"
+                                                                th:src="@{'/video/' + ${lesson.video} }" alt="..." />
+                                                            <label for="video">Video:</label>
+                                                            <input type="file" class="form-control-file" id="video"
+                                                                name="video" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Update
+                                                            Lesson</button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+    </th:block>
+</th:block>
