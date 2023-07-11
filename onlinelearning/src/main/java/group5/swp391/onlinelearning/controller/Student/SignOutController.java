@@ -11,7 +11,6 @@ public class SignOutController {
     public String studentSignOut(HttpSession session) {
         session.removeAttribute("studentSession");
         session.removeAttribute("cartStudentSession");
-
         return "redirect:/student/login";
     }
 }
