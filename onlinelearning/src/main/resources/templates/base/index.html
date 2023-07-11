@@ -55,7 +55,7 @@
                         <th>Delete</th>
                     </tr>
                 </thead>
-                <tbody th:unless="${entities.isEmpty}">
+                <tbody>
                     <tr th:each="entity : ${entities}">
                         <th:block th:each="field : ${fields}">
                             <td th:if="${field.getType.getSimpleName == 'Collection'}"
