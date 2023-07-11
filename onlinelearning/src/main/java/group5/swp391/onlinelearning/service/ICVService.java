@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.stereotype.Service;
-
 import group5.swp391.onlinelearning.entity.CV;
 
 public interface ICVService {
