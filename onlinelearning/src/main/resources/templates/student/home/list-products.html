@@ -42,20 +42,41 @@
 
 
         <section class="py-5 text-center container">
-            <h3 th:if="${student != null}" th:text="'Xin chào, ' + ${student.name}"></h3>
-            <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Banner image hear</h1>
-                    <p class="lead text-muted">Something short and leading about the collection below—its contents,
-                        the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over
-                        it entirely.</p>
-                    <p>
-                        <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                    </p>
+            <img th:src="@{/image/online-learning-web-banner-2-compressor.jpg}" style="width: 100%;" alt="banner image">
+            <br>
+            <br>
+            <br>
+            <div style="background-color: rgb(0, 115, 255); color: white; width: 100%;">
+                <h2 style="color: white; text-align: center;">Popular course</h2>
+            </div>
+            <br>
+            <br>
+            <div class="album">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <div class="col" th:each="course : ${popularCourses}">
+                        <div class="card shadow-sm">
+                            <img th:src="@{'/image/' + ${course.imageLink} }" width="100%" height="225">
+                            <div class=" card-body">
+                                <a th:href="'/student/course/detail/' + ${course.id}">
+                                    <h3 th:text="${course.name}"></h3>
+                                </a>
+                                <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
+                                <div style="margin: auto;">
+                                    <span>3</span>
+                                    <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
+                                </div>
+                                <span th:text="${course.price}" class="card-title h2"></span><small>vnđ</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+        <div style="background-color: rgb(0, 115, 255); color: white; width: 100%;">
+            <h2 style="color: white; text-align: center;">All course</h2>
+        </div>
+        <br>
+        <br>
         <div class="album">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
                 <div class="col" th:each="course : ${courses}">
@@ -76,5 +97,14 @@
                 </div>
             </div>
         </div>
+        <br>
+        <nav aria-label="...">
+            <ul class="pagination pagination-lg">
+                <li class="page-item" th:each="number : ${listPageNumber}">
+                    <a class="page-link" th:href="'/student/home/' + ${number}" th:text="${number}"
+                        th:style="'background-color: ' + ${number == pageChoose ? 'pink' : 'white'} + ';'"></a>
+                </li>
+            </ul>
+        </nav>
     </th:block>
 </th:block>
