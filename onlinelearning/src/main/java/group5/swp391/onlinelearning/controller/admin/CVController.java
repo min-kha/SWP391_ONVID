@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.CV;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
@@ -87,14 +89,39 @@ public class CVController {
     }
 
     @GetMapping("/review/{id}")
-    public String getReview(Model model, @PathVariable @NotNull int id) {
-        return "redirect:/admin/users/details/{id}";
-        // try {
-        // CV cV = cVService.getCVById(id);
-        // thymeleafBaseCRUD.setBaseForEntity(model, cV, "Review CV - Admin");
-        // } catch (Exception e) {
-        // return "/error";
-        // }
-        // return "admin/cv/edit";
+    public String getReview(Model model, @PathVariable @NotNull int id) throws Exception {
+        try {
+            CV cV = cVService.getCVById(id);
+            if (cV.getStatus() == 0) {
+                // TODO: cV.setStaff(//staff in session);
+                cV.setStatus(1); // set status to In processing
+                cVService.updateCV(cV);
+            }
+            thymeleafBaseCRUD.setBaseForEntity(model, cV, "Review CV - Admin");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return "admin/cv/review";
+    }
+
+    @PostMapping("/review/{id}")
+    public String postReview(Model model, @PathVariable @NotNull int id, @RequestParam String approve) {
+        CV cV = cVService.getCVById(id);
+        try {
+            if (approve.equals("true")) {
+                cV.setStatus(2); // set status to approved
+                cVService.updateCV(cV);
+
+            }
+            if (approve.equals("false")) {
+                cV.setStatus(3); // set status to rejected
+                cVService.updateCV(cV);
+            }
+            thymeleafBaseCRUD.setBaseForEntity(model, cV, "Detail CV - Admin");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return "redirect:/admin/cvs/detail/{id}";
     }
 }
