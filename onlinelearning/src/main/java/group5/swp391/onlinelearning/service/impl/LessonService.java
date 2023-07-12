@@ -21,6 +21,9 @@ public class LessonService implements ILessonService {
     @Autowired
     LessonMapper lessonMapper;
 
+    @Autowired
+    CourseService courseService;
+
     @Override
     public List<Lesson> getLessonsByCourseId(int courseId) {
         List<Lesson> list = lessonRepository.findAllByCourseId(courseId);
@@ -43,4 +46,28 @@ public class LessonService implements ILessonService {
         Lesson lesson = lessonMapper.lessionDtoAddtoLessonDocument(lessonDtoAdd, document);
         return lessonRepository.save(lesson);
     }
+
+    @Override
+    public boolean isLessonVideo(int lessonId) {
+        Lesson lesson = getLessonById(lessonId);
+        if (lesson.getVideo() == null || lesson.getVideo().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isLessonOfCourse(int lessonId, int courseId) {
+        Lesson lesson = getLessonById(lessonId);
+        if (lesson.getCourse().getId() == courseId) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Lesson updateLesson(@Valid Lesson lesson) {
+        return lessonRepository.save(lesson);
+    }
+
 }

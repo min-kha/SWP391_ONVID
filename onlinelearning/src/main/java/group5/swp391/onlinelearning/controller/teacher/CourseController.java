@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,12 +65,11 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(70);
+        User user = userService.getUserById(2);
         req.setAttribute("studentSession", user);
         List<CourseDTOTeacher> courses = courseService.getCourseDTOTeacherList();
         String title = "Course List";
         thymeleafBaseCRUD.setBaseForList(model, courses, title);
-
         return "teacher/course/list";
     }
 
@@ -79,6 +79,9 @@ public class CourseController {
         model.addAttribute("topics", topicService.getTopics());
         return "teacher/course/add";
     }
+
+    @Value("${upload.directory}")
+    private String uploadDirectory;
 
     @PostMapping("/create")
     public String addCourse(@Valid @ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req,
@@ -99,16 +102,34 @@ public class CourseController {
         // StandardCopyOption.REPLACE_EXISTING);
         // SWP391_ONVID\onlinelearning\target\classes\static\image
         // SWP391_ONVID\onlinelearning\src\main\resources\static\image
+
+        // if (!image.isEmpty()) {
+        // try {
+        // // Lưu ảnh vào thư mục trên máy tính
+        // String filePath = uploadDirectory + image.getOriginalFilename();
+        // image.transferTo(new File(filePath));
+
+        // return "Upload successful!";
+        // } catch (IOException e) {
+        // return "Error uploading file.";
+        // }
+        // } else {
+        // return "No file selected.";
+        // }
+
         String projectPath = System.getProperty("user.dir");
         String fileName = "";
         Part filePart = req.getPart("image");
         fileName = filePart.getSubmittedFileName();
-        String relativePath = "\\onlinelearning\\src\\main\\resources\\static\\image";
+        String relativePath = "\\src\\main\\resources\\static\\image";
 
         String filePath = projectPath + relativePath + File.separator + fileName;
         Path path = Paths.get(filePath);
-        InputStream inputStream = filePart.getInputStream();
-        Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+
+        try (InputStream inputStream = filePart.getInputStream()) {
+            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+        }
 
         courseDTOAdd.setImageLink(fileName);
         int topic_id = Integer.parseInt(req.getParameter("topic"));
