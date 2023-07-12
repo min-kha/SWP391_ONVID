@@ -71,6 +71,6 @@ public class CartController {
         cartService.deleteAllCourseInCart(courses, cart.getId());
         session.setAttribute("cartStudentSession",
                 cartService.getCoursebyCartId(cart.getId()));
-        return "redirect:/student/my-course";
+        return "redirect:/student/my-course/1";
     }
 }
