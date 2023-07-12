@@ -148,4 +148,14 @@ public class CourseService {
         return courseRepository.getMyCourse(studentId);
     }
 
+    public List<CourseDtoHomeDetail> getPopularCourse() {
+        List<Course> coursesPopular = courseRepository.getPopularCourse();
+        List<CourseDtoHomeDetail> courseDtoHomeDetailsPopular = new ArrayList<>();
+
+        for (Course course : coursesPopular) {
+            courseDtoHomeDetailsPopular.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+        }
+        return courseDtoHomeDetailsPopular;
+    }
+
 }

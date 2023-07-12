@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-import group5.swp391.onlinelearning.utils.SHA1;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/student")
@@ -29,4 +31,7 @@ public class HomeController {
         model.addAttribute("student", student);
         return "student/home/list-products";
     }
+
+  
+
 }
