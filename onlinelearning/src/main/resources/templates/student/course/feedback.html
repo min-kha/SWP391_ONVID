@@ -4,13 +4,13 @@
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-md-8 col-xl-6 text-center mx-auto">
-                        <form method="post" th:object="${feedback}">
+                        <form method="post" th:object="${feedback}" th:if="${isUpdate == false}">
                             <h2 th:text="'Feedback Course: ' + ${course.name}"> </h2>
                             <p>Let us know how you feel about this course, your suggestions will help us improve </p>
-                            <input name="comment" id="" cols="30" rows="10" placeholder="Comment"
-                                style="width: 100%; height: 40px;" th:field="*{comment}" value=""></input>
+                            <input name="comment" cols="30" rows="10" placeholder="Comment"
+                                style="width: 100%; height: 40px;" th:field="*{comment}"></input>
                             <p th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" style="color: red;"></p>
-                            <br>
+
                             <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
                             <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
                             <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
@@ -38,11 +38,61 @@
                             </select>
                             <p th:if="${#fields.hasErrors('ratingStar')}" th:errors="*{ratingStar}" style="color: red;">
                             </p>
-
-                            <br>
                             <br>
                             <button class="btn btn-primary d-block w-100" type="submit" style="width: 20px;">
-                                Submit
+                                Submit feedback
+                            </button>
+
+                            <input type="hidden" th:value="${courseId}" name="courseId">
+                        </form>
+
+
+
+
+
+
+
+
+
+
+                        <form method="post" th:object="${feedback}" th:if="${isUpdate == true}"
+                            th:action="'/student/course/feedback/update/' + ${courseId}">
+                            <h2 th:text="'Feedback Course: ' + ${course.name}"> </h2>
+                            <p>Let us know how you feel about this course, your suggestions will help us improve </p>
+                            <input name="comment" cols="30" rows="10" placeholder="Comment"
+                                style="width: 100%; height: 40px;" th:field="*{comment}"></input>
+                            <p th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" style="color: red;"></p>
+
+                            <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
+                            <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
+                            <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
+                            <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
+                            <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
+                            <select name="rating" style="width: 100%; height: 40px;" th:field="*{ratingStar}">
+                                <option value="0" disabled>
+                                    Please select star
+                                </option>
+                                <option value="1">
+                                    1 star
+                                </option>
+                                <option value="2">
+                                    2 star
+                                </option>
+                                <option value="3">
+                                    3 star
+                                </option>
+                                <option value="4">
+                                    4 star
+                                </option>
+                                <option value="5">
+                                    5 star
+                                </option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('ratingStar')}" th:errors="*{ratingStar}" style="color: red;">
+                            </p>
+                            <br>
+                            <button class="btn btn-primary d-block w-100" type="submit" style="width: 20px;">
+                                Update feedback
                             </button>
                             <input type="hidden" th:value="${courseId}" name="courseId">
                         </form>

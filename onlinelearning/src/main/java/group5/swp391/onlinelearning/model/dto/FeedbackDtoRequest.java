@@ -8,18 +8,20 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class FeedbackDtoRequest {
     @NotBlank(message = "Comment must not be empty")
-    @NotNull
     private String comment;
 
-    @NotNull
     @Min(value = 1, message = "rating star not valid")
     @Max(value = 10, message = "rating star not valid")
     private int ratingStar;
