@@ -1,0 +1,92 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <div class="pb-3">
+                                                    <h1 th:text="${title}"></h1>
+                                                    <div>
+                                                        <hr />
+                                                        <dl class="row border rounded p-3">
+                                                            <dt th:text="id" class="col-sm-3 fw-bold text-capitalize">
+                                                            </dt>
+                                                            <dd th:text="${entity.id}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+
+                                                            <dt th:text="date" class="col-sm-3 fw-bold text-capitalize">
+                                                            </dt>
+                                                            <dd th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"
+                                                                class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt th:text="pdfLink"
+                                                                class="col-sm-3 fw-bold text-capitalize">
+                                                            </dt>
+                                                            <dd class="col-sm-9">
+                                                                <a th:href="'/pdf/cv/' + ${entity.pdfLink}"
+                                                                    target="_blank" class="btn btn-outline-primary">CV
+                                                                    file</a>
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt th:text="status"
+                                                                class="col-sm-3 fw-bold text-capitalize">
+                                                            </dt>
+                                                            <dd class="col-sm-9">
+                                                                <span th:if="${entity.status == 0}"
+                                                                    class="btn btn-danger">To Do
+                                                                </span>
+                                                                <span th:if="${entity.status == 1}"
+                                                                    class="btn btn-primary">In
+                                                                    Processing</span>
+                                                                <span th:if="${entity.status == 2}"
+                                                                    class="btn btn-success">Done</span>
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt th:text="teacher"
+                                                                class="col-sm-3 fw-bold text-capitalize">
+                                                            </dt>
+                                                            <dd th:text="${entity.teacher?.name}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt th:text="staff"
+                                                                class="col-sm-3 fw-bold text-capitalize">
+                                                            </dt>
+                                                            <dd th:text="${entity.staff?.name}" class="col-sm-9">
+                                                            </dd>
+
+                                                        </dl>
+                                                    </div>
+                                                    <form method="POST" class="text-end">
+                                                        <button type="submit" name="approve" value="true"
+                                                            th:href="'../' + 'index'" class="btn btn-success p-2 m-2"
+                                                            aria-disabled="true">Approve</button>
+                                                        <button type="submit" name="approve" value="false"
+                                                            th:href="'../' + 'index'" class="btn btn-danger p-2 m-2"
+                                                            aria-disabled="true">Reject</button>
+                                                        <a th:href="'../' + 'index'" class="btn btn-link px-3 "
+                                                            aria-disabled="true">Back
+                                                            to list</a>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </th:block>
+</th:block>

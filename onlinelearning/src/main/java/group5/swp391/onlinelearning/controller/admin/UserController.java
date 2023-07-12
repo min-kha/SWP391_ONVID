@@ -62,7 +62,7 @@ public class UserController {
             user = modelMapper.map(userDTORegisterRequest, User.class);
             userService.addStaff(user);
         } catch (InvalidInputException e) {
-            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getErrorMessage());
+            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getMessage());
             thymeleafBaseCRUD.setBaseForEntity(model, user, title);
             return "/sample/create";
         } catch (Exception e) {

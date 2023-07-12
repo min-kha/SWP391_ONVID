@@ -44,6 +44,13 @@
                                                     th:errors="*{__${field.getName}__}" class="form-text text-danger">
                                                 </label>
                                             </div>
+                                            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                                                <ul>
+                                                    <li th:each="error : ${#fields.globalErrors()}" th:text="${error}">
+                                                    </li>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                             <div class="text-end">
                                                 <button type="submit" class="px-3 btn btn-primary">Save</button>
                                                 <a th:href="'../' + 'index'" class="btn btn-link px-3 "
