@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -26,16 +27,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.model.mapper.LessonMapper;
 import group5.swp391.onlinelearning.model.teacher.LessonDtoAdd;
+import group5.swp391.onlinelearning.model.teacher.LessonDtoEditDocument;
+import group5.swp391.onlinelearning.model.teacher.LessonDtoEditVideo;
 import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
+import lombok.val;
 
 @RequestMapping(value = "/teacher")
 @Service
 
 public class LessonTeacherController {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     CourseService courseService;
@@ -57,7 +65,7 @@ public class LessonTeacherController {
     }
 
     @GetMapping("/lesson/create/{courseid}/{options}")
-    public String getCreateLession(@PathVariable Integer courseid, Model model, @PathVariable Integer options) {
+    public String getCreateLesson(@PathVariable Integer courseid, Model model, @PathVariable Integer options) {
         if (courseid == null || !courseService.isCourse(courseid)) {
             return "404";
         }
@@ -74,9 +82,9 @@ public class LessonTeacherController {
     }
 
     @PostMapping("/lesson/create/video/{courseid}")
-    public String postCreateLession(
-            @Valid @ModelAttribute("lesson") LessonDtoAdd lessonDtoAdd, HttpServletRequest req,
-            @RequestParam("video") MultipartFile video, BindingResult result) throws IOException, ServletException {
+    public String postCreateLesson(
+            @Valid @ModelAttribute("lesson") LessonDtoAdd lessonDtoAdd, BindingResult result, HttpServletRequest req,
+            @RequestParam("video") MultipartFile video) throws IOException, ServletException {
         if (result.hasErrors()) {
             return "/lesson/create/" + lessonDtoAdd.getCourseId();
         }
@@ -89,8 +97,7 @@ public class LessonTeacherController {
         String fileName = "";
         Part filePart = req.getPart("video");
         fileName = filePart.getSubmittedFileName();
-        fileName.equals("");
-        String relativePath = "\\onlinelearning\\src\\main\\resources\\static\\video";
+        String relativePath = "\\src\\main\\resources\\static\\video";
         String filePath = projectPath + relativePath + File.separator + fileName;
         Path path = Paths.get(filePath);
         InputStream inputStream = filePart.getInputStream();
@@ -104,7 +111,7 @@ public class LessonTeacherController {
             return "404";
         }
 
-        return "lesson/list/" + lessonDtoAdd.getCourseId();
+        return "redirect:/teacher/lesson/list/" + lessonDtoAdd.getCourseId();
     }
 
     @PostMapping("/lesson/create/document/{courseid}")
@@ -128,7 +135,7 @@ public class LessonTeacherController {
             return "404";
         }
 
-        return "lesson/list/" + lessonDtoAdd.getCourseId();
+        return "redirect:/teacher/lesson/list/" + lessonDtoAdd.getCourseId();
     }
 
     @GetMapping(value = "lesson/detail/{courseId}/{lessonId}")
@@ -142,9 +149,14 @@ public class LessonTeacherController {
         } catch (Exception e) {
             return "404";
         }
+        boolean isVideo = true;
+        if (lesson.getVideo() == null || lesson.getVideo().isEmpty()) {
+            isVideo = false;
+        }
         model.addAttribute("lessons", lessons);
         model.addAttribute("lesson", lesson);
         model.addAttribute("empty", 1);
+        model.addAttribute("isVideo", isVideo);
         return "teacher/lesson/list";
     }
 
@@ -160,44 +172,150 @@ public class LessonTeacherController {
             empty = 1;
             lesson = lessons.get(0);
         }
+        boolean isVideo = true;
+        if (lesson.getVideo() == null || lesson.getVideo().isEmpty()) {
+            isVideo = false;
+        }
+        model.addAttribute("isVideo", isVideo);
         model.addAttribute("empty", empty);
         model.addAttribute("lessons", lessons);
         model.addAttribute("lesson", lesson);
         return "teacher/lesson/list";
     }
-    // TODO: maicode
-    // @GetMapping(value = "lesson/edit/{courseId}/{lessonId}/{options}")
-    // public String getEditLesson(@PathVariable Integer lessonId, @PathVariable
-    // Integer courseId,
-    // @PathVariable Integer options, Model model) {
-    // // check valid lesson
 
-    // if (lessonService.getLessonById(lessonId) == null)
-    // return "404";
-    // Lesson lesson = lessonService.getLessonById(lessonId);
-    // LessonDtoAdd lessonDtoAdd = lessonMappers.;
-    // model.addAttribute("lessonDtoAdd", lessonDtoAdd);
-    // model.addAttribute("options", options);
-    // return "teacher/lesson/edit";
-    // }
-
-    @PostMapping(value = "lesson/edit/{courseId}/{lessonId}")
-    public String postEditLesson(@PathVariable Integer courseId, @PathVariable Integer lessonId,
+    @GetMapping(value = "/lesson/edit/{courseId}/{lessonId}/{options}")
+    public String getEditLesson(@PathVariable Integer lessonId, @PathVariable Integer courseId,
             @PathVariable Integer options, Model model) {
-        // get all lesson following by courseid
-        List<Lesson> lessons = lessonService.getLessonsByCourseId(courseId);
+        // Check validation of lesson
+        if (lessonService.getLessonById(lessonId) == null)
+            return "404";
+        // Check Course Owner
+        if (!courseService.checkCourseOwner(courseId))
+            return "AccessDenied";
+        // Check lesson in course or not
+        if (!lessonService.isLessonOfCourse(lessonId, courseId))
+            return "404";
+        Course course = courseService.getCourseById(lessonId);
+        Lesson lesson = lessonService.getLessonById(lessonId);
+        // check lesson has video
+        boolean isLessonVideo = lessonService.isLessonVideo(lessonId);
+        // check options == (1 document) == (0 video)
+        boolean isVideo = options == 0;
 
-        Lesson lesson = null;
-        // check empty courses
-        int empty = 0; // = 0 uf for course not have lessson
-        if (lessons.size() != 0) {
-            empty = 1;
-            lesson = lessons.get(0);
+        // set lessonDtoEdit model for html
+        // lesson hien tai va lesson muon sua khac nhau ==> Tạo Lesson Mới và thêm vào
+        if (isLessonVideo != isVideo) {
+            // check
+            if (isVideo == true) {
+                LessonDtoEditVideo lessonDtoEditVideo = new LessonDtoEditVideo();
+                lessonDtoEditVideo = modelMapper.map(lesson, LessonDtoEditVideo.class);
+                model.addAttribute("lesson", lessonDtoEditVideo);
+            }
+
+            else {
+                LessonDtoEditDocument lessonDtoEditDocument = new LessonDtoEditDocument();
+                lessonDtoEditDocument = modelMapper.map(lesson, LessonDtoEditDocument.class);
+                model.addAttribute("lesson", lessonDtoEditDocument);
+            }
+
+        } else { // lesson hiện tại và lesson sửa là 1 kiêu ( lesson kiểu video hoặc document)
+            if (isVideo == true) {
+                LessonDtoEditVideo lessonDtoEdit = new LessonDtoEditVideo();
+                lessonDtoEdit = modelMapper.map(lesson, LessonDtoEditVideo.class);
+                String oldVideo = lesson.getVideo();
+                model.addAttribute("oldVideo", oldVideo);
+                model.addAttribute("lesson", lessonDtoEdit);
+            } else {
+                LessonDtoEditDocument lessonEditDocument = new LessonDtoEditDocument();
+                lessonEditDocument = modelMapper.map(lesson, LessonDtoEditDocument.class);
+                model.addAttribute("lesson", lessonEditDocument);
+            }
         }
 
-        model.addAttribute("empty", empty);
-        model.addAttribute("lessons", lessons);
-        model.addAttribute("lesson", lesson);
-        return "teacher/lesson/list" + courseId;
+        model.addAttribute("options", options);
+
+        // với trường hợp thêm mới lesson thay thế vào
+        return "/teacher/lesson/edit";
+    }
+
+    @PostMapping(value = "lesson/edit/{courseId}/{lessonId}/0")
+    public String postEditVideo(
+            @Valid @ModelAttribute("lesson") LessonDtoEditVideo lessonDtoEditVideo, BindingResult result,
+            HttpServletRequest req,
+            @RequestParam("video") MultipartFile video, Model model) throws IOException, ServletException {
+        if (result.hasErrors()) {
+            model.addAttribute("options", 0);
+            return "teacher/lesson/edit";
+        }
+        // Xử lý video
+        String oldVideo = req.getParameter("oldVideo");
+        String projectPath = System.getProperty("user.dir");
+        String fileName = "";
+        Part filePart = req.getPart("video");
+        fileName = filePart.getSubmittedFileName();
+        if (!fileName.equals("")) {
+            String relativePath = "\\src\\main\\resources\\static\\video";
+            String filePath = projectPath + relativePath + File.separator + fileName;
+            Path path = Paths.get(filePath);
+            try (InputStream inputStream = filePart.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                return "404";
+            }
+            oldVideo = fileName;
+        }
+
+        // TODO:Save
+        Lesson lesson = modelMapper.map(lessonDtoEditVideo, Lesson.class);
+        lesson.setVideo(oldVideo);
+        lesson.setDocument("");
+        lesson.setStatus(true);
+        try {
+            if (lessonService.updateLesson(lesson) == null)
+                throw new Exception("");
+        } catch (Exception e) {
+            return "404";
+        }
+        return "redirect:/teacher/lesson/list/" + lessonDtoEditVideo.getCourse().getId();
+    }
+
+    @PostMapping(value = "lesson/edit/{courseId}/{lessonId}/1")
+    public String postEditDocument(
+            @Valid @ModelAttribute("lesson") LessonDtoEditDocument lessonDtoEditDocument, BindingResult result,
+            HttpServletRequest req, Model model) throws IOException, ServletException {
+        if (result.hasErrors()) {
+            model.addAttribute("options", 0);
+            return "teacher/lesson/edit";
+        }
+
+        // TODO:Save
+        Lesson lesson = modelMapper.map(lessonDtoEditDocument, Lesson.class);
+        lesson.setVideo("");
+        lesson.setStatus(true);
+        try {
+            if (lessonService.updateLesson(lesson) == null)
+                throw new Exception("");
+        } catch (Exception e) {
+            return "404";
+        }
+        return "redirect:/teacher/lesson/list/" + lessonDtoEditDocument.getCourse().getId();
+    }
+
+    @GetMapping("/lesson/delete/{courseId}/{lessonId}")
+    public String getDeleteLesson(@PathVariable Integer courseId, @PathVariable Integer lessonId, Model model) {
+        // Check validation of lesson
+        if (lessonService.getLessonById(lessonId) == null)
+            return "404";
+        // Check Course Owner
+        if (!courseService.checkCourseOwner(courseId))
+            return "AccessDenied";
+        // Check lesson in course or not
+        if (!lessonService.isLessonOfCourse(lessonId, courseId))
+            return "404";
+        // Delete lesson
+        if (lessonService.deleteLessonByIdOfTeacher(lessonId, courseId) == null)
+            return "404";
+        // Go to list lesson of course owner
+        return "redirect:" + "/teacher/lesson/list/" + courseId;
     }
 }

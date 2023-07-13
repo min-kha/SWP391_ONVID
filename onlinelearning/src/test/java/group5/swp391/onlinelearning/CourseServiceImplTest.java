@@ -22,9 +22,9 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
-import group5.swp391.onlinelearning.repository.CourseRepository;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.service.impl.UserService;
+import group5.swp391.onlinelearning.repository.CourseRepository;
 
 public class CourseServiceImplTest {
     @Mock
@@ -40,7 +40,6 @@ public class CourseServiceImplTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-
 
     @Test
     public void testGetAllCourses() {
@@ -221,7 +220,6 @@ public class CourseServiceImplTest {
     // verify(userService, times(1)).getUserById(2);
     // verify(courseRepository, times(1)).save(course);
     // }
-
 
     @Test
     public void testUpdateCourse() {
