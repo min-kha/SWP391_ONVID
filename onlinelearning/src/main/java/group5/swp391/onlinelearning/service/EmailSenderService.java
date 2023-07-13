@@ -7,6 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import group5.swp391.onlinelearning.utils.SHA1;
 import group5.swp391.onlinelearning.utils.NumberUtils;
 
 @Service
@@ -14,11 +15,10 @@ public class EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
-    HttpSession session;
+    private HttpSession session;
 
     public void sendEmail(String email, String mailSubjectInput, String mailContentInput) throws Exception {
         int otp = NumberUtils.generateRandomNumber();
-        boolean checkValidEmail = true;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("onvid0505@gmail.com");
@@ -30,6 +30,8 @@ public class EmailSenderService {
         message.setSubject(mailSubject);
         message.setText(mailContent);
         mailSender.send(message);
-        session.setAttribute("otp", otp);
+        String otpString = String.valueOf(otp);
+        String otpEncrypt = SHA1.toSHA1(otpString);
+        session.setAttribute("otp", otpEncrypt);
     }
 }

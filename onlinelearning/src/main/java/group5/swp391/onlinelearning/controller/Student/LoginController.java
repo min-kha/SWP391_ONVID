@@ -50,7 +50,7 @@ public class LoginController {
                 Cart cart = cartService.getCartByStudentId(studentRes.getId());
                 List<Course> courses = cartService.getCoursebyCartId(cart.getId());
                 session.setAttribute("cartStudentSession", courses);
-                return "redirect:/student/home";
+                return "redirect:/student/home/" + 1;
             } else {
                 model.addAttribute("loginError", "Login failed");
                 return "/student/login/loginAccount";

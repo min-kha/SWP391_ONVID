@@ -1,0 +1,103 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <style>
+            table {
+                width: 100%;
+            }
+
+            .datatable-search {
+                position: relative;
+            }
+
+            .datatable-input,
+            .datatable-selector {
+                padding: 8px 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+
+            .datatable-input:focus,
+            .datatable-selector:focus {
+                outline: none;
+                border-color: #5c7cfa;
+                box-shadow: 0 0 0 2px rgba(92, 124, 250, 0.5);
+            }
+
+            th {
+                color: #5c7cfa;
+            }
+        </style>
+        <!-- Alert when have message -->
+        <div class="row no-gutters fixed-top justify-content-end m-3">
+            <div class="col-lg-5 col-md-12 ml-auto">
+                <div class="alert alert-success fade show" role="alert">
+                    <h4 class="alert-heading">Success!</h4>
+                    <p>This is an alert within a column. The column can be made any size at different viewpoints.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid px-4">
+            <div class="card mb-4">
+                <h1 class="card-header" th:text="${title}">
+                </h1>
+                <div class="card-body table-responsive">
+                    <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Date</th>
+                                <th>Teacher</th>
+                                <th>Reviewer</th>
+                                <th>CV</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Review</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="entity : ${entities}">
+                                <td th:text="${entity.id}"></td>
+                                <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${entity.teacher?.name}"></td>
+                                <td th:text="${entity.staff?.name}"></td>
+                                <td>
+                                    <a class="btn btn-outline-primary" th:href="'/pdf/cv/' + ${entity.pdfLink}"
+                                        tabindex="-1" aria-disabled="true">CV File</a>
+                                </td>
+                                <td th:if="${entity.status == 0}"><span class="btn btn-danger w-75">To
+                                        Do</span></td>
+                                <td th:if="${entity.status == 1}"><span class="btn btn-primary w-75">In
+                                        Processing</span></td>
+                                <td th:if="${entity.status == 2}"><span class="btn btn-success w-75">Approved</span>
+                                </td>
+                                <td th:if="${entity.status == 3}"><span class="btn btn-dark w-75">Rejected</span>
+                                </td>
+                                <td>
+                                    <a th:href="'detail/' + ${entity[fields[0].getName]}" class="btn btn-secondary"
+                                        tabindex="-1" aria-disabled="true">Detail</a>
+                                </td>
+                                <td>
+                                    <!-- TODO: Check if status == 0,1 and entity.staff.id = id in session then show review -->
+                                    <a th:if="${entity.status == 0}" th:href="'review/' + ${entity.id}"
+                                        class="btn btn-warning" tabindex="-1" aria-disabled="true">Review</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                // show the alert
+                setTimeout(function () {
+                    $(".alert").alert('close');
+                }, 2000);
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
+    </th:block>
+</th:block>

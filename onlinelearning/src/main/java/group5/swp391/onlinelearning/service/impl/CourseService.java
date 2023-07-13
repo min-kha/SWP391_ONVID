@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -145,6 +146,38 @@ public class CourseService {
 
     public List<Course> getMyCourse(int studentId) {
         return courseRepository.getMyCourse(studentId);
+    }
+
+    public List<CourseDtoHomeDetail> getPopularCourse() {
+        List<Course> coursesPopular = courseRepository.getPopularCourse();
+        List<CourseDtoHomeDetail> courseDtoHomeDetailsPopular = new ArrayList<>();
+
+        for (Course course : coursesPopular) {
+            courseDtoHomeDetailsPopular.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+        }
+        return courseDtoHomeDetailsPopular;
+    }
+
+    public List<CourseDtoHomeDetail> getSearchCourse(String keyword) {
+
+        keyword = "%" + keyword + "%";
+        List<Course> coursesSearch = courseRepository.searchCourseByKeyword(keyword);
+        List<CourseDtoHomeDetail> courseDtoHomeDetailsSearch = new ArrayList<>();
+
+        for (Course course : coursesSearch) {
+            courseDtoHomeDetailsSearch.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+        }
+        return courseDtoHomeDetailsSearch;
+    }
+
+    public List<CourseDtoHomeDetail> getCourseByPrice(Double from, Double to) {
+        List<Course> coursesPrice = courseRepository.searchCourseByPrice(from, to);
+        List<CourseDtoHomeDetail> courseDtoHomeDetailsPrice = new ArrayList<>();
+
+        for (Course course : coursesPrice) {
+            courseDtoHomeDetailsPrice.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+        }
+        return courseDtoHomeDetailsPrice;
     }
 
 }

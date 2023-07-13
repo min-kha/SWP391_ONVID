@@ -84,7 +84,7 @@ public class LessonController {
         model.addAttribute("lessonDtoDetails", lessonDtoDetails);
         Course course = courseService.getCourseById(courseIdInt);
         model.addAttribute("course", course);
-
+        model.addAttribute("leassonId", leassonIdInt);
         return "/student/course/all-lesson";
     }
 }

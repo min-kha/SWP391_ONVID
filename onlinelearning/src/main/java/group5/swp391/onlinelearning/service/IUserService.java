@@ -1,6 +1,9 @@
 package group5.swp391.onlinelearning.service;
 
 import java.util.Collection;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
 
 import org.springframework.ui.Model;
 
@@ -11,7 +14,7 @@ import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 
 public interface IUserService {
-    public Collection<User> getAllUsers();
+    public List<User> getAllUsers();
 
     public Collection<UserDTOAccountRequest> getAllUserDTOAccountRequest();
 
@@ -29,5 +32,9 @@ public interface IUserService {
 
     public User changePassword(User user);
 
-    public void addStaff(User user);
+    public void addStaff(User user) throws Exception;
+
+    public void updateUser(User user) throws Exception;
+
+    public void deleteUser(@NotNull int id);
 }

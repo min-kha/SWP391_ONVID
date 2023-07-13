@@ -61,7 +61,7 @@ public class TopicController {
             topic = modelMapper.map(topicDto, Topic.class);
             topicService.addTopic(topic);
         } catch (InvalidInputException e) {
-            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getErrorMessage());
+            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getMessage());
             thymeleafBaseCRUD.setBaseForEntity(model, topicDto, title);
             return "/sample/create";
         } catch (Exception e) {
@@ -106,21 +106,22 @@ public class TopicController {
 
     @PostMapping("/delete/{id}")
     public String postDelete(Model model, @PathVariable @NotNull int id) {
-        topicService.deleteTopic(id);
+        try {
+            topicService.deleteTopic(id);
+        } catch (Exception e) {
+            return "/error";
+        }
         return "redirect:/admin/topics/index";
     }
 
     @GetMapping("/details/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
-        Topic topic = topicService.getTopicById(id);
-        thymeleafBaseCRUD.setBaseForEntity(model, topic, "Detail topic - Admin");
+        try {
+            Topic topic = topicService.getTopicById(id);
+            thymeleafBaseCRUD.setBaseForEntity(model, topic, "Detail topic - Admin");
+        } catch (Exception e) {
+            return "/error";
+        }
         return "sample/detail";
     }
-
-    @GetMapping(value = "/topic")
-    public String getMethodTopic(Model model) {
-        model.addAttribute("topic", new Topic());
-        return "#";
-    }
-
 }
