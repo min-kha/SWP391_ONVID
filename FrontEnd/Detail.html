@@ -16,7 +16,9 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap"
     />
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css" />
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css" />
     <link rel="stylesheet" href="assets/css/styles.min.css" />
   </head>
   <body>
@@ -49,6 +51,14 @@
             </li>
             <li class="nav-item"></li>
           </ul>
+          <div class="float-start float-md-end mt-5 mt-md-0 search-area">
+            <i class="fas fa-search float-start search-icon"></i
+            ><input
+              class="float-start float-sm-end custom-search-input"
+              type="search"
+              placeholder="Type to filter by address"
+            />
+          </div>
           <ul class="navbar-nav text-end ms-auto">
             <li class="nav-item">
               <a
@@ -137,27 +147,26 @@
               <span class="text">Total:</span
               ><span class="text-primary price">&nbsp; $360</span>
             </h4>
-            <a
-              class="btn btn-primary btn-sm active font-monospace text-nowrap text-truncate text-break fs-5 fw-light text-center bg-primary bg-gradient border-2 border-primary shadow-sm d-flex float-start d-md-flex flex-grow-1 ms-auto justify-content-md-center w-100"
-              role="button"
-              href="Cart-1.html"
-              style="
-                margin-right: 0px;
-                padding: 5px;
-                color: var(--bs-btn-disabled-color);
-                background: var(--bs-blue);
-                border-top-left-radius: 30px;
-                border-top-right-radius: 30px;
-                border-bottom-right-radius: 28px;
-                border-bottom-left-radius: 28px;
-              "
-              >Add to c<strong>art</strong></a
-            >
           </div>
         </div>
       </div>
     </div>
-    <div></div>
+    <div>
+      <a
+        class="btn btn-primary btn-sm active font-monospace text-nowrap text-truncate text-break fs-5 fw-light text-center bg-primary bg-gradient border-2 border-primary shadow-sm d-flex float-start d-md-flex flex-grow-1 ms-auto justify-content-md-center w-100"
+        role="button"
+        href="Cart-1.html"
+        style="
+          background: var(--bs-blue);
+          border-top-left-radius: 30px;
+          border-top-right-radius: 30px;
+          border-bottom-right-radius: 28px;
+          border-bottom-left-radius: 28px;
+          border-style: none;
+        "
+        ><strong>Add to cart</strong></a
+      >
+    </div>
     <div>
       <div>
         <footer style="background: #edb9c2">
