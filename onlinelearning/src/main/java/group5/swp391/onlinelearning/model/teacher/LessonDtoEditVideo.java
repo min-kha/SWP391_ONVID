@@ -21,7 +21,5 @@ public class LessonDtoEditVideo {
     @NotBlank(message = "Name must not be empty")
     private String name;
 
-    private String video;
-
     private Course course;
 }

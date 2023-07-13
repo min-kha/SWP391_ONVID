@@ -1,7 +1,6 @@
 package group5.swp391.onlinelearning.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +14,6 @@ import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
-
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
@@ -64,7 +62,7 @@ public class CourseService {
     }
 
     public List<CourseDTOTeacher> getCourseDTOTeacherList() {
-        User teacher = (User) session.getAttribute("studentSession");
+        User teacher = (User) session.getAttribute("userSession");
         int id = teacher.getId();
         List<Course> courses = courseRepository.findAllByTeacherId(id);
         List<CourseDTOTeacher> cDtoTeachers = new ArrayList<CourseDTOTeacher>();
@@ -87,7 +85,7 @@ public class CourseService {
 
     // Check course have true teacher owener
     public boolean checkCourseOwner(int courseId) {
-        User teacher = (User) session.getAttribute("studentSession");
+        User teacher = (User) session.getAttribute("userSession");
         int id = teacher.getId();
         List<Course> courses = courseRepository.findAllByTeacherId(id);
         for (Course course : courses) {

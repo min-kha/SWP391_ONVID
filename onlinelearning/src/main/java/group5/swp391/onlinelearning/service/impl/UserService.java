@@ -13,8 +13,8 @@ import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.model.mapper.UserMapper;
-import group5.swp391.onlinelearning.repository.UserRepository;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.repository.UserRepository;
 
 @Service
 public class UserService implements IUserService {

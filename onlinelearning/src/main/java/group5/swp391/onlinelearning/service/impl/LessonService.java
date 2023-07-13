@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.model.mapper.LessonMapper;
 import group5.swp391.onlinelearning.model.teacher.LessonDtoAdd;
@@ -68,6 +69,23 @@ public class LessonService implements ILessonService {
     @Override
     public Lesson updateLesson(@Valid Lesson lesson) {
         return lessonRepository.save(lesson);
+    }
+
+    @Override
+    public Lesson deleteLessonById(Integer lessonId) {
+        Lesson lesson = getLessonById(lessonId);
+        lesson.setStatus(false);
+        return lessonRepository.save(lesson);
+    }
+
+    @Override
+    public Lesson deleteLessonByIdOfTeacher(Integer lessonId, Integer courseId) {
+        Course course = courseService.getCourseById(courseId);
+        if (course.getStatus() != 3) {
+            return deleteLessonById(lessonId);
+        }
+        // TODO: course == 3 (đã được đăng) Thì xử lý ntn
+        return null;
     }
 
 }

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
-import group5.swp391.onlinelearning.repository.CourseRepository;
 import group5.swp391.onlinelearning.service.ICourseTeacherService;
+import group5.swp391.onlinelearning.repository.CourseRepository;
 
 @Service
 public class CourseTeacherService implements ICourseTeacherService {

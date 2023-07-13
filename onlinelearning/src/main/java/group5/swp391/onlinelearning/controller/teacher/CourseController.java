@@ -17,7 +17,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,8 +64,12 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(2);
-        req.setAttribute("studentSession", user);
+        User user = userService.getUserById(70);
+        req.setAttribute("userSession", user);
+        // Check role access site
+        if (user.getRole() != 1)
+            return "AccessDenied";
+
         List<CourseDTOTeacher> courses = courseService.getCourseDTOTeacherList();
         String title = "Course List";
         thymeleafBaseCRUD.setBaseForList(model, courses, title);
@@ -74,14 +77,15 @@ public class CourseController {
     }
 
     @GetMapping("/create")
-    public String getCreateCourse(Model model) {
+    public String getCreateCourse(Model model, HttpSession req) {
+        // Check role access site
+        User user = (User) req.getAttribute("userSession");
+        if (user.getRole() != 1)
+            return "AccessDenied";
         model.addAttribute("course", new CourseDTOAdd());
         model.addAttribute("topics", topicService.getTopics());
         return "teacher/course/add";
     }
-
-    @Value("${upload.directory}")
-    private String uploadDirectory;
 
     @PostMapping("/create")
     public String addCourse(@Valid @ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req,
@@ -90,33 +94,6 @@ public class CourseController {
         if (result.hasErrors()) {
             return "teacher/course/add";
         }
-        // String fileName = ("");
-        // Part filePart = req.getPart("image");
-        // fileName = filePart.getSubmittedFileName();
-        // Resource resource = new ClassPathResource("static/image/");
-        // String absolutePath = resource.getFile().getAbsolutePath();
-        // String filePath = absolutePath + "\\" + fileName;
-        // Path path = Paths.get(filePath);
-        // InputStream inputStream = filePart.getInputStream();
-        // Files.copy(inputStream, path,
-        // StandardCopyOption.REPLACE_EXISTING);
-        // SWP391_ONVID\onlinelearning\target\classes\static\image
-        // SWP391_ONVID\onlinelearning\src\main\resources\static\image
-
-        // if (!image.isEmpty()) {
-        // try {
-        // // Lưu ảnh vào thư mục trên máy tính
-        // String filePath = uploadDirectory + image.getOriginalFilename();
-        // image.transferTo(new File(filePath));
-
-        // return "Upload successful!";
-        // } catch (IOException e) {
-        // return "Error uploading file.";
-        // }
-        // } else {
-        // return "No file selected.";
-        // }
-
         String projectPath = System.getProperty("user.dir");
         String fileName = "";
         Part filePart = req.getPart("image");
@@ -139,8 +116,21 @@ public class CourseController {
     }
 
     @GetMapping("/edit/{id}")
-    public String getUpdateCourse(Model model, @PathVariable @NotNull Integer id) {
+    public String getUpdateCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
+        // Check role access site
+        User user = (User) req.getAttribute("userSession");
+        if (user.getRole() != 1)
+            return "AccessDenied";
+        // check course exit
         Course course = courseService.getCourseById(id);
+        if (course == null)
+            return "404";
+        // check owner course
+        if (courseService.checkCourseOwner(id))
+            return "AccessDenied";
+        // check published course
+        if (course.getStatus() == 3)
+            return "AccessDenied";
         CourseDTOEdit courseDTEdit = mapper.courseToCourseDtoEdit(course);
         model.addAttribute("course", courseDTEdit);
         model.addAttribute("topics", topicService.getTopics());
@@ -173,13 +163,27 @@ public class CourseController {
     }
 
     @GetMapping("/delete/{id}")
-    public String getDeleteCourse(@PathVariable @NotNull Integer id) {
+    public String getDeleteCourse(@PathVariable @NotNull Integer id, HttpSession req) {
+        // Check role access site
+        User user = (User) req.getAttribute("userSession");
+        if (user.getRole() != 1)
+            return "AccessDenied";
+        // check course exit
+        Course course = courseService.getCourseById(id);
+        if (course == null)
+            return "404";
+        // check owner course
+        if (courseService.checkCourseOwner(id))
+            return "AccessDenied";
+        // check published course
+        if (course.getStatus() == 3)
+            return "AccessDenied";
         courseService.deleteCourse((int) id);
         return "redirect:../list";
     }
 
     @GetMapping("/detail/{id}")
-    public String getDetail(@PathVariable @NotNull Integer id, Model model) {
+    public String getDetail(@PathVariable @NotNull Integer id, Model model, HttpSession req) {
         Course course = courseService.getCourseById(id);
         model.addAttribute("course", course);
         return "teacher/course/detail";

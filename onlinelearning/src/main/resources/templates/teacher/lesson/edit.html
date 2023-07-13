@@ -68,9 +68,11 @@
                                                             </p>
                                                         </div>
                                                         <div class="form-group">
-                                                            <video controls preload="auto" autoplay width="100%">
-                                                                <source th:src="@{'/video/' + ${lesson.video}}">
-                                                            </video>
+                                                            <div th:if="${oldVideo!=null} ">
+                                                                <video controls preload="auto" autoplay width="100%">
+                                                                    <source th:src="@{'/video/' + ${oldVideo}}">
+                                                                </video>
+                                                            </div>
                                                             <!-- <input type="hidden" th:field="*{video}"
                                                                 th:value="${lesson.video}"> -->
                                                             <label for="video">Video:</label>
@@ -78,7 +80,8 @@
                                                         </div>
                                                         <input type="hidden" th:field="*{id}">
                                                         <input type="hidden" th:field="*{course}">
-
+                                                        <input type="hidden" id="oldVideo" name="oldVideo"
+                                                            th:value="oldVideo">
                                                         <button type="submit" class="btn btn-primary">Update
                                                             Lesson</button>
                                                     </form>

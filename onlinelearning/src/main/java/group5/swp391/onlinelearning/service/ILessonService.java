@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.model.teacher.LessonDtoAdd;
-import group5.swp391.onlinelearning.model.teacher.LessonDtoEditVideo;
 
 @Service
 public interface ILessonService {
@@ -25,4 +24,9 @@ public interface ILessonService {
     public boolean isLessonOfCourse(int lessonId, int courseId);
 
     public Lesson updateLesson(@Valid Lesson lesson);
+
+    public Lesson deleteLessonById(Integer lessonId);
+
+    public Lesson deleteLessonByIdOfTeacher(Integer lessonId, Integer courseId);
+
 }
