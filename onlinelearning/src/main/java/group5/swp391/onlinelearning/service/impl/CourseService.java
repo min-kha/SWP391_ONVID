@@ -7,12 +7,14 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
@@ -25,13 +27,15 @@ import group5.swp391.onlinelearning.repository.TopicRepository;
 @Service
 public class CourseService {
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    CourseMapper courseMapper;
+    private CourseMapper courseMapper;
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     private HttpSession session;
 
@@ -111,6 +115,13 @@ public class CourseService {
         }
         // TODO: Throw exception in here
         return null;
+    }
+
+    public Course updateCourse(Course course) throws Exception {
+        if (courseRepository.findById(course.getId()).isPresent()){
+            return courseRepository.save(course);
+        }
+        throw new InvalidInputException("id", "course.notfound", "Course not found");
     }
 
     public Course deleteCourse(int id) {

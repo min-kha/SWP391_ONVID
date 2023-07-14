@@ -1,0 +1,108 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+        <style>
+            table {
+                width: 100%;
+            }
+
+            .datatable-search {
+                position: relative;
+            }
+
+            .datatable-input,
+            .datatable-selector {
+                padding: 8px 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+
+            .datatable-input:focus,
+            .datatable-selector:focus {
+                outline: none;
+                border-color: #5c7cfa;
+                box-shadow: 0 0 0 2px rgba(92, 124, 250, 0.5);
+            }
+
+            th {
+                color: #5c7cfa;
+            }
+        </style>
+        <!-- Alert when have message -->
+        <div class="row no-gutters fixed-top justify-content-end m-3">
+            <div class="col-lg-5 col-md-12 ml-auto">
+                <div class="alert alert-success fade show" role="alert">
+                    <h4 class="alert-heading">Success!</h4>
+                    <p>This is an alert within a column. The column can be made any size at different viewpoints.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid px-4">
+            <div class="card mb-4">
+                <h1 class="card-header" th:text="${title}">
+                </h1>
+                <div class="card-body table-responsive">
+                    <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
+                        <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
+                        <!-- Name	Status	Description	ImageLink	Price	Date	
+                            Topic	Views	CourseReviews	Feedbacks	Carts	Teacher	OrderDetails	Lessons -->
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Description</th>
+                                <th>ImageLink</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Topic</th>
+                                <th>Views</th>
+                                <th>Lessons</th>
+                                <th>Detail</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="entity : ${entities}">
+                                <td th:text="${entity.name}"></td>
+                                <td th:text="${entity.status}"></td>
+                                <td th:text="${entity.description}"></td>
+                                <td th:text="${entity.imageLink}"></td>
+                                <td th:text="${entity.price}"></td>
+                                <td th:text="${entity.date}"></td>
+                                <td th:text="${entity.topic.name}"></td>
+                                <td th:text="*{entity.views[0].viewNumber}"></td>
+                                <td th:text="${entity.lessons.size}"></td>
+                                <td>
+                                    <a th:href="'details/' + ${entity[fields[0].getName]}"
+                                        class="btn btn-secondary btn-sm " tabindex="-1" aria-disabled="true">Details</a>
+                                </td>
+                                <td>
+                                    <a th:href="'edit/' + ${entity[fields[0].getName]}"
+                                        class="btn btn-warning btn-sm px-3" tabindex="-1" aria-disabled="true">Edit</a>
+                                </td>
+                                <td>
+                                    <a th:href="'delete/' + ${entity[fields[0].getName]}" class="btn btn-danger btn-sm "
+                                        tabindex="-1" aria-disabled="true">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                // show the alert
+                setTimeout(function () {
+                    $(".alert").alert('close');
+                }, 2000);
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
+    </th:block>
+</th:block>
