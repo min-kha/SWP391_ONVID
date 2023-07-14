@@ -84,8 +84,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-9">
-                    <div th:if="${isVideo == true}">
+                <div class="col-sm-8">
+                    
+                    <div th:if="${isVideo}">
                         <h2 th:text="${lesson.title}"></h2>
                         <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span></h5>
                         <video controls preload="auto" autoplay width="100%">
@@ -108,7 +109,8 @@
                             </a>
                         </div>
                     </div>
-                    <div th:if="${isVideo == false}">
+                    <div th:if="${!isVideo}">
+                    
                         <h2 th:text="${lesson.title}"></h2>
                         <h5>
                             <span class="label label-danger" th:text="${lesson.name}">
@@ -120,15 +122,17 @@
                         <p th:text="${lesson.document}"></p>
                         <button onclick="showOptions()">Edit Lesson</button>
 
-                        <div id="optionsDiv" style="display: none;">
-                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/0'">
-                                <button class="btn btn-primary d-block" style="width: 150px;">
+                        <div id="optionsDiv" style="display: none; margin-top: 10px;">
+                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/0'"
+                                style="display: inline-block;">
+                                <button class="btn btn-secondary" style="width: 150px;">
                                     Edit lession with video
                                 </button>
                             </a>
 
-                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/1'">
-                                <button class="btn btn-primary d-block" style="width: 150px;">
+                            <a th:href="'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/1'"
+                                style="display: inline-block;">
+                                <button class="btn btn-secondary" style="width: 150px;">
                                     Edit lession with document
                                 </button>
                             </a>

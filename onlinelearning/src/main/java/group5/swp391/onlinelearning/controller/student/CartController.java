@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import group5.swp391.onlinelearning.entity.Cart;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.entity.WithdrawalDetail;
+import group5.swp391.onlinelearning.service.IWalletService;
+import group5.swp391.onlinelearning.service.IWithdrawalDetailService;
 import group5.swp391.onlinelearning.service.impl.CartService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
+import group5.swp391.onlinelearning.service.impl.WalletService;
 
 @Controller
 @RequestMapping("/student")
@@ -27,6 +31,10 @@ public class CartController {
     CartService cartService;
     @Autowired
     CourseService courseService;
+    @Autowired
+    IWalletService walletService;
+    @Autowired
+    IWithdrawalDetailService withdrawalDetailService;
 
     @PostMapping("/addToCart")
     public String addToCart(HttpSession session, HttpServletRequest request) {
@@ -68,6 +76,11 @@ public class CartController {
         User student = (User) session.getAttribute("studentSession");
         Cart cart = cartService.getCartByStudentId(student.getId());
         List<Course> courses = (List<Course>) session.getAttribute("cartStudentSession");
+        //TODO: Hung code
+        walletService.changeRevenue(courses);
+        withdrawalDetailService.addWithdrawalDetail(courses, student);
+
+        //TODO: Hung k code ở dưới
         cartService.deleteAllCourseInCart(courses, cart.getId());
         session.setAttribute("cartStudentSession",
                 cartService.getCoursebyCartId(cart.getId()));
