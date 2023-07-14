@@ -64,7 +64,7 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(70);
+        User user = userService.getUserById(1);
         req.setAttribute("userSession", user);
         // Check role access site
         if (user.getRole() != 1)
@@ -126,7 +126,7 @@ public class CourseController {
         if (course == null)
             return "404";
         // check owner course
-        if (courseService.checkCourseOwner(id))
+        if (!courseService.checkCourseOwner(id))
             return "AccessDenied";
         // check published course
         if (course.getStatus() == 3)

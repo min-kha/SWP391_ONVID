@@ -1,5 +1,7 @@
 package group5.swp391.onlinelearning.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private double revenue;
+    private BigDecimal revenue;
 
     @OneToOne
     @JoinColumn(name = "teacher_id")

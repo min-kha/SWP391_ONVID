@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,14 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class WithdrawalDetail {
     @Id
@@ -24,19 +29,23 @@ public class WithdrawalDetail {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "teacher_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private User student;
+    private User teacher;
 
     @ManyToOne
-    @JoinColumn(name = "staff_id")
+    @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private User staff;
+    private User user;
+
+    private BigDecimal money;
 
     private Date date;
 
     private int status;
+
+    private String descripton;
 
 }

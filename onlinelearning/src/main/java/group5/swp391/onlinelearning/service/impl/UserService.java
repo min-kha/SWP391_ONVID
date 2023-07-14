@@ -11,18 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.model.mapper.UserMapper;
-import group5.swp391.onlinelearning.service.IUserService;
-
 import group5.swp391.onlinelearning.repository.UserRepository;
-
+import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.utils.SHA1;
 
 
