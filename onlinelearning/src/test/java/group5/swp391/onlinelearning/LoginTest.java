@@ -1,8 +1,18 @@
 package group5.swp391.onlinelearning;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import javax.servlet.http.HttpSession;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -10,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import group5.swp391.onlinelearning.controller.student.LoginController;
+import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.service.IUserService;
 
 public class LoginTest {
