@@ -30,6 +30,7 @@ public class LessonMapper {
                 .course(course)
                 .document("")
                 .video(video)
+                .status(true)
                 .build();
         return lesson;
     }
@@ -41,6 +42,7 @@ public class LessonMapper {
                 .title(lessonDtoAdd.getTitle())
                 .course(course)
                 .document(document)
+                .status(true)
                 .build();
         return lesson;
     }

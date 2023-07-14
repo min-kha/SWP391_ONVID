@@ -16,6 +16,7 @@ import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
+import group5.swp391.onlinelearning.utils.PagingUtils;
 
 @Controller(value = "CourseStudentController")
 @RequestMapping("/student")
@@ -25,6 +26,9 @@ public class CourseController {
 
     @Autowired
     IViewService viewService;
+
+    @Autowired
+    PagingUtils pagingUtils;
 
     @GetMapping("/course/detail/{courseId}")
     public String detail(Model model, @PathVariable Integer courseId, HttpSession session) {
@@ -59,10 +63,20 @@ public class CourseController {
         return "/student/course/detail";
     }
 
-    @GetMapping("/my-course")
-    public String getMyCourse(HttpSession session, Model model) {
+    @GetMapping("/my-course/{pageChoose}")
+    public String getMyCourse(HttpSession session, Model model, @PathVariable String pageChoose) {
         User student = (User) session.getAttribute("studentSession");
         List<Course> courses = courseService.getMyCourse(student.getId());
+        int numberPerPage = 12;
+        List<Course> listOnPage = (List<Course>) pagingUtils.getPagingList(pageChoose,
+                courses, numberPerPage);
+        int numberOfPage = pagingUtils.getNumberOfPage(courses, numberPerPage);
+        int pageChooseInt = Integer.parseInt(pageChoose);
+
+        List<Integer> listPageNumber = pagingUtils.getListPageNumber(numberOfPage);
+        model.addAttribute("courses", listOnPage);
+        model.addAttribute("listPageNumber", listPageNumber);
+        model.addAttribute("pageChoose", pageChooseInt);
         model.addAttribute("courses", courses);
         return "student/course/my-course";
     }

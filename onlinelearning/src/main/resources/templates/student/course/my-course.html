@@ -75,6 +75,15 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <nav aria-label="..." style="margin: auto;">
+                <ul class="pagination pagination-lg">
+                    <li class="page-item" th:each="number : ${listPageNumber}">
+                        <a class="page-link" th:href="'/student/home/' + ${number}" th:text="${number}"
+                            th:style="'background-color: ' + ${number == pageChoose ? 'pink' : 'white'} + ';'"></a>
+                    </li>
+                </ul>
+            </nav>
         </section>
     </th:block>
 </th:block>
