@@ -22,7 +22,7 @@ public class AcoountManagerTest {
 
     @Test
     public void testGetAccountList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/account"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/admin/account"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attributeExists("listAccount"))
                 .andExpect(MockMvcResultMatchers.view().name("ManageAccount"));

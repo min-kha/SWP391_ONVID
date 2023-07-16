@@ -68,9 +68,10 @@ public class UserService implements IUserService {
     public User loginStudent(UserDTOLoginRequest student, Model model) {
         boolean checkInvalidAccount = false;
         boolean checkWrongAccountOrPassword = false;
-        List<User> users = getAllUsers();
+        User user = userRepository.login(student.getEmail());
+       
         // TODO: CHECK BẰNG SQL BY MINH KHA
-        for (User user : users) {
+       
             if (student.getEmail().equals(user.getEmail())
                     && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
                 if (user.getStatus()) {
@@ -78,12 +79,11 @@ public class UserService implements IUserService {
                 } else {
                     checkWrongAccountOrPassword = false;
                     checkInvalidAccount = true;
-                    break;
                 }
             } else {
                 checkWrongAccountOrPassword = true;
             }
-        }
+        
         if (checkInvalidAccount) {
             model.addAttribute("invalidAccount", "Your account has been locked");
         }

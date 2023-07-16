@@ -76,11 +76,12 @@ public class CartController {
         User student = (User) session.getAttribute("studentSession");
         Cart cart = cartService.getCartByStudentId(student.getId());
         List<Course> courses = (List<Course>) session.getAttribute("cartStudentSession");
+
         //TODO: Hung code
         walletService.changeRevenue(courses);
         withdrawalDetailService.addWithdrawalDetail(courses, student);
 
-        //TODO: Hung k code ở dưới
+
         cartService.deleteAllCourseInCart(courses, cart.getId());
         session.setAttribute("cartStudentSession",
                 cartService.getCoursebyCartId(cart.getId()));
