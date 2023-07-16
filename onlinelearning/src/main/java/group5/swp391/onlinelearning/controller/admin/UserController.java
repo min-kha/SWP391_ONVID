@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.controller.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
+import group5.swp391.onlinelearning.model.admin.UserDto;
 import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
@@ -35,8 +37,13 @@ public class UserController {
     @GetMapping("/index")
     public String getIndex(Model model) {
         List<User> users = userService.getAllUsers();
+        List<UserDto> usersDto = new ArrayList<>();
+        for (User user : users) {
+            usersDto.add(userService.map(user));
+            System.out.println(usersDto);
+        }
         String title = "List users - Admin";
-        thymeleafBaseCRUD.setBaseForList(model, users, title);
+        thymeleafBaseCRUD.setBaseForList(model, usersDto, title);
         return "sample/index";
     }
 
@@ -62,7 +69,7 @@ public class UserController {
             user = modelMapper.map(userDTORegisterRequest, User.class);
             userService.addStaff(user);
         } catch (InvalidInputException e) {
-            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getErrorMessage());
+            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getMessage());
             thymeleafBaseCRUD.setBaseForEntity(model, user, title);
             return "/sample/create";
         } catch (Exception e) {
@@ -72,27 +79,31 @@ public class UserController {
     }
 
     @GetMapping("/edit/{id}")
-    public String getEdit(Model model, @PathVariable @NotNull int id) {
+    public String getEdit(Model model, @PathVariable @NotNull int id) throws Exception {
         User user = userService.getUserById(id);
-        thymeleafBaseCRUD.setBaseForEntity(model, user, "Edit user - Admin");
+        var userDto = userService.map(user);
+        thymeleafBaseCRUD.setBaseForEntity(model, userDto, "Edit user - Admin");
         return "sample/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String postEdit(@Valid @ModelAttribute("entity") User user, BindingResult bindingResult,
+    public String postEdit(@Valid @ModelAttribute("entity") UserDto userDto, BindingResult bindingResult,
             Model model) {
         final String title = "Edit User - Admin";
+        User user = new User();
         try {
+            user = userService.map(userDto);
             if (bindingResult.hasErrors()) {
-                thymeleafBaseCRUD.setBaseForEntity(model, user, title);
+                thymeleafBaseCRUD.setBaseForEntity(model, userDto, title);
                 return "/sample/edit";
             }
             userService.updateUser(user);
         } catch (InvalidInputException e) {
             bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getMessage());
-            thymeleafBaseCRUD.setBaseForEntity(model, user, title);
+            thymeleafBaseCRUD.setBaseForEntity(model, userDto, title);
             return "/sample/edit";
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return "/error";
         }
         return "redirect:/admin/users/index";
@@ -119,7 +130,8 @@ public class UserController {
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         try {
             User user = userService.getUserById(id);
-            thymeleafBaseCRUD.setBaseForEntity(model, user, "Detail user - Admin");
+            UserDto userDto = userService.map(user);
+            thymeleafBaseCRUD.setBaseForEntity(model, userDto, "Detail user - Admin");
         } catch (Exception e) {
             return "/error";
         }

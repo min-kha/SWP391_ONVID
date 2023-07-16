@@ -18,4 +18,15 @@ public interface ILessonService {
     public Lesson addLessonVideo(@Valid LessonDtoAdd lessonDtoAdd, String fileName);
 
     public Lesson addLessonDocument(@Valid LessonDtoAdd lessonDtoAdd, String document);
+
+    public boolean isLessonVideo(int lessonId);
+
+    public boolean isLessonOfCourse(int lessonId, int courseId);
+
+    public Lesson updateLesson(@Valid Lesson lesson);
+
+    public Lesson deleteLessonById(Integer lessonId);
+
+    public Lesson deleteLessonByIdOfTeacher(Integer lessonId, Integer courseId);
+
 }

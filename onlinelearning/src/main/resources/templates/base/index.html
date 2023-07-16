@@ -55,12 +55,14 @@
                         <th>Delete</th>
                     </tr>
                 </thead>
-                <tbody th:unless="${entities.isEmpty}">
+                <tbody>
                     <tr th:each="entity : ${entities}">
                         <th:block th:each="field : ${fields}">
                             <td th:if="${field.getType.getSimpleName == 'Collection'}"
                                 th:text="${entity[field.getName].size}"></td>
-                            <td th:if="${field.getType.getSimpleName != 'Collection'}"
+                            <td th:if="${field.getType.getSimpleName == 'Boolean'}"
+                                th:text="${entity[field.getName]==true?'Active':'Deactive'}"></td>
+                            <td th:if="${field.getType.getSimpleName != 'Collection' && field.getType.getSimpleName != 'Boolean'}"
                                 th:text="${entity[field.getName]}"></td>
                         </th:block>
 
