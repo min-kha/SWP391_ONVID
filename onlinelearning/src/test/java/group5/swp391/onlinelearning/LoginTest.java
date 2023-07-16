@@ -84,7 +84,6 @@ public class LoginTest {
                 "MatKhauSai123@");
         when(bindingResult.hasErrors()).thenReturn(false);
         User user = new User();
-
         when(userService.loginStudent(student, model)).thenReturn(null);
 
         String result = loginController.postStudentLogin(student, bindingResult,

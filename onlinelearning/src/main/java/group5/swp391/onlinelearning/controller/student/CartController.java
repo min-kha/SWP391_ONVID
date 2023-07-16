@@ -68,6 +68,7 @@ public class CartController {
         User student = (User) session.getAttribute("studentSession");
         Cart cart = cartService.getCartByStudentId(student.getId());
         List<Course> courses = (List<Course>) session.getAttribute("cartStudentSession");
+
         cartService.deleteAllCourseInCart(courses, cart.getId());
         session.setAttribute("cartStudentSession",
                 cartService.getCoursebyCartId(cart.getId()));
