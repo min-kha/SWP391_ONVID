@@ -45,8 +45,10 @@
                                             <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
                                                 <ul>
                                                     <li th:each="error : ${#fields.globalErrors()}" th:text="${error}">
+
                                                     </li>
-                                                    </li>
+
+
                                                 </ul>
                                             </div>
                                             <div class="text-end">
