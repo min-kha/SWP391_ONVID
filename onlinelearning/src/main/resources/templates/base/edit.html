@@ -30,7 +30,15 @@
                                                                 th:field="*{__${field.getName}__}" th:id="${field.name}"
                                                                 class="form-control">
                                                         </th:block>
-                                                        <th:block th:case="Collection">
+                                                        <th:block th:case="'Boolean'">
+                                                            <select th:placeholder="*{__${field.getName}__}"
+                                                                th:field="*{__${field.getName}__}" th:id="${field.name}"
+                                                                class="form-control">
+                                                                <option value="true">Active</option>
+                                                                <option value="false">Deactive</option>
+                                                            </select>
+                                                        </th:block>
+                                                        <th:block th:case="'Collection'">
                                                             <input readonly th:placeholder="*{__${field.getName}__}"
                                                                 th:id="${field.name}" class="form-control">
                                                         </th:block>
