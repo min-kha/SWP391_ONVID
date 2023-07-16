@@ -38,7 +38,11 @@ public class ThymeleafBaseCRUD {
     public void setBaseForList(Model model, List<? extends Object> list, String title) {
         model.addAttribute("entities", list);
         model.addAttribute("title", title);
-        List<Field> fields = Arrays.asList(list.get(0).getClass().getDeclaredFields());
+        // TODO: Still get all fields from the empty list
+        List<Field> fields = null;
+        if (!list.isEmpty()) {
+            fields = Arrays.asList(list.get(0).getClass().getDeclaredFields());
+        }
         model.addAttribute("fields", fields);
     }
 }

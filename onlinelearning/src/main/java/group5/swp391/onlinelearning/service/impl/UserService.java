@@ -6,14 +6,15 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
+import group5.swp391.onlinelearning.model.admin.UserDto;
 import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
@@ -29,6 +30,8 @@ public class UserService implements IUserService {
     UserRepository userRepository;
     @Autowired
     UserMapper mapper;
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public List<User> getAllUsers() {
@@ -145,5 +148,55 @@ public class UserService implements IUserService {
 
     private boolean isDuplicateEmail(User user) {
         return userRepository.findByEmail(user.getEmail()) != null;
+    }
+
+    public String getRoleName(int role) {
+        switch (role) {
+            case 0:
+                return "STUDENT";
+            case 1:
+                return "TEACHER";
+            case 2:
+                return "STAFF";
+            case 3:
+                return "ADMIN";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
+    public int getRoleNumber(String role) throws Exception {
+        switch (role) {
+            case "STUDENT":
+                return 0;
+            case "TEACHER":
+                return 1;
+            case "STAFF":
+                return 2;
+            case "ADMIN":
+                return 3;
+            default:
+                throw new Exception("Invalid string role");
+        }
+    }
+
+    public UserDto map(User user) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        userDto.setRoleName(getRoleName(user.getRole()));
+        return userDto;
+    }
+
+    public User map(UserDto userDto) throws Exception {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        User user = modelMapper.map(userDto, User.class);
+        try {
+            String oldPassword = this.getUserById(userDto.getId()).getPassword();
+            user.setPassword(oldPassword);
+            user.setRole(getRoleNumber(userDto.getRoleName()));
+        } catch (Exception e) {
+            throw new InvalidInputException("roleName", "role.invalid", e.getMessage());
+        }
+        return user;
     }
 }

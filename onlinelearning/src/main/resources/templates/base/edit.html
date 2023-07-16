@@ -30,7 +30,15 @@
                                                                 th:field="*{__${field.getName}__}" th:id="${field.name}"
                                                                 class="form-control">
                                                         </th:block>
-                                                        <th:block th:case="Collection">
+                                                        <th:block th:case="'Boolean'">
+                                                            <select th:placeholder="*{__${field.getName}__}"
+                                                                th:field="*{__${field.getName}__}" th:id="${field.name}"
+                                                                class="form-control">
+                                                                <option value="true">Active</option>
+                                                                <option value="false">Deactive</option>
+                                                            </select>
+                                                        </th:block>
+                                                        <th:block th:case="'Collection'">
                                                             <input readonly th:placeholder="*{__${field.getName}__}"
                                                                 th:id="${field.name}" class="form-control">
                                                         </th:block>
@@ -43,6 +51,13 @@
                                                 <label th:if="${#fields.hasErrors('__${field.name}__')}"
                                                     th:errors="*{__${field.getName}__}" class="form-text text-danger">
                                                 </label>
+                                            </div>
+                                            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                                                <ul>
+                                                    <li th:each="error : ${#fields.globalErrors()}" th:text="${error}">
+                                                    </li>
+                                                    </li>
+                                                </ul>
                                             </div>
                                             <div class="text-end">
                                                 <button type="submit" class="px-3 btn btn-primary">Save</button>

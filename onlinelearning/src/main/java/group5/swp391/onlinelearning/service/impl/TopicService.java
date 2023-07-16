@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
-import group5.swp391.onlinelearning.repository.TopicRepository;
 import group5.swp391.onlinelearning.service.ITopicService;
+import group5.swp391.onlinelearning.repository.TopicRepository;
 
 @Service
 public class TopicService implements ITopicService {

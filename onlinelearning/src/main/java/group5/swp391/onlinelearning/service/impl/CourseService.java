@@ -1,21 +1,21 @@
 package group5.swp391.onlinelearning.service.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
-
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
@@ -26,13 +26,15 @@ import group5.swp391.onlinelearning.repository.TopicRepository;
 @Service
 public class CourseService {
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    CourseMapper courseMapper;
+    private CourseMapper courseMapper;
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     private HttpSession session;
 
@@ -64,7 +66,7 @@ public class CourseService {
     }
 
     public List<CourseDTOTeacher> getCourseDTOTeacherList() {
-        User teacher = (User) session.getAttribute("studentSession");
+        User teacher = (User) session.getAttribute("userSession");
         int id = teacher.getId();
         List<Course> courses = courseRepository.findAllByTeacherId(id);
         List<CourseDTOTeacher> cDtoTeachers = new ArrayList<CourseDTOTeacher>();
@@ -87,7 +89,7 @@ public class CourseService {
 
     // Check course have true teacher owener
     public boolean checkCourseOwner(int courseId) {
-        User teacher = (User) session.getAttribute("studentSession");
+        User teacher = (User) session.getAttribute("userSession");
         int id = teacher.getId();
         List<Course> courses = courseRepository.findAllByTeacherId(id);
         for (Course course : courses) {
@@ -112,6 +114,13 @@ public class CourseService {
         }
         // TODO: Throw exception in here
         return null;
+    }
+
+    public Course updateCourse(Course course) throws Exception {
+        if (courseRepository.findById(course.getId()).isPresent()){
+            return courseRepository.save(course);
+        }
+        throw new InvalidInputException("id", "course.notfound", "Course not found");
     }
 
     public Course deleteCourse(int id) {

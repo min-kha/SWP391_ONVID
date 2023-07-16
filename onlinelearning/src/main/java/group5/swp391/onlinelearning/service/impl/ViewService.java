@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.View;
-import group5.swp391.onlinelearning.repository.ViewRepositoty;
 import group5.swp391.onlinelearning.service.IViewService;
+import group5.swp391.onlinelearning.repository.ViewRepositoty;
 
 @Service
 public class ViewService implements IViewService {

@@ -28,11 +28,15 @@
             th {
                 color: #5c7cfa;
             }
+
+            td {
+                max-width: 200px;
+            }
         </style>
 
         <div class="container-fluid px-4">
             <div class="card mb-4">
-                <div class="card-header" th:text="'List ' + ${entities[0].class.getSimpleName}">
+                <div class="card-header" th:text="'List Course'">
                 </div>
                 <div class="card-body table-responsive">
 
@@ -53,7 +57,9 @@
                         <tbody>
                             <tr th:each="entity : ${entities}">
                                 <td th:text="${entity.name}"></td>
-                                <td> <img class="img-fluid" th:src="@{'/image/' + ${entity.image} }" alt="..." />
+                                <td> <img style="aspect-ratio: 4/3; object-fit: cover;" class="img-fluid w-100 h-100"
+                                        th:src="@{'/image/' + ${entity.image} }" alt="..."
+                                        onerror="checkAndReloadImage(this)" />
                                 </td>
                                 <td th:text="${entity.topic}"></td>
                                 <td>
@@ -91,7 +97,7 @@
                                             tabindex="-1" aria-disabled="true">Deactive</a>
                                     </div>
                                     <div th:if="${entity.status == 4}">
-                                        <a th:href="'delete/' + ${entity.id}" class="btn btn-danger btn-sm"
+                                        <a th:href="'delete/' + ${entity.id}" class="btn btn-success btn-sm"
                                             tabindex="-1" aria-disabled="true">Active</a>
                                     </div>
                                 </td>
@@ -103,5 +109,15 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
+        <script>
+            function checkAndReloadImage(imageUrl) {
+                setTimeout(function () {
+                    var newImg = new Image();
+                    newImg.src = imageUrl.src;
+                    // TODO: Xử lý tải lại ảnh tại đây, ví dụ gán lại ảnh vào một thẻ <img>
+                    imageUrl.src = newImg.src;
+                }, 300);
+            };
+        </script>
     </th:block>
 </th:block>

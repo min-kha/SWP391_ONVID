@@ -61,7 +61,7 @@ public class TopicController {
             topic = modelMapper.map(topicDto, Topic.class);
             topicService.addTopic(topic);
         } catch (InvalidInputException e) {
-            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getErrorMessage());
+            bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(), e.getMessage());
             thymeleafBaseCRUD.setBaseForEntity(model, topicDto, title);
             return "/sample/create";
         } catch (Exception e) {
