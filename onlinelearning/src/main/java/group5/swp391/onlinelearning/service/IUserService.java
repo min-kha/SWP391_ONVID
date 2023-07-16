@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.ui.Model;
 
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.admin.UserDto;
 import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
@@ -37,4 +38,11 @@ public interface IUserService {
     public void updateUser(User user) throws Exception;
 
     public void deleteUser(@NotNull int id);
+
+    public UserDto map(User user);
+
+    public int getRoleNumber(String role) throws Exception;
+
+    public User map(UserDto user) throws Exception;
+
 }
