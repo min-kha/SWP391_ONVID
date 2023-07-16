@@ -58,8 +58,6 @@ public class RegisterController {
     public String storeAccount(HttpSession session) {
         UserDTORegisterRequest userDTORegisterRequest = (UserDTORegisterRequest) session
                 .getAttribute("userRegisterSession");
-
-        
         User user = userService.addUserRegister(userDTORegisterRequest);
         cartService.createCart(user);
         session.invalidate();

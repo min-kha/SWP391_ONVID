@@ -66,21 +66,19 @@ public class UserService implements IUserService {
         boolean checkInvalidAccount = false;
         boolean checkWrongAccountOrPassword = false;
         User user = userRepository.login(student.getEmail());
-       
-        // TODO: CHECK BẰNG SQL BY MINH KHA
-       
-            if (student.getEmail().equals(user.getEmail())
-                    && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
-                if (user.getStatus()) {
-                    return user;
-                } else {
-                    checkWrongAccountOrPassword = false;
-                    checkInvalidAccount = true;
-                }
+
+        if (student.getEmail().equals(user.getEmail())
+                && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
+            if (user.getStatus()) {
+                return user;
             } else {
-                checkWrongAccountOrPassword = true;
+                checkWrongAccountOrPassword = false;
+                checkInvalidAccount = true;
             }
-        
+        } else {
+            checkWrongAccountOrPassword = true;
+        }
+
         if (checkInvalidAccount) {
             model.addAttribute("invalidAccount", "Your account has been locked");
         }
