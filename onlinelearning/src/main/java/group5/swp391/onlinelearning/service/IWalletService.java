@@ -12,4 +12,6 @@ public interface IWalletService {
     public BigDecimal getRevenue();
 
     public void changeRevenue(List<Course> listCourse);
+
+    public void subRevenue(BigDecimal money);
 }

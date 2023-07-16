@@ -64,7 +64,7 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(1);
+        User user = userService.getUserById(70);
         req.setAttribute("userSession", user);
         // Check role access site
         if (user.getRole() != 1)

@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import group5.swp391.onlinelearning.entity.Cart;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.service.ICartService;
 import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.service.OtpService;
-import group5.swp391.onlinelearning.utils.SHA1;
 
 @Controller
 public class RegisterController {
@@ -59,7 +57,6 @@ public class RegisterController {
         UserDTORegisterRequest userDTORegisterRequest = (UserDTORegisterRequest) session
                 .getAttribute("userRegisterSession");
 
-        
         User user = userService.addUserRegister(userDTORegisterRequest);
         cartService.createCart(user);
         session.invalidate();
