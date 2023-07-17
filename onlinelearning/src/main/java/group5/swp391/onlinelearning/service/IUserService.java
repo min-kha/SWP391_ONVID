@@ -21,7 +21,7 @@ public interface IUserService {
 
     public User getUserById(int id);
 
-    public void changeStatus(int id);
+    public void changeStatus(int id) throws Exception;
 
     public void addStaff(StaffDTOCreate staffDTOCreate);
 

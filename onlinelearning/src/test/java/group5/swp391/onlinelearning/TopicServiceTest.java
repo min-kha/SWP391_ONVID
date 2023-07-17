@@ -112,16 +112,16 @@ public class TopicServiceTest {
 
     @Test
     public void testUpdateTopicDuplicateHashtag() {
-        Topic exitingTopic = getRandomTopic();
+        Topic existingTopic = getRandomTopic();
         Topic topic = getRandomTopic();
         Topic updatingTopic = getRandomTopic();
         updatingTopic.setId(topic.getId());
         // assuming that updatingTopic has the same hashtag with exitingTopic
-        updatingTopic.setHashtag(exitingTopic.getHashtag());
+        updatingTopic.setHashtag(existingTopic.getHashtag());
 
         when(topicRepository.findById(updatingTopic.getId())).thenReturn(Optional.of(topic));
         // hashtag is duplicate
-        when(topicRepository.findByHashtag(updatingTopic.getHashtag())).thenReturn(exitingTopic);
+        when(topicRepository.findByHashtag(updatingTopic.getHashtag())).thenReturn(existingTopic);
 
         assertThrows(InvalidInputException.class, () -> topicService.updateTopic(updatingTopic));
         verify(topicRepository, never()).save(updatingTopic);
