@@ -50,8 +50,8 @@
                                 <th>Topic</th>
                                 <th>Status</th>
                                 <th>Price</th>
-                                <!-- <th>Action</th> -->
-                                <th></th>
+                                <th>Action</th>
+                                <!-- <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -64,11 +64,14 @@
                                 <td th:text="${entity.topic}"></td>
                                 <td>
                                     <div th:switch="${entity.status}">
+                                        <div th:case="-1">
+                                            <div class="btn btn-secondary btn-sm" th:text="Draf"></div>
+                                        </div>
                                         <div th:case="0">
-                                            <div class="btn btn-secondary btn-sm" th:text="Unsubmit"></div>
+                                            <div class="btn btn-info btn-sm" th:text="Submited"></div>
                                         </div>
                                         <div th:case="1">
-                                            <div class="btn btn-info btn-sm" th:text="Submited"></div>
+                                            <div class="btn btn-light btn-sm" th:text="Reviewing"></div>
                                         </div>
                                         <div th:case="2">
                                             <div class="btn btn-danger btn-sm" th:text="Reject"></div>
@@ -76,7 +79,7 @@
                                         <div th:case="3">
                                             <div class="btn btn-success btn-sm" th:text="Published"></div>
                                         </div>
-                                        <div th:case="*">
+                                        <div th:case="4">
                                             <div class="btn btn-dark btn-sm" th:text="DeActive"></div>
                                         </div>
                                     </div>
@@ -87,9 +90,15 @@
                                 <td>
                                     <a th:href="'detail/' + ${entity.id}" class="btn btn-secondary btn-sm "
                                         tabindex="-1" aria-disabled="true">Details</a>
-                                    <a th:if="${entity.status ne 3 and entity.status ne 1}"
+                                    <a th:if="${entity.status ne 3 and entity.status ne 0 and entity.status ne 1}"
                                         th:href="'edit/' + ${entity.id}" class="btn btn-warning btn-sm px-3"
-                                        tabindex="-1" aria-disabled="true">Edit</aư>
+                                        tabindex="-1" aria-disabled="true">Edit</a>
+                                    <a th:if="${entity.status ne 3 and entity.status ne 0 and entity.status ne 1}"
+                                        th:href="'submit/' + ${entity.id}" class="btn btn-info btn-sm px-3"
+                                        tabindex="-1" aria-disabled="true">Submited</a>
+                                    <a th:if="${entity.status ne 3 and entity.status ne 0 and entity.status ne 1}"
+                                        th:href="'delete/' + ${entity.id}" class="btn btn-danger btn-sm px-3"
+                                        tabindex="-1" aria-disabled="true">Delete</a>
                                 </td>
                                 <!-- <td>
                                     <div th:if="${entity.status != 4}">

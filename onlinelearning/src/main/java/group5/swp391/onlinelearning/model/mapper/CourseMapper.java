@@ -77,7 +77,7 @@ public class CourseMapper {
                 .name(courseDTOAdd.getName())
                 .date(date)
                 .imageLink(courseDTOAdd.getImageLink())
-                .status(0)
+                .status(-1)
                 .price(courseDTOAdd.getPrice())
                 .topic(topic)
                 .teacher(teacher)

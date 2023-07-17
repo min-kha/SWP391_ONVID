@@ -1,31 +1,22 @@
 package group5.swp391.onlinelearning;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
-import group5.swp391.onlinelearning.controller.teacher.CourseController;
-import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
+import group5.swp391.onlinelearning.repository.CourseRepository;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.service.impl.UserService;
-import group5.swp391.onlinelearning.repository.CourseRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
