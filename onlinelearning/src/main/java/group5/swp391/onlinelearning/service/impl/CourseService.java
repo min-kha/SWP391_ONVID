@@ -28,13 +28,9 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
-    private UserService userService;
-    @Autowired
     private CourseMapper courseMapper;
     @Autowired
     private TopicRepository topicRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
     private HttpSession session;
 
@@ -117,7 +113,7 @@ public class CourseService {
     }
 
     public Course updateCourse(Course course) throws Exception {
-        if (courseRepository.findById(course.getId()).isPresent()){
+        if (courseRepository.findById(course.getId()).isPresent()) {
             return courseRepository.save(course);
         }
         throw new InvalidInputException("id", "course.notfound", "Course not found");
