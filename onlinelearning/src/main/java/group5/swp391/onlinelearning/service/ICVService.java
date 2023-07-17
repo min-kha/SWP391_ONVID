@@ -18,5 +18,7 @@ public interface ICVService {
 
     public CV getCVById(int id);
 
+    public CV getCVByTeacherId(int teacherId);
+
     public void createNewCV(User teacherId, String pdf_link);
 }

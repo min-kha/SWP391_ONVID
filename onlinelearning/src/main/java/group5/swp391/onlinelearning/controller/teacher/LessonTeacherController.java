@@ -153,8 +153,9 @@ public class LessonTeacherController {
 
     @GetMapping(value = "lesson/detail/{courseId}/{lessonId}")
     public String getLessons(@PathVariable Integer courseId, Model model, @PathVariable Integer lessonId) {
+        // get course
+        Course course = courseService.getCourseById(courseId);
         // get all lesson following by courseid
-
         List<Lesson> lessons = lessonService.getLessonsByCourseId(courseId);
         Lesson lesson = null;
         try {
@@ -170,29 +171,34 @@ public class LessonTeacherController {
         model.addAttribute("lesson", lesson);
         model.addAttribute("empty", 1);
         model.addAttribute("isVideo", isVideo);
+        model.addAttribute("course", course);
         return "teacher/lesson/list";
     }
 
     @GetMapping(value = "lesson/list/{courseId}")
     public String getListLessons(@PathVariable Integer courseId, Model model) {
+        // get course
+        Course course = courseService.getCourseById(courseId);
+
         // get all lesson following by courseid
         List<Lesson> lessons = lessonService.getLessonsByCourseId(courseId);
 
         Lesson lesson = null;
         // check empty courses
         int empty = 0; // = 0 uf for course not have lessson
+        boolean isVideo = true;
         if (lessons.size() != 0) {
             empty = 1;
             lesson = lessons.get(0);
-        }
-        boolean isVideo = true;
-        if (lesson.getVideo() == null || lesson.getVideo().isEmpty()) {
-            isVideo = false;
+            if (lesson.getVideo() == null || lesson.getVideo().isEmpty()) {
+                isVideo = false;
+            }
         }
         model.addAttribute("isVideo", isVideo);
         model.addAttribute("empty", empty);
         model.addAttribute("lessons", lessons);
         model.addAttribute("lesson", lesson);
+        model.addAttribute("course", course);
         return "teacher/lesson/list";
     }
 
@@ -295,7 +301,7 @@ public class LessonTeacherController {
             return "teacher/lesson/edit";
         }
 
-        // TODO:Save
+        // Save
         Lesson lesson = modelMapper.map(lessonDtoEditVideo, Lesson.class);
         lesson.setVideo(oldVideo);
         lesson.setDocument("");
@@ -318,7 +324,7 @@ public class LessonTeacherController {
             return "teacher/lesson/edit";
         }
 
-        // TODO:Save
+        // Save
         Lesson lesson = modelMapper.map(lessonDtoEditDocument, Lesson.class);
         lesson.setVideo("");
         lesson.setStatus(true);
@@ -342,6 +348,8 @@ public class LessonTeacherController {
         // Check lesson in course or not
         if (!lessonService.isLessonOfCourse(lessonId, courseId))
             return "404";
+        // Published course and Submitted Course shouldn't delete
+
         // Delete lesson
         if (lessonService.deleteLessonByIdOfTeacher(lessonId, courseId) == null)
             return "404";

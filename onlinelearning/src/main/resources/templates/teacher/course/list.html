@@ -87,9 +87,9 @@
                                 <td>
                                     <a th:href="'detail/' + ${entity.id}" class="btn btn-secondary btn-sm "
                                         tabindex="-1" aria-disabled="true">Details</a>
-
-                                    <a th:href="'edit/' + ${entity.id}" class="btn btn-warning btn-sm px-3"
-                                        tabindex="-1" aria-disabled="true">Edit</a>
+                                    <a th:if="${entity.status ne 3 and entity.status ne 1}"
+                                        th:href="'edit/' + ${entity.id}" class="btn btn-warning btn-sm px-3"
+                                        tabindex="-1" aria-disabled="true">Edit</aư>
                                 </td>
                                 <!-- <td>
                                     <div th:if="${entity.status != 4}">
