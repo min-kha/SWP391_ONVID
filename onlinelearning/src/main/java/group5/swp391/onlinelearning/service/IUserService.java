@@ -17,6 +17,8 @@ import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 public interface IUserService {
     public List<User> getAllUsers();
 
+    public User addTeacherRegister(UserDTORegisterRequest userDTORegisterRequest);
+
     public Collection<UserDTOAccountRequest> getAllUserDTOAccountRequest();
 
     public User getUserById(int id);

@@ -85,12 +85,12 @@
                     </div>
                 </div>
                 <div class="col-sm-8">
-                    
+
                     <div th:if="${isVideo}">
                         <h2 th:text="${lesson.title}"></h2>
                         <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span></h5>
                         <video controls preload="auto" autoplay width="100%">
-                            <source th:src="@{'/video/' + ${lesson.video}}">
+                            <source th:src="@{'/video/' + ${lesson.video}}" onerror="checkAndReloadImage(this)">
                         </video>
                         <button onclick="showOptions()" class="btn btn-labeled btn-info">Edit Lesson</button>
                         <div id="optionsDiv" style="display: none; margin-top: 10px;">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                     <div th:if="${!isVideo}">
-                    
+
                         <h2 th:text="${lesson.title}"></h2>
                         <h5>
                             <span class="label label-danger" th:text="${lesson.name}">
@@ -145,6 +145,15 @@
                     var optionsDiv = document.getElementById("optionsDiv");
                     optionsDiv.style.display = "block";
                 }
+
+                function checkAndReloadImage(imageUrl) {
+                    setTimeout(function () {
+                        var newImg = new Image();
+                        newImg.src = imageUrl.src;
+                        // TODO: Xử lý tải lại ảnh tại đây, ví dụ gán lại ảnh vào một thẻ <img>
+                        imageUrl.src = newImg.src;
+                    }, 300);
+                };
             </script>
     </th:block>
 </th:block>

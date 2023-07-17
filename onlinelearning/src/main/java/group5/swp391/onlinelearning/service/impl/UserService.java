@@ -54,7 +54,7 @@ public class UserService implements IUserService {
         var value = userRepository.findById(id);
         if (value.isPresent()) {
             user = value.get();
-        } else{
+        } else {
             throw new Exception("User not found");
         }
         if (Boolean.TRUE.equals(user.getStatus())) {
@@ -202,5 +202,12 @@ public class UserService implements IUserService {
             throw new InvalidInputException("roleName", "role.invalid", e.getMessage());
         }
         return user;
+    }
+
+    @Override
+    public User addTeacherRegister(UserDTORegisterRequest userDTORegisterRequest) {
+        userDTORegisterRequest.setPassword(SHA1.toSHA1(userDTORegisterRequest.getPassword()));
+        User user = mapper.userDTORegisterRequestToTeacher(userDTORegisterRequest);
+        return userRepository.save(user);
     }
 }

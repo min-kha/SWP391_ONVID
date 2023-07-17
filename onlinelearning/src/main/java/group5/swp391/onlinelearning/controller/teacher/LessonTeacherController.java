@@ -35,7 +35,6 @@ import group5.swp391.onlinelearning.model.teacher.LessonDtoEditDocument;
 import group5.swp391.onlinelearning.model.teacher.LessonDtoEditVideo;
 import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-import lombok.val;
 
 @RequestMapping(value = "/teacher")
 @Service
@@ -61,6 +60,7 @@ public class LessonTeacherController {
         if (!courseService.checkCourseOwner(courseid))
             return "AccessDenied";
         model.addAttribute("courseId", courseid);
+        model.addAttribute("errorFormat", "");
         return "teacher/lesson/choose-option";
     }
 
@@ -84,7 +84,7 @@ public class LessonTeacherController {
     @PostMapping("/lesson/create/video/{courseid}")
     public String postCreateLesson(
             @Valid @ModelAttribute("lesson") LessonDtoAdd lessonDtoAdd, BindingResult result, HttpServletRequest req,
-            @RequestParam("video") MultipartFile video) throws IOException, ServletException {
+            @RequestParam("video") MultipartFile video, Model model) throws IOException, ServletException {
         if (result.hasErrors()) {
             return "/lesson/create/" + lessonDtoAdd.getCourseId();
         }
@@ -93,15 +93,28 @@ public class LessonTeacherController {
         lessonDtoAdd.setCourseId(courseId);
 
         // lay link video va luu video vao project
+        // Xử lý video
         String projectPath = System.getProperty("user.dir");
         String fileName = "";
         Part filePart = req.getPart("video");
         fileName = filePart.getSubmittedFileName();
-        String relativePath = "\\src\\main\\resources\\static\\video";
-        String filePath = projectPath + relativePath + File.separator + fileName;
-        Path path = Paths.get(filePath);
-        InputStream inputStream = filePart.getInputStream();
-        Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+        if (fileName.endsWith(".mp4") || fileName.endsWith(".mov")) {
+            String relativePath = "\\src\\main\\resources\\static\\video";
+            String filePath = projectPath + relativePath + File.separator + fileName;
+            Path path = Paths.get(filePath);
+            try (InputStream inputStream = filePart.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                return "404";
+            }
+        } else {
+            Lesson lesson = new Lesson();
+            lesson.setCourse(courseService.getCourseById(courseId));
+            model.addAttribute("lesson", new LessonDtoAdd());
+            model.addAttribute("id", courseId);
+            model.addAttribute("errorFormat", "Video is not available");
+            return "teacher/lesson/add-video";
+        }
 
         try {
             Lesson lesson = lessonService.addLessonVideo(lessonDtoAdd, fileName);
@@ -233,6 +246,7 @@ public class LessonTeacherController {
         }
 
         model.addAttribute("options", options);
+        model.addAttribute("errorFormat", "");
 
         // với trường hợp thêm mới lesson thay thế vào
         return "/teacher/lesson/edit";
@@ -241,7 +255,7 @@ public class LessonTeacherController {
     @PostMapping(value = "lesson/edit/{courseId}/{lessonId}/0")
     public String postEditVideo(
             @Valid @ModelAttribute("lesson") LessonDtoEditVideo lessonDtoEditVideo, BindingResult result,
-            HttpServletRequest req,
+            HttpServletRequest req, @PathVariable Integer courseId, @PathVariable Integer lessonId,
             @RequestParam("video") MultipartFile video, Model model) throws IOException, ServletException {
         if (result.hasErrors()) {
             model.addAttribute("options", 0);
@@ -253,7 +267,7 @@ public class LessonTeacherController {
         String fileName = "";
         Part filePart = req.getPart("video");
         fileName = filePart.getSubmittedFileName();
-        if (!fileName.equals("")) {
+        if (fileName.endsWith(".mp4") || fileName.endsWith(".mov")) {
             String relativePath = "\\src\\main\\resources\\static\\video";
             String filePath = projectPath + relativePath + File.separator + fileName;
             Path path = Paths.get(filePath);
@@ -263,6 +277,22 @@ public class LessonTeacherController {
                 return "404";
             }
             oldVideo = fileName;
+        } else {
+            // TODO:
+            Lesson lesson = modelMapper.map(lessonDtoEditVideo, Lesson.class);
+            model.addAttribute("errorFormat", "Video format not supported");
+            model.addAttribute("options", 0);
+            if (lesson.getDocument() != null || lesson.getDocument() != "") {
+                LessonDtoEditDocument lessonEditDocument = new LessonDtoEditDocument();
+                lessonEditDocument = modelMapper.map(lesson, LessonDtoEditDocument.class);
+                model.addAttribute("lesson", lessonEditDocument);
+            } else {
+                LessonDtoEditVideo lessonDtoEdit = new LessonDtoEditVideo();
+                lessonDtoEdit = modelMapper.map(lesson, LessonDtoEditVideo.class);
+                model.addAttribute("oldVideo", oldVideo);
+                model.addAttribute("lesson", lessonDtoEdit);
+            }
+            return "teacher/lesson/edit";
         }
 
         // TODO:Save

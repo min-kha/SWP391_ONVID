@@ -50,7 +50,7 @@
                                 <th>Topic</th>
                                 <th>Status</th>
                                 <th>Price</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                                 <th></th>
                             </tr>
                         </thead>
@@ -91,7 +91,7 @@
                                     <a th:href="'edit/' + ${entity.id}" class="btn btn-warning btn-sm px-3"
                                         tabindex="-1" aria-disabled="true">Edit</a>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <div th:if="${entity.status != 4}">
                                         <a th:href="'delete/' + ${entity.id}" class="btn btn-danger btn-sm"
                                             tabindex="-1" aria-disabled="true">Deactive</a>
@@ -100,7 +100,7 @@
                                         <a th:href="'delete/' + ${entity.id}" class="btn btn-success btn-sm"
                                             tabindex="-1" aria-disabled="true">Active</a>
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>

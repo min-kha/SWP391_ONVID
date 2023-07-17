@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.CV;
+import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.repository.CVRepository;
 import group5.swp391.onlinelearning.service.ICVService;
@@ -49,6 +51,18 @@ public class CVService implements ICVService {
     @Override
     public CV getCVById(int id) {
         return cVRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void createNewCV(User teacher, String pdf_link) {
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        CV cv = new CV();
+        cv.setDate(date);
+        cv.setTeacher(teacher);
+        cv.setStatus(0);
+        cv.setPdfLink(pdf_link);
+        cVRepository.save(cv);
     }
 
 }

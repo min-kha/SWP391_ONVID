@@ -117,7 +117,7 @@ public class CourseService {
     }
 
     public Course updateCourse(Course course) throws Exception {
-        if (courseRepository.findById(course.getId()).isPresent()){
+        if (courseRepository.findById(course.getId()).isPresent()) {
             return courseRepository.save(course);
         }
         throw new InvalidInputException("id", "course.notfound", "Course not found");

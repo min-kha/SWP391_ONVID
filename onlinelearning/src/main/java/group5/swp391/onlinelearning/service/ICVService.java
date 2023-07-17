@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import group5.swp391.onlinelearning.entity.CV;
+import group5.swp391.onlinelearning.entity.User;
 
 public interface ICVService {
     public List<CV> getCVs();
@@ -16,4 +17,6 @@ public interface ICVService {
     public void updateCV(@NotNull CV cv) throws Exception;
 
     public CV getCVById(int id);
+
+    public void createNewCV(User teacherId, String pdf_link);
 }
