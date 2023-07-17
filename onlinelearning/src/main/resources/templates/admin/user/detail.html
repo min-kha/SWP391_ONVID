@@ -1,0 +1,65 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <div class="pb-3">
+                                                    <h1 th:text="${title}"></h1>
+                                                    <div>
+                                                        <hr />
+                                                        <dl class="row border rounded p-3">
+                                                            <th:block th:each="field : ${fields}">
+                                                                <th:block>
+                                                                    <dt th:text="${field.getName}"
+                                                                        class="col-sm-3 fw-bold text-capitalize">
+                                                                    </dt>
+                                                                    <dd class="col-sm-9"
+                                                                        th:switch="${field.getType().getSimpleName()}">
+                                                                        <ol th:each="e : ${entity[field.getName()]}"
+                                                                            th:case="'Collection'">
+                                                                            <li th:text="${e.name}"></li>
+                                                                        </ol>
+                                                                        <span th:case="Boolean"
+                                                                            th:text="${entity[field.getName()]==true?'Active':'Deactive'}"
+                                                                            class="col-sm-9">
+                                                                        </span>
+                                                                        <span th:case="*"
+                                                                            th:text="${entity[field.getName()]}"
+                                                                            class="col-sm-9">
+                                                                        </span>
+                                                                    </dd>
+
+
+                                                                    <hr style="color: #aaaaaa" />
+                                                                </th:block>
+                                                        </dl>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <a th:href="'../edit/' + ${entity[fields[0].getName]}"
+                                                            class="btn btn-warning px-3 " aria-disabled="true">Edit</a>
+                                                        <a th:href="'../' + 'index'" class="btn btn-link px-3 "
+                                                            aria-disabled="true">Back
+                                                            to list</a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </th:block>
+</th:block>
