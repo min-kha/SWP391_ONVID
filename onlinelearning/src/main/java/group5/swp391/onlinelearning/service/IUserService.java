@@ -33,6 +33,8 @@ public interface IUserService {
 
     public User loginStudent(UserDTOLoginRequest student, Model model);
 
+    public User loginTeacher(UserDTOLoginRequest student, Model model, Boolean isProcess);
+
     public User changePassword(User user);
 
     public void addStaff(User user) throws Exception;

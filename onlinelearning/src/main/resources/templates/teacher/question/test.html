@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quizizz Clone - Questions</title>
+</head>
+
+<body>
+    <h1>Quizizz Clone - Questions</h1>
+    <form id="questionForm" action="/questions/add" method="post" th:object="${course}">
+        <label for="questionText">Question:</label>
+        <input type="text" id="questionText" name="questionText" required th:field="*{name}"><br>
+        <div id="answersContainer">
+            <div class="answer">
+                <label for="answer1">Answer 1:</label>
+                <input type="text" id="answer1" name="answers" required th:field="*{answer[1]}">
+                <input type="radio" name="correctRadio" value="1" required th:field="*{answer[1].isCorrect}">
+            </div>
+            <div class="answer">
+                <label for="answer2">Answer 2:</label>
+                <input type="text" id="answer2" name="answers" required th:field="*{answer[2]}">
+                <input type="radio" name="correctRadio" value="2" required th:field="*{answer[2].isCorrect}">
+            </div>
+        </div>
+        <button type="button" onclick="addAnswer()">Add Answer</button>
+        <button type="submit">Add Question</button>
+    </form>
+    <h2>List of Questions:</h2>
+    <ul>
+        <li th:each="question : ${questions}">
+            <span th:text="${question.questionText}"></span>
+        </li>
+    </ul>
+    <script>
+        let answerCount = 2;
+
+        function addAnswer() {
+            const answersContainer = document.getElementById('answersContainer');
+            const newAnswerDiv = document.createElement('div');
+            newAnswerDiv.className = 'answer';
+
+            const answerLabel = document.createElement('label');
+            answerLabel.textContent = `Answer ${answerCount + 1}:`;
+
+            const answerInput = document.createElement('input');
+            answerInput.type = 'text';
+            answerInput.name = 'answers';
+            answerInput.required = true;
+
+            const correctRadio = document.createElement('input');
+            correctRadio.type = 'radio';
+            correctRadio.name = 'correctRadio';
+            correctRadio.value = answerCount + 1;
+            correctRadio.required = true;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function () {
+                removeAnswer(this);
+            };
+
+            newAnswerDiv.appendChild(answerLabel);
+            newAnswerDiv.appendChild(answerInput);
+            newAnswerDiv.appendChild(correctRadio);
+            newAnswerDiv.appendChild(deleteButton);
+
+            answersContainer.appendChild(newAnswerDiv);
+
+            answerCount++;
+        }
+
+        function removeAnswer(button) {
+            const answerDiv = button.parentNode;
+            answerDiv.remove();
+        }
+    </script>
+</body>
+
+</html>

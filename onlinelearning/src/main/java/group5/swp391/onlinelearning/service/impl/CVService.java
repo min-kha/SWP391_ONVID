@@ -65,4 +65,9 @@ public class CVService implements ICVService {
         cVRepository.save(cv);
     }
 
+    @Override
+    public CV getCVByTeacherId(int teacherId) {
+        return cVRepository.getCVByTeacherId(teacherId);
+    }
+
 }

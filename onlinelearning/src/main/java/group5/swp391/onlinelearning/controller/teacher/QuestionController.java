@@ -19,21 +19,30 @@ public class QuestionController {
     @Autowired
     CourseService courseService;
 
+    // @GetMapping("/lesson/create/{courseid}")
+    // public String getCreateLesson(@PathVariable Integer courseid, Model model,
+    // HttpSession req) {
+    // // check role
+    // User user = (User) req.getAttribute("userSession");
+    // if (user.getRole() != 1)
+    // return "AccessDenied";
+    // // check valid course
+    // if (courseid == null || !courseService.isCourse(courseid)) {
+    // return "404";
+    // }
+    // if (!courseService.checkCourseOwner(courseid))
+    // return "AccessDenied";
+    // //
+    // model.addAttribute("question", new Question());
+
+    // return "/teacher/question/create";
+    // }
+
     @GetMapping("/lesson/create/{courseid}")
     public String getCreateLesson(@PathVariable Integer courseid, Model model, HttpSession req) {
-        // check role
-        User user = (User) req.getAttribute("userSession");
-        if (user.getRole() != 1)
-            return "AccessDenied";
-        // check valid course
-        if (courseid == null || !courseService.isCourse(courseid)) {
-            return "404";
-        }
-        if (!courseService.checkCourseOwner(courseid))
-            return "AccessDenied";
-        //
-        model.addAttribute("question", new Question());
+        Question question = new Question();
+        model.addAttribute("quiz", question);
 
-        return "/teacher/question/create";
+        return "teacher/question/testKha";
     }
 }

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -20,6 +21,10 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String question;
+
+    @OneToOne
+    @JoinColumn(name = "answer")
+    private AnswerChoice answer;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
