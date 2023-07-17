@@ -81,10 +81,10 @@ public class LessonService implements ILessonService {
     @Override
     public Lesson deleteLessonByIdOfTeacher(Integer lessonId, Integer courseId) {
         Course course = courseService.getCourseById(courseId);
-        if (course.getStatus() != 3) {
+        // check published course, submited, progeressing
+        if (course.getStatus() != 3 || course.getStatus() != 0 || course.getStatus() != 1) {
             return deleteLessonById(lessonId);
         }
-        // TODO: course == 3 (đã được đăng) Thì xử lý ntn
         return null;
     }
 

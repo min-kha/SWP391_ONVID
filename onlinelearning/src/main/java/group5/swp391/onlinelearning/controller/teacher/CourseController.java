@@ -147,8 +147,8 @@ public class CourseController {
         // check owner course
         if (!courseService.checkCourseOwner(id))
             return "AccessDenied";
-        // check published course
-        if (course.getStatus() == 3)
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
             return "AccessDenied";
         CourseDTOEdit courseDTEdit = mapper.courseToCourseDtoEdit(course);
         model.addAttribute("errorFormat", "");
@@ -184,10 +184,10 @@ public class CourseController {
             course.setImageLink(fileName);
             // fileName is not valid ( != jpg and png files)
         } else {
-            model.addAttribute("errorFormat", "");
+            model.addAttribute("errorFormat", "Image in not correct");
             model.addAttribute("course", course);
             model.addAttribute("topics", topicService.getTopics());
-            return "teacher/course/edit/" + course.getId();
+            return "teacher/course/edit";
         }
         // set other parameters and save them
         int topic_id = Integer.parseInt(req.getParameter("topic"));
@@ -209,8 +209,8 @@ public class CourseController {
         // check owner course
         if (!courseService.checkCourseOwner(id))
             return "AccessDenied";
-        // check published course
-        if (course.getStatus() == 3)
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
             return "AccessDenied";
         courseService.deleteCourse((int) id);
         return "redirect:/teacher/course/list";
@@ -221,5 +221,26 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         model.addAttribute("course", course);
         return "teacher/course/detail";
+    }
+
+    @GetMapping("/submit/{id}")
+    public String getSubmitCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
+        // Check role access site
+        User user = (User) req.getAttribute("userSession");
+        if (user.getRole() != 1)
+            return "AccessDenied";
+        // check course exit
+        Course course = courseService.getCourseById(id);
+        if (course == null)
+            return "404";
+        // check owner course
+        if (!courseService.checkCourseOwner(id))
+            return "AccessDenied";
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
+            return "AccessDenied";
+        // change status of course
+        courseService.submitCourse(course);
+        return "redirect:/teacher/course/list";
     }
 }
