@@ -41,7 +41,7 @@ public class UserService implements IUserService {
     @Override
     public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
         List<User> list = this.getAllUsers();
-        List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<UserDTOAccountRequest>();
+        List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<>();
         for (User user : list) {
             listUserDTOAccountRequest.add(mapper.mapperUsertoUserDTOAccountRequest(user));
         }
@@ -49,9 +49,15 @@ public class UserService implements IUserService {
     }
 
     // TODO: MUST CHANGE, After changes variable type of status from int to Boolean
-    public void changeStatus(int id) {
-        User user = userRepository.findById(id).get();
-        if (user.getStatus()) {
+    public void changeStatus(int id) throws Exception {
+        User user;
+        var value = userRepository.findById(id);
+        if (value.isPresent()) {
+            user = value.get();
+        } else{
+            throw new Exception("User not found");
+        }
+        if (Boolean.TRUE.equals(user.getStatus())) {
             user.setStatus(false);
         } else {
             user.setStatus(true);
@@ -72,7 +78,7 @@ public class UserService implements IUserService {
 
         if (student.getEmail().equals(user.getEmail())
                 && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
-            if (user.getStatus()) {
+            if (Boolean.TRUE.equals(user.getStatus())) {
                 return user;
             } else {
                 checkWrongAccountOrPassword = false;
