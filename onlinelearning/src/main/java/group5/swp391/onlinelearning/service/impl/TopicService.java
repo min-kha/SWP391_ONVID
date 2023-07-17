@@ -39,14 +39,14 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public void updateTopic(@NotNull Topic topic) throws Exception {
-        Optional<Topic> topicTmp = topicRepository.findById(topic.getId());
-        if (topicTmp.isPresent()) {
+    public void updateTopic(@NotNull Topic updatingTopic) throws Exception {
+        Optional<Topic> exitingTopic = topicRepository.findById(updatingTopic.getId());
+        if (exitingTopic.isPresent()) {
             // Duplicate and had changed
-            if (isDuplicateHashtag(topic) && !topic.getHashtag().equals(topicTmp.get().getHashtag())) {
+            if (isDuplicateHashtag(updatingTopic) && !updatingTopic.getHashtag().equals(exitingTopic.get().getHashtag())) {
                 throw new InvalidInputException("hashtag", "hashtag.duplicate", "Duplicate topic hashtag");
             }
-            topicRepository.save(topic);
+            topicRepository.save(updatingTopic);
         } else {
             throw new InvalidInputException("id", "topic.notfound", "Topic not found");
         }
