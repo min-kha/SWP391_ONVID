@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quizizz-like Form with Save Button for Each Question</title>
+    <style>
+        .question-container {
+            margin-bottom: 20px;
+        }
+
+        .answer-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .answer-radio {
+            margin-right: 10px;
+        }
+
+        .add-answer-btn {
+            margin-top: 10px;
+        }
+
+        .save-btn {
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        var questionCounter = 1;
+
+        function addQuestion() {
+            var quizContainer = document.getElementById("quiz-container");
+
+            var newQuestionContainer = document.createElement("div");
+            newQuestionContainer.className = "question-container";
+
+            var questionLabel = document.createElement("label");
+            questionLabel.innerHTML = "Câu hỏi " + questionCounter + ":";
+
+            var questionInput = document.createElement("input");
+            questionInput.type = "text";
+
+            var answerContainer = document.createElement("div");
+
+            var addAnswerBtn = document.createElement("button");
+            addAnswerBtn.innerHTML = "Thêm câu trả lời";
+            addAnswerBtn.className = "add-answer-btn";
+            addAnswerBtn.onclick = function () { addAnswer(answerContainer); };
+
+            var saveBtn = document.createElement("button");
+            saveBtn.innerHTML = "Lưu";
+            saveBtn.className = "save-btn";
+            saveBtn.onclick = function () { saveQuestion(this.parentNode); };
+
+            newQuestionContainer.appendChild(questionLabel);
+            newQuestionContainer.appendChild(questionInput);
+            newQuestionContainer.appendChild(answerContainer);
+            newQuestionContainer.appendChild(addAnswerBtn);
+            newQuestionContainer.appendChild(saveBtn);
+
+            quizContainer.appendChild(newQuestionContainer);
+
+            questionCounter++;
+        }
+
+        function addAnswer(answerContainer) {
+            var newAnswerContainer = document.createElement("div");
+            newAnswerContainer.className = "answer-container";
+
+            var answerRadio = document.createElement("input");
+            answerRadio.type = "radio";
+            answerRadio.className = "answer-radio";
+            answerRadio.name = "answer-" + questionCounter;
+
+            var answerInput = document.createElement("input");
+            answerInput.type = "text";
+
+            newAnswerContainer.appendChild(answerRadio);
+            newAnswerContainer.appendChild(answerInput);
+
+            answerContainer.appendChild(newAnswerContainer);
+        }
+
+        function saveQuestion(questionContainer) {
+            var questionInput = questionContainer.querySelector("input[type='text']");
+            var answerContainers = questionContainer.getElementsByClassName("answer-container");
+            var answers = [];
+
+            for (var i = 0; i < answerContainers.length; i++) {
+                var answerContainer = answerContainers[i];
+
+                var answerInput = answerContainer.querySelector("input[type='text']");
+                var answerRadio = answerContainer.querySelector("input[type='radio']");
+
+                answers.push({
+                    text: answerInput.value,
+                    isCorrect: answerRadio.checked
+                });
+            }
+
+            var questionData = {
+                question: questionInput.value,
+                answers: answers
+            };
+
+            // Send questionData to server using Ajax
+            $.ajax({
+                url: "your-server-url",
+                type: "POST",
+                data: JSON.stringify(questionData),
+                contentType: "application/json",
+                success: function (response) {
+                    // Handle success response
+                    console.log(response);
+                },
+                error: function (error) {
+                    // Handle error response
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Quizizz-like Form with Save Button for Each Question</h2>
+
+    <div id="quiz-container">
+        <div class="question-container">
+            <label>Câu hỏi 1:</label>
+
+            <input type="text">
+            <div>
+                <button class="add-answer-btn" onclick="addAnswer(this.parentNode)">Thêm câu trả lời</button>
+                <button class="save-btn" onclick="saveQuestion(this.parentNode)">Lưu</button>
+            </div>
+            <div class="answer-container">
+                <input type="radio" class="answer-radio" name="answer-1">
+                <input type="text">
+            </div>
+
+            <div class="answer-container">
+                <input type="radio" class="answer-radio" name="answer-1">
+                <input type="text">
+            </div>
+
+
+        </div>
+    </div>
+
+    <button onclick="addQuestion()">Thêm câu hỏi</button>
+</body>
+
+</html>

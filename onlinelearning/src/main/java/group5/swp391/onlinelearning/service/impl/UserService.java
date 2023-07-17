@@ -6,14 +6,15 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
+import group5.swp391.onlinelearning.model.admin.UserDto;
 import group5.swp391.onlinelearning.model.dto.StaffDTOCreate;
 import group5.swp391.onlinelearning.model.dto.UserDTOAccountRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
@@ -29,6 +30,8 @@ public class UserService implements IUserService {
     UserRepository userRepository;
     @Autowired
     UserMapper mapper;
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public List<User> getAllUsers() {
@@ -38,7 +41,7 @@ public class UserService implements IUserService {
     @Override
     public List<UserDTOAccountRequest> getAllUserDTOAccountRequest() {
         List<User> list = this.getAllUsers();
-        List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<UserDTOAccountRequest>();
+        List<UserDTOAccountRequest> listUserDTOAccountRequest = new ArrayList<>();
         for (User user : list) {
             listUserDTOAccountRequest.add(mapper.mapperUsertoUserDTOAccountRequest(user));
         }
@@ -46,9 +49,15 @@ public class UserService implements IUserService {
     }
 
     // TODO: MUST CHANGE, After changes variable type of status from int to Boolean
-    public void changeStatus(int id) {
-        User user = userRepository.findById(id).get();
-        if (user.getStatus()) {
+    public void changeStatus(int id) throws Exception {
+        User user;
+        var value = userRepository.findById(id);
+        if (value.isPresent()) {
+            user = value.get();
+        } else{
+            throw new Exception("User not found");
+        }
+        if (Boolean.TRUE.equals(user.getStatus())) {
             user.setStatus(false);
         } else {
             user.setStatus(true);
@@ -65,22 +74,20 @@ public class UserService implements IUserService {
     public User loginStudent(UserDTOLoginRequest student, Model model) {
         boolean checkInvalidAccount = false;
         boolean checkWrongAccountOrPassword = false;
-        List<User> users = getAllUsers();
-        // TODO: CHECK BẰNG SQL BY MINH KHA
-        for (User user : users) {
-            if (student.getEmail().equals(user.getEmail())
-                    && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
-                if (user.getStatus()) {
-                    return user;
-                } else {
-                    checkWrongAccountOrPassword = false;
-                    checkInvalidAccount = true;
-                    break;
-                }
+        User user = userRepository.login(student.getEmail());
+
+        if (student.getEmail().equals(user.getEmail())
+                && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
+            if (Boolean.TRUE.equals(user.getStatus())) {
+                return user;
             } else {
-                checkWrongAccountOrPassword = true;
+                checkWrongAccountOrPassword = false;
+                checkInvalidAccount = true;
             }
+        } else {
+            checkWrongAccountOrPassword = true;
         }
+
         if (checkInvalidAccount) {
             model.addAttribute("invalidAccount", "Your account has been locked");
         }
@@ -145,5 +152,55 @@ public class UserService implements IUserService {
 
     private boolean isDuplicateEmail(User user) {
         return userRepository.findByEmail(user.getEmail()) != null;
+    }
+
+    public String getRoleName(int role) {
+        switch (role) {
+            case 0:
+                return "STUDENT";
+            case 1:
+                return "TEACHER";
+            case 2:
+                return "STAFF";
+            case 3:
+                return "ADMIN";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
+    public int getRoleNumber(String role) throws Exception {
+        switch (role) {
+            case "STUDENT":
+                return 0;
+            case "TEACHER":
+                return 1;
+            case "STAFF":
+                return 2;
+            case "ADMIN":
+                return 3;
+            default:
+                throw new Exception("Invalid string role");
+        }
+    }
+
+    public UserDto map(User user) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        userDto.setRoleName(getRoleName(user.getRole()));
+        return userDto;
+    }
+
+    public User map(UserDto userDto) throws Exception {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        User user = modelMapper.map(userDto, User.class);
+        try {
+            String oldPassword = this.getUserById(userDto.getId()).getPassword();
+            user.setPassword(oldPassword);
+            user.setRole(getRoleNumber(userDto.getRoleName()));
+        } catch (Exception e) {
+            throw new InvalidInputException("roleName", "role.invalid", e.getMessage());
+        }
+        return user;
     }
 }

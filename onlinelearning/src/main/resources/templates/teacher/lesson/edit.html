@@ -14,7 +14,40 @@
                                                 <hr>
                                                 <div th:if="${options == 1}">
                                                     <form
-                                                        th:action="@{'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id}}"
+                                                        th:action="@{/teacher/lesson/edit/{courseId}/{lessonId}/{options}(courseId=${lesson.course.id}, lessonId=${lesson.id}, options=${options})}"
+                                                        th:object="${lesson}" method="post">
+                                                        <div class="form-group">
+                                                            <label for="title">Title :</label>
+                                                            <input type="text" class="form-control" id="title"
+                                                                name="title" required th:field="*{title}">
+                                                            <p th:if="${#fields.hasErrors('title')}"
+                                                                th:errors="*{title}">
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="name">Name :</label>
+                                                            <input type="text" class="form-control" id="name"
+                                                                name="name" required th:field="*{name}"
+                                                                value="lesson.name">
+                                                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="document"> document:</label>
+                                                            <textarea class="form-control" id="document" name="document"
+                                                                rows="4" required th:field="*{document}"></textarea>
+                                                            <p th:if="${#fields.hasErrors('document')}"
+                                                                th:errors="*{document}"></p>
+                                                        </div>
+                                                        <input type="hidden" th:field="*{id}">
+                                                        <input type="hidden" th:field="*{course}">
+                                                        <button type="submit" class="btn btn-primary">Update
+                                                            Lesson</button>
+                                                    </form>
+                                                </div>
+                                                <div th:if="${options == 0}">
+                                                    <form
+                                                        th:action="@{'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id} + '/' + ${options}}"
                                                         th:object="${lesson}" method="post"
                                                         enctype="multipart/form-data">
                                                         <div class="form-group">
@@ -28,51 +61,27 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="name">Name :</label>
-                                                            <input type="number" class="form-control" id="name"
+                                                            <input type="text" class="form-control" id="name"
                                                                 name="name" required th:field="*{name}"
                                                                 value="lesson.name">
                                                             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                                                             </p>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="document"> document:</label>
-                                                            <textarea class="form-control" id="document" name="document"
-                                                                rows="4" required th:field="*{document}"></textarea>
-                                                            <p th:if="${#fields.hasErrors('document')}"
-                                                                th:errors="*{document}"></p>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-primary">Update
-                                                            Lesson</button>
-                                                    </form>
-                                                </div>
-                                                <div th:if="${options == 0}">
-                                                    <form
-                                                        th:action="@{'/teacher/lesson/edit/' + ${lesson.course.id} + '/' + ${lesson.id}}"
-                                                        th:object="${lesson}" method="post">
-                                                        <div class="form-group">
-                                                            <label for="title">Title :</label>
-                                                            <input type="text" class="form-control" id="title"
-                                                                name="title" required th:field="*{title}"
-                                                                value="lesson.title">
-                                                            <p th:if="${#fields.hasErrors('title')}"
-                                                                th:errors="*{title}">
-                                                            </p>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">Name :</label>
-                                                            <input type="number" class="form-control" id="name"
-                                                                name="name" required th:field="*{name}"
-                                                                value="lesson.name">
-                                                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                                                            </p>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <img class="img-fluid"
-                                                                th:src="@{'/video/' + ${lesson.video} }" alt="..." />
+                                                            <div th:if="${oldVideo!=null} ">
+                                                                <video controls preload="auto" autoplay width="100%">
+                                                                    <source th:src="@{'/video/' + ${oldVideo}}">
+                                                                </video>
+                                                            </div>
+                                                            <!-- <input type="hidden" th:field="*{video}"
+                                                                th:value="${lesson.video}"> -->
                                                             <label for="video">Video:</label>
-                                                            <input type="file" class="form-control-file" id="video"
-                                                                name="video" required>
+                                                            <input type="file" class="form-control-file" name="video">
                                                         </div>
+                                                        <input type="hidden" th:field="*{id}">
+                                                        <input type="hidden" th:field="*{course}">
+                                                        <input type="hidden" id="oldVideo" name="oldVideo"
+                                                            th:value="oldVideo">
                                                         <button type="submit" class="btn btn-primary">Update
                                                             Lesson</button>
                                                     </form>

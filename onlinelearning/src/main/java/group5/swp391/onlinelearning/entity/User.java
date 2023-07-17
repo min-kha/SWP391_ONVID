@@ -60,7 +60,7 @@ public class User {
     @ToString.Exclude
     private Collection<Feedback> feedbacks;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<WithdrawalDetail> withdrawalsStudents;
@@ -70,7 +70,7 @@ public class User {
     @ToString.Exclude
     private Collection<Learn> learn;
 
-    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<WithdrawalDetail> withdrawalsStaffs;

@@ -31,7 +31,7 @@ public class Lesson {
     private String name;
     private String document;
     private String video;
-
+    private boolean status;
     @ManyToOne
     @JoinColumn(name = "course_id")
     @EqualsAndHashCode.Exclude

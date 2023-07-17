@@ -67,13 +67,12 @@ public class LoginTest {
     public void testPostStudentLogin_WithInvalidCredentials_ReturnLoginViewWithErrors() {
         UserDTOLoginRequest student = new UserDTOLoginRequest("123", "123");
         when(bindingResult.hasErrors()).thenReturn(true);
-        User user = new User();
         when(userService.loginStudent(student, model)).thenReturn(null);
 
         String result = loginController.postStudentLogin(student, bindingResult,
                 model, session);
 
-        assertEquals("login", result);
+        assertEquals("/student/login/loginAccount", result);
         verify(model, atLeastOnce()).addAttribute("EnterFieldError", "Login failed");
         verify(model, never()).addAttribute(eq("loginError"), anyString());
     }
@@ -84,7 +83,6 @@ public class LoginTest {
                 "MatKhauSai123@");
         when(bindingResult.hasErrors()).thenReturn(false);
         User user = new User();
-
         when(userService.loginStudent(student, model)).thenReturn(null);
 
         String result = loginController.postStudentLogin(student, bindingResult,
