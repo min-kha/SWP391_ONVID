@@ -77,6 +77,7 @@
                                 <td th:text="${entity.topic.name}"></td>
                                 <td th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}"></td>
                                 <td th:text=" ${entity.lessons?.size}"></td>
+                                <td th:if="${entity.status == -2}"><span class="btn btn-secondary">Deactived</span></td>
                                 <td th:if="${entity.status == 0}"><span class="btn btn-danger">To
                                         Do</span></td>
                                 <td th:if="${entity.status == 1}"><span class="btn btn-primary">In
@@ -95,8 +96,14 @@
                                         aria-disabled="true">Review</a>
                                 </td>
                                 <td>
-                                    <a th:href="'delete/' + ${entity[fields[0].getName]}" class="btn btn-danger btn-sm "
-                                        tabindex="-1" aria-disabled="true">Deactive</a>
+                                    <a th:unless="*{entity.status==true}"
+                                        th:href="'active/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-success btn-sm" tabindex="-1"
+                                        aria-disabled="true">&ensp;Active&ensp;</a>
+                                    <a th:if="*{entity.status==true}"
+                                        th:href="'deactive/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-danger btn-sm" tabindex="-1"
+                                        aria-disabled="true">Deactive
                                 </td>
                             </tr>
                         </tbody>

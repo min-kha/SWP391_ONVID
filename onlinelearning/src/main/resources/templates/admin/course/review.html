@@ -5,7 +5,7 @@
                 <div class="mask d-flex align-items-center h-100">
                     <div class="container">
                         <div class="row d-flex justify-content-center align-items-center">
-                            <div class="col-12 col-lg-9 col-xl-8">
+                            <div class="col-6">
                                 <div class="card" style="border-radius: 1rem;">
                                     <div class="row justify-content-center">
                                         <div class="d-flex align-items-center">
@@ -123,6 +123,42 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body py-5 px-4 p-md-5 col-6">
+                                <div class="card mb-4">
+                                    <h1 class="card-header">
+                                        History review
+                                    </h1>
+                                    <div class="card-body table-responsive">
+                                        <table id="datatablesSimple" class="table table-hover"
+                                            aria-describedby="list-table">
+                                            <a href="create" class="btn btn-primary px-3 "
+                                                aria-disabled="true">Create</a>
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th>Teacher</th>
+                                                    <th>ImageLink</th>
+                                                    <th>Price</th>
+                                                    <th>Date</th>
+                                                    <th>Topic</th>
+                                                    <th>Views</th>
+                                                    <th>Lessons</th>
+                                                    <th>Status</th>
+                                                    <th>Detail</th>
+                                                    <th>Review</th>
+                                                    <th>Deactive</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="entity : ${entities}">
+                                                    <td th:text="${entity.name}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

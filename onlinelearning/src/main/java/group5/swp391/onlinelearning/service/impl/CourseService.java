@@ -186,4 +186,20 @@ public class CourseService {
         courseRepository.save(course);
     }
 
+    public void changeStatus(int id) throws Exception {
+        Course course;
+        var value = courseRepository.findById(id);
+        if (value.isPresent()) {
+            course = value.get();
+        } else {
+            throw new Exception("User not found");
+        }
+        if (course.getStatus() != -2) {
+            course.setStatus(-2); // set status to Deactived
+        } else {
+            course.setStatus(3); // set status to Approved
+        }
+        courseRepository.save(course);
+    }
+
 }
