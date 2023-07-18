@@ -1,6 +1,7 @@
 package group5.swp391.onlinelearning.controller.student;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,12 +44,14 @@ public class CartController {
         cartService.addCourseToCart(cartService.getCartByStudentId(student.getId()),
                 courseService.getCourseByCourseId(CourseId));
         Cart cart = cartService.getCartByStudentId(student.getId());
+
         session.setAttribute("cartStudentSession", cartService.getCoursebyCartId(cart.getId()));
         return "redirect:/student/course/detail/" + CourseId;
     }
 
     @GetMapping("/cart/detail")
     public String cartDetail(HttpSession session, Model model) {
+
         List<Course> courses = (List<Course>) session.getAttribute("cartStudentSession");
         model.addAttribute("courses", courses);
         BigDecimal total = BigDecimal.ZERO;
@@ -77,10 +80,9 @@ public class CartController {
         Cart cart = cartService.getCartByStudentId(student.getId());
         List<Course> courses = (List<Course>) session.getAttribute("cartStudentSession");
 
-        //TODO: Hung code
+        // TODO: Hung code
         walletService.changeRevenue(courses);
         withdrawalDetailService.addWithdrawalDetail(courses, student);
-
 
         cartService.deleteAllCourseInCart(courses, cart.getId());
         session.setAttribute("cartStudentSession",

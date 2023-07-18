@@ -28,13 +28,9 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
-    private UserService userService;
-    @Autowired
     private CourseMapper courseMapper;
     @Autowired
     private TopicRepository topicRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
     private HttpSession session;
 
