@@ -45,6 +45,7 @@ public class WithdrawalDetail {
     private Date date;
 
     private int status;
+    // 0 = todo, 1 = inprogress, 2 = rejected, 3 = approved
 
     private String descripton;
 

@@ -40,11 +40,8 @@
     <div class="row no-gutters fixed-top justify-content-end m-3">
       <div class="col-lg-5 col-md-12 ml-auto">
         <div class="alert alert-success fade show" role="alert">
-          <h4 class="alert-heading">Success!</h4>
-          <p>
-            This is an alert within a column. The column can be made any size at
-            different viewpoints.
-          </p>
+          <h4 class="alert-heading">Notation !</h4>
+          <p>List Wallet Successfull</p>
         </div>
       </div>
     </div>
@@ -60,59 +57,18 @@
             <a href="create" class="btn btn-primary px-3" aria-disabled="true"
               >Create</a
             >
-
             <thead>
               <tr>
-                <th
-                  th:each="field : ${fields}"
-                  th:text="${field.getName}"
-                  class="text-capitalize"
-                ></th>
-                <th>Details</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th>ID</th>
+                <th>Deposit</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Time</th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="entity : ${entities}">
-                <th:block th:each="field : ${fields}">
-                  <td
-                    th:if="${field.getType.getSimpleName == 'Collection'}"
-                    th:text="${entity[field.getName].size}"
-                  ></td>
-                  <td
-                    th:if="${field.getType.getSimpleName != 'Collection'}"
-                    th:text="${entity[field.getName]}"
-                  ></td>
-                </th:block>
-
-                <td>
-                  <a
-                    th:href="'details/' + ${entity[fields[0].getName]}"
-                    class="btn btn-secondary btn-sm"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Details</a
-                  >
-                </td>
-                <td>
-                  <a
-                    th:href="'edit/' + ${entity[fields[0].getName]}"
-                    class="btn btn-warning btn-sm px-3"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Edit</a
-                  >
-                </td>
-                <td>
-                  <a
-                    th:href="'delete/' + ${entity[fields[0].getName]}"
-                    class="btn btn-danger btn-sm"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Delete</a
-                  >
-                </td>
+              <tr th:each="item : ${wallets}">
+                
               </tr>
             </tbody>
           </table>
