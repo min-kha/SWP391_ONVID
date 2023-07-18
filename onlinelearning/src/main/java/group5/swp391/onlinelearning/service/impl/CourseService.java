@@ -28,13 +28,9 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
-    private UserService userService;
-    @Autowired
     private CourseMapper courseMapper;
     @Autowired
     private TopicRepository topicRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
     private HttpSession session;
 
@@ -117,20 +113,15 @@ public class CourseService {
     }
 
     public Course updateCourse(Course course) throws Exception {
-        if (courseRepository.findById(course.getId()).isPresent()){
+        if (courseRepository.findById(course.getId()).isPresent()) {
             return courseRepository.save(course);
         }
         throw new InvalidInputException("id", "course.notfound", "Course not found");
     }
 
-    public Course deleteCourse(int id) {
+    public void deleteCourse(int id) {
         Course course = courseRepository.findById(id).get();
-        if (course.getStatus() == 4) {
-            course.setStatus(0);
-        } else {
-            course.setStatus(4);
-        }
-        return courseRepository.save(course);
+        courseRepository.delete(course);
     }
 
     public List<CourseDtoHomeDetail> getAllCourseDtoHomeDetails() {
@@ -188,6 +179,11 @@ public class CourseService {
             courseDtoHomeDetailsPrice.add(CourseMapper.courseToCourseDtoHomeDetail(course));
         }
         return courseDtoHomeDetailsPrice;
+    }
+
+    public void submitCourse(Course course) {
+        course.setStatus(0);
+        courseRepository.save(course);
     }
 
 }

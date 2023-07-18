@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Thêm Quiz và Answer</title>
+</head>
+
+<body>
+    <h1>Thêm Quiz và Answer</h1>
+    <form th:object="${quiz}" th:action="@{/quizzes/add}" method="post">
+        <label for="question">Câu hỏi:</label>
+        <textarea id="question" th:field="*{question}" required></textarea><br>
+
+        <h2>Thêm Answer:</h2>
+        <div id="answersContainer">
+            <div class="answer" th:each="answer, answerIndex : *{answers}">
+                <h3>Answer [[${answerIndex.index + 1}]]</h3>
+                <label for="answerText" th:text="${'Nội dung Answer: ' + (answerIndex.index + 1)}"></label>
+                <textarea id="answerText" th:name="'answers[' + ${answerIndex.index} + '].answerText'"
+                    required></textarea><br>
+                <label for="correctAnswer" th:text="${'Đáp án đúng: ' + (answerIndex.index + 1)}"></label>
+                <input type="checkbox" id="correctAnswer" th:name="'answers[' + ${answerIndex.index} + '].correct"
+                    required><br>
+            </div>
+        </div>
+        <button type="button" onclick="addAnswer()">Thêm Answer</button><br>
+
+        <button type="submit">Thêm Quiz và Answer</button>
+    </form>
+
+    <script>
+        let answerCount = 1;
+
+        function addAnswer() {
+            const answersContainer = document.getElementById('answersContainer');
+            const newAnswerDiv = document.createElement('div');
+            newAnswerDiv.className = 'answer';
+
+            const answerHeader = document.createElement('h3');
+            answerHeader.textContent = `Answer ${answerCount + 1}`;
+
+            const answerTextLabel = document.createElement('label');
+            answerTextLabel.textContent = `Nội dung Answer: ${answerCount + 1}`;
+
+            const answerTextTextarea = document.createElement('textarea');
+            answerTextTextarea.name = `answers[${answerCount}].answerText`;
+            answerTextTextarea.required = true;
+
+            const correctAnswerLabel = document.createElement('label');
+            correctAnswerLabel.textContent = `Đáp án đúng: ${answerCount + 1}`;
+
+            const correctAnswerCheckbox = document.createElement('input');
+            correctAnswerCheckbox.type = 'checkbox';
+            correctAnswerCheckbox.name = `answers[${answerCount}].correct`;
+            correctAnswerCheckbox.required = true;
+
+            newAnswerDiv.appendChild(answerHeader);
+            newAnswerDiv.appendChild(answerTextLabel);
+            newAnswerDiv.appendChild(answerTextTextarea);
+            newAnswerDiv.appendChild(correctAnswerLabel);
+            newAnswerDiv.appendChild(correctAnswerCheckbox);
+
+            answersContainer.appendChild(newAnswerDiv);
+
+            answerCount++;
+        }
+    </script>
+</body>
+
+</html>

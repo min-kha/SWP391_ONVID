@@ -12,12 +12,16 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.entity.Wallet;
 import group5.swp391.onlinelearning.repository.WalletRepository;
+import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.service.IWalletService;
 
 @Service
 public class WalletService implements IWalletService {
     @Autowired
     WalletRepository walletRepository;
+
+    @Autowired
+    IUserService userService;
 
     private HttpSession session;
 
@@ -52,6 +56,20 @@ public class WalletService implements IWalletService {
         Wallet wallet = walletRepository.getWalletByTeacherId(teacher.getId());
         BigDecimal revenue = wallet.getRevenue().subtract(money);
         wallet.setRevenue(revenue);
+        walletRepository.save(wallet);
+    }
+
+    @Override
+    public void createWallet(int teacherId) {
+        // get teacher according to id
+        User teacher = userService.getUserById(teacherId);
+
+        // set field for teacher default
+        Wallet wallet = new Wallet();
+        wallet.setRevenue(BigDecimal.ZERO);
+        wallet.setTeacher(teacher);
+
+        // save wallet
         walletRepository.save(wallet);
     }
 

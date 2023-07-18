@@ -69,9 +69,10 @@ public class CourseController {
         // Check role access site
         if (user.getRole() != 1)
             return "AccessDenied";
-
+        // Create List course of teacher and send to front end
         List<CourseDTOTeacher> courses = courseService.getCourseDTOTeacherList();
         String title = "Course List";
+        // Throw data to base front end
         thymeleafBaseCRUD.setBaseForList(model, courses, title);
         return "teacher/course/list";
     }
@@ -82,6 +83,8 @@ public class CourseController {
         User user = (User) req.getAttribute("userSession");
         if (user.getRole() != 1)
             return "AccessDenied";
+        // create a new model
+        model.addAttribute("errorFormat", "");
         model.addAttribute("course", new CourseDTOAdd());
         model.addAttribute("topics", topicService.getTopics());
         return "teacher/course/add";
@@ -89,29 +92,45 @@ public class CourseController {
 
     @PostMapping("/create")
     public String addCourse(@Valid @ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req,
-            @RequestParam("image") MultipartFile image, BindingResult result)
+            @RequestParam("image") MultipartFile image, BindingResult result, Model model)
             throws IOException, ServletException {
+        // check error
         if (result.hasErrors()) {
+            model.addAttribute("errorFormat", "");
+            model.addAttribute("course", new CourseDTOAdd());
+            model.addAttribute("topics", topicService.getTopics());
             return "teacher/course/add";
         }
+        // get link image
         String projectPath = System.getProperty("user.dir");
         String fileName = "";
         Part filePart = req.getPart("image");
         fileName = filePart.getSubmittedFileName();
-        String relativePath = "\\src\\main\\resources\\static\\image";
+        if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
+            String relativePath = "\\src\\main\\resources\\static\\image";
 
-        String filePath = projectPath + relativePath + File.separator + fileName;
-        Path path = Paths.get(filePath);
+            String filePath = projectPath + relativePath + File.separator + fileName;
+            Path path = Paths.get(filePath);
 
-        try (InputStream inputStream = filePart.getInputStream()) {
-            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+            try (InputStream inputStream = filePart.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+            }
+            // fileName is not valid ( != jpg and png files)
+        } else {
+            model.addAttribute("errorFormat", "File Name must format same .jpg or .png");
+            model.addAttribute("course", new CourseDTOAdd());
+            model.addAttribute("topics", topicService.getTopics());
+            return "teacher/course/add";
         }
 
+        // set link to model directory
         courseDTOAdd.setImageLink(fileName);
         int topic_id = Integer.parseInt(req.getParameter("topic"));
         courseDTOAdd.setTopic_id(topic_id);
+        // create a new Course
         courseService.createCourse(courseDTOAdd);
+        // redirect to course list
         return "redirect:/teacher/course/list";
     }
 
@@ -128,34 +147,49 @@ public class CourseController {
         // check owner course
         if (!courseService.checkCourseOwner(id))
             return "AccessDenied";
-        // check published course
-        if (course.getStatus() == 3)
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
             return "AccessDenied";
         CourseDTOEdit courseDTEdit = mapper.courseToCourseDtoEdit(course);
+        model.addAttribute("errorFormat", "");
         model.addAttribute("course", courseDTEdit);
         model.addAttribute("topics", topicService.getTopics());
         return "teacher/course/edit";
     }
 
     @PostMapping("/edit")
-    public String postUpdateCourse(@Valid @ModelAttribute CourseDTOEdit course, HttpServletRequest req,
-            BindingResult bindingResult) throws IOException, ServletException {
+    public String postUpdateCourse(@Valid @ModelAttribute CourseDTOEdit course, BindingResult bindingResult,
+            HttpServletRequest req,
+            Model model) throws IOException, ServletException {
+        // check error status
         if (bindingResult.hasErrors()) {
             return "redirect:/teacher/course/edit/" + course.getId();
         }
+        // get link image and set link image
+        // get link image
         String projectPath = System.getProperty("user.dir");
         String fileName = "";
         Part filePart = req.getPart("image");
         fileName = filePart.getSubmittedFileName();
-        if (!fileName.equals("")) {
-            String relativePath = "\\onlinelearning\\src\\main\\resources\\static\\image";
+        if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
+            String relativePath = "\\src\\main\\resources\\static\\image";
 
             String filePath = projectPath + relativePath + File.separator + fileName;
             Path path = Paths.get(filePath);
-            InputStream inputStream = filePart.getInputStream();
-            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+
+            try (InputStream inputStream = filePart.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+            }
             course.setImageLink(fileName);
+            // fileName is not valid ( != jpg and png files)
+        } else {
+            model.addAttribute("errorFormat", "Image in not correct");
+            model.addAttribute("course", course);
+            model.addAttribute("topics", topicService.getTopics());
+            return "teacher/course/edit";
         }
+        // set other parameters and save them
         int topic_id = Integer.parseInt(req.getParameter("topic"));
         course.setTopic_id(topic_id);
         courseService.updateCourse(course);
@@ -173,13 +207,13 @@ public class CourseController {
         if (course == null)
             return "404";
         // check owner course
-        if (courseService.checkCourseOwner(id))
+        if (!courseService.checkCourseOwner(id))
             return "AccessDenied";
-        // check published course
-        if (course.getStatus() == 3)
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
             return "AccessDenied";
         courseService.deleteCourse((int) id);
-        return "redirect:../list";
+        return "redirect:/teacher/course/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -187,5 +221,26 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         model.addAttribute("course", course);
         return "teacher/course/detail";
+    }
+
+    @GetMapping("/submit/{id}")
+    public String getSubmitCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
+        // Check role access site
+        User user = (User) req.getAttribute("userSession");
+        if (user.getRole() != 1)
+            return "AccessDenied";
+        // check course exit
+        Course course = courseService.getCourseById(id);
+        if (course == null)
+            return "404";
+        // check owner course
+        if (!courseService.checkCourseOwner(id))
+            return "AccessDenied";
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
+            return "AccessDenied";
+        // change status of course
+        courseService.submitCourse(course);
+        return "redirect:/teacher/course/list";
     }
 }

@@ -27,11 +27,11 @@
                                                                 </dt>
                                                                 <div>
                                                                     <div th:switch="${course.status}">
-                                                                        <div th:case="0">
+                                                                        <div th:case="-1">
                                                                             <div class="btn btn-secondary btn-sm"
                                                                                 th:text="Unsubmit"></div>
                                                                         </div>
-                                                                        <div th:case="1">
+                                                                        <div th:case="0">
                                                                             <div class="btn btn-info btn-sm"
                                                                                 th:text="Submited"></div>
                                                                         </div>
@@ -43,7 +43,7 @@
                                                                             <div class="btn btn-success btn-sm"
                                                                                 th:text="Published"></div>
                                                                         </dd>
-                                                                        <div th:case="*">
+                                                                        <div th:case="4">
                                                                             <div class="btn btn-dark btn-sm"
                                                                                 th:text="DeActive"></div>
                                                                         </div>
@@ -93,7 +93,8 @@
                                                     <div class="text-end"
                                                         style="display: flex; justify-content: space-between;">
                                                         <div>
-                                                            <a th:href="'../edit/' + ${course.getId()}"
+                                                            <a th:if="${course.status ne 3 and course.status ne 0 and course.status ne 1}"
+                                                                th:href="'../edit/' + ${course.getId()}"
                                                                 class="btn btn-warning px-3 " aria-disabled="true"
                                                                 style="display: inline-block;">Edit</a>
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import group5.swp391.onlinelearning.entity.CV;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.admin.UserDto;
@@ -21,6 +22,7 @@ import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 import group5.swp391.onlinelearning.model.mapper.UserMapper;
 import group5.swp391.onlinelearning.repository.UserRepository;
+import group5.swp391.onlinelearning.service.ICVService;
 import group5.swp391.onlinelearning.service.IUserService;
 import group5.swp391.onlinelearning.utils.SHA1;
 
@@ -32,6 +34,8 @@ public class UserService implements IUserService {
     UserMapper mapper;
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    ICVService cvService;
 
     @Override
     public List<User> getAllUsers() {
@@ -54,7 +58,7 @@ public class UserService implements IUserService {
         var value = userRepository.findById(id);
         if (value.isPresent()) {
             user = value.get();
-        } else{
+        } else {
             throw new Exception("User not found");
         }
         if (Boolean.TRUE.equals(user.getStatus())) {
@@ -90,6 +94,51 @@ public class UserService implements IUserService {
 
         if (checkInvalidAccount) {
             model.addAttribute("invalidAccount", "Your account has been locked");
+        }
+        if (checkWrongAccountOrPassword) {
+            model.addAttribute("wrongAccountOrPassword", "Email or password not true");
+        }
+        return null;
+    }
+
+    @Override
+    public User loginTeacher(UserDTOLoginRequest teacher, Model model, Boolean isProcess) {
+        boolean checkInvalidAccount = false;
+        boolean checkWrongAccountOrPassword = false;
+        boolean checkCVFalse = false;
+        boolean checkCVProcess = false;
+        User user = userRepository.login(teacher.getEmail());
+        if (user == null) {
+            checkWrongAccountOrPassword = true;
+            return null;
+        }
+
+        if (user.getRole() == 1
+                && SHA1.toSHA1(teacher.getPassword()).equals(user.getPassword())) {
+            if (Boolean.TRUE.equals(user.getStatus())) {
+                // XLY CV
+                CV cv = cvService.getCVByTeacherId(user.getId());
+                if (cv.getStatus() == 3) {
+                    checkCVFalse = true;
+                } else if (cv.getStatus() == 2) {
+                    return user;
+                } else {
+                    checkCVProcess = true;
+                }
+            } else {
+                checkInvalidAccount = true;
+            }
+        } else {
+            checkWrongAccountOrPassword = true;
+        }
+
+        model.addAttribute("cVProcess", checkCVProcess);
+
+        if (checkCVFalse) {
+            model.addAttribute("cVFalse", "CV False");
+        }
+        if (checkInvalidAccount) {
+            model.addAttribute("invalidAccount", "Account was locked");
         }
         if (checkWrongAccountOrPassword) {
             model.addAttribute("wrongAccountOrPassword", "Email or password not true");
@@ -202,5 +251,12 @@ public class UserService implements IUserService {
             throw new InvalidInputException("roleName", "role.invalid", e.getMessage());
         }
         return user;
+    }
+
+    @Override
+    public User addTeacherRegister(UserDTORegisterRequest userDTORegisterRequest) {
+        userDTORegisterRequest.setPassword(SHA1.toSHA1(userDTORegisterRequest.getPassword()));
+        User user = mapper.userDTORegisterRequestToTeacher(userDTORegisterRequest);
+        return userRepository.save(user);
     }
 }

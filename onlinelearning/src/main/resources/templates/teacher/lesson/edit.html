@@ -77,6 +77,8 @@
                                                                 th:value="${lesson.video}"> -->
                                                             <label for="video">Video:</label>
                                                             <input type="file" class="form-control-file" name="video">
+                                                            <p th:if="${errorFormat != ''}" th:text="${errorFormat}"
+                                                                style="color: red;"></p>
                                                         </div>
                                                         <input type="hidden" th:field="*{id}">
                                                         <input type="hidden" th:field="*{course}">
@@ -84,6 +86,7 @@
                                                             th:value="oldVideo">
                                                         <button type="submit" class="btn btn-primary">Update
                                                             Lesson</button>
+
                                                     </form>
                                                 </div>
 

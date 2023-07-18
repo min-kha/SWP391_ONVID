@@ -16,6 +16,7 @@
             <div class="form-group">
                 <label for=" video">Video</label>
                 <input type="file" class="form-control-file" id="video" name="video" required>
+                <p th:if="${errorFormat != ''}" th:text="${errorFormat}" style="color: red;"></p>
             </div>
 
             <input type="hidden" class="form-control" id="course_id" name="course_id" th:value="${id}">

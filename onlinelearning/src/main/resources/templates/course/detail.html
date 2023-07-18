@@ -54,7 +54,8 @@
             </div>
             <hr>
             <div>
-                <a th:href="@{../update/{courseId}(courseId=${course.courseId})}" class="btn btn-warning">Sửa</a>
+                <a th:if="${course.status ne 3 and course.status ne 1}"
+                    th:href="@{../update/{courseId}(courseId=${course.courseId})}" class="btn btn-warning">Sửa</a>
                 <a th:href="@{../delete/{courseId}(courseId=${course.courseId})}" class="btn btn-danger">Xóa</a>
             </div>
             <div th:unless="${course != null}">

@@ -9,7 +9,7 @@
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="text" class="form-control" id="price" name="price" required th:field="*{price}">
+                <input type="number" class="form-control" id="price" name="price" required th:field="*{price}">
                 <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
             </div>
             <div class="form-group">
@@ -27,6 +27,7 @@
             <div class="form-group">
                 <label for="image">Image:</label>
                 <input type="file" class="form-control-file" id="image" name="image" required>
+                <p th:if="${errorFormat != ''}" th:text="${errorFormat}" style="color: red;"></p>
             </div>
             <input type="hidden" class="form-control" id="description" name="description" th:value="*{description}">
             <input type="hidden" class="form-control" id="topicfake" name="topicfake" th:field="*{topic_id}" value="1">
