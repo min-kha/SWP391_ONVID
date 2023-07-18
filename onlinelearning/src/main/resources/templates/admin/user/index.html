@@ -47,56 +47,45 @@
                 <div class="card-body table-responsive">
                     <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
                         <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
-                        <!-- Name	Status	Description	ImageLink	Price	Date	
-                            Topic	Views	CourseReviews	Feedbacks	Carts	Teacher	OrderDetails	Lessons -->
+
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Teacher</th>
-                                <th>ImageLink</th>
-                                <th>Price</th>
-                                <th>Date</th>
-                                <th>Topic</th>
-                                <th>Views</th>
-                                <th>Lessons</th>
-                                <th>Status</th>
-                                <th>Detail</th>
-                                <th>Review</th>
-                                <th>Deactive</th>
+                                <th th:each="field : ${fields}" th:text="${field.getName}" class="text-capitalize">
+                                </th>
+                                <th>Details</th>
+                                <th>Update</th>
+                                <th>Active/Deactive</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="entity : ${entities}">
-                                <td th:text="${entity.name}"></td>
-                                <td th:text="${entity.description}"></td>
-                                <td th:text="${entity.teacher?.name}"></td>
-                                <td th:text="${entity.imageLink}"></td>
-                                <td th:text="${entity.price}"></td>
-                                <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
-                                <td th:text="${entity.topic.name}"></td>
-                                <td th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}"></td>
-                                <td th:text=" ${entity.lessons?.size}"></td>
-                                <td th:if="${entity.status == 0}"><span class="btn btn-danger">To
-                                        Do</span></td>
-                                <td th:if="${entity.status == 1}"><span class="btn btn-primary">In
-                                        Progressing</span></td>
-                                <td th:if="${entity.status == 2}"><span class="btn btn-dark">Rejected</span>
-                                </td>
-                                <td th:if="${entity.status == 3}"><span class="btn btn-success">Approved</span>
-                                </td>
+                                <th:block th:each="field : ${fields}">
+                                    <td th:if="${field.getType.getSimpleName == 'Collection'}"
+                                        th:text="${entity[field.getName].size}"></td>
+                                    <td th:if="${field.getType.getSimpleName == 'Boolean'}"
+                                        th:text="${entity[field.getName]==true?'Active':'Deactive'}"></td>
+                                    <td th:if="${field.getType.getSimpleName != 'Collection' && field.getType.getSimpleName != 'Boolean'}"
+                                        th:text="${entity[field.getName]}"></td>
+                                </th:block>
+
                                 <td>
-                                    <a th:href="'details/' + ${entity[fields[0].getName]}"
+                                    <a th:href="'details/' + ${entity[fields[0]?.getName]}"
                                         class="btn btn-secondary btn-sm " tabindex="-1" aria-disabled="true">Details</a>
                                 </td>
                                 <td>
-                                    <a th:href="'review/' + ${entity[fields[0].getName]}"
-                                        class="btn btn-warning btn-sm px-3" tabindex="-1"
-                                        aria-disabled="true">Review</a>
+                                    <a th:href="'edit/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-warning btn-sm px-3" tabindex="-1" aria-disabled="true">Edit</a>
                                 </td>
                                 <td>
-                                    <a th:href="'delete/' + ${entity[fields[0].getName]}" class="btn btn-danger btn-sm "
-                                        tabindex="-1" aria-disabled="true">Deactive</a>
+                                    <a th:unless="*{entity.status==true}"
+                                        th:href="'active/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-success btn-sm" tabindex="-1"
+                                        aria-disabled="true">&ensp;Active&ensp;</a>
+                                    <a th:if="*{entity.status==true}"
+                                        th:href="'deactive/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-danger btn-sm" tabindex="-1"
+                                        aria-disabled="true">Deactive
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

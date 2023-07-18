@@ -1,15 +1,20 @@
 package group5.swp391.onlinelearning;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -57,23 +62,84 @@ public class CartManagerTest {
         Course course = new Course();
         cart.setCourses(new ArrayList<>());
 
-        // when(cartRepository.save(any(Cart.class))).thenReturn(cart);
-
         cartService.addCourseToCart(cart, course);
         verify(cartRepository, times(1)).save(cart);
         assertEquals(1, cart.getCourses().size());
         assertTrue(cart.getCourses().contains(course));
     }
 
-    // @Test
-    // void getCartByStudentId() {
-    // int studentId = 1;
-    // Cart cart = new Cart();
-    // when(cartService.getCartByStudentId(studentId)).thenReturn(cart);
+    @Test
+    void getCartByStudentId() {
+        int studentId = 1;
+        User user = User.builder().id(studentId).build();
+        Cart cart = Cart.builder().user(user).build();
+        List<Cart> carts = new ArrayList<>();
+        carts.add(cart);
+        when(cartRepository.findAll()).thenReturn(carts);
 
-    // cartService.getCartByStudentId(studentId);
-    // verify(cartRepository, times(1)).save(cart);
-    // assertEquals(1, cart.getCourses().size());
-    // assertTrue(cart.getCourses().contains(course));
-    // }
+        Cart cartResult = cartService.getCartByStudentId(studentId);
+
+        verify(cartRepository, times(1)).findAll();
+        assertEquals(cart, cartResult);
+    }
+
+    @Test
+    void getCartByStudentIdCanNotFindCart() {
+        int studentId = 1;
+        User user = User.builder().id(studentId).build();
+        Cart cart = Cart.builder().user(user).build();
+        List<Cart> carts = new ArrayList<>();
+        carts.add(cart);
+        when(cartRepository.findAll()).thenReturn(carts);
+        int nonExistentStudentId = 2;
+
+        Cart nonExistentCart = cartService.getCartByStudentId(nonExistentStudentId);
+
+        assertNull(nonExistentCart);
+    }
+
+    @Test
+    void testGetCoursebyCartId() {
+        int cartId = 123;
+        Cart cart = new Cart();
+        cart.setId(cartId);
+        List<Course> courses = new ArrayList<>();
+        Course course1 = new Course();
+        Course course2 = new Course();
+        courses.add(course1);
+        courses.add(course2);
+        cart.setCourses(courses);
+        when(cartRepository.findById(cartId)).thenReturn(Optional.of(cart));
+
+        List<Course> resultCourses = cartService.getCoursebyCartId(cartId);
+
+        verify(cartRepository, times(1)).findById(cartId);
+        assertEquals(courses, resultCourses);
+    }
+
+    @Test
+    void testDeleteCourseInCartByCourseId() {
+        int courseId = 123;
+        int cartId = 456;
+        Cart cart = new Cart();
+        cart.setId(cartId);
+        Course course1 = new Course();
+        course1.setId(courseId);
+        Course course2 = new Course();
+        course2.setId(789);
+        List<Course> courses = new ArrayList<>();
+        courses.add(course1);
+        courses.add(course2);
+        cart.setCourses(courses);
+        Optional<Cart> cartOptional = Optional.of(cart);
+        when(cartRepository.findById(cartId)).thenReturn(cartOptional);
+
+        cartService.deleteCourseInCartByCourseId(courseId, cartId);
+
+        verify(cartRepository, times(1)).findById(cartId);
+        verify(cartRepository, times(1)).save(cart);
+        assertEquals(1, cart.getCourses().size());
+        assertFalse(cart.getCourses().contains(course1));
+        assertTrue(cart.getCourses().contains(course2));
+    }
 }

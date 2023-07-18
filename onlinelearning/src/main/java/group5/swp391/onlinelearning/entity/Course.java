@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class Course {
     private int id;
 
     private String name;
-    private int status;
+    private int status; // draff = -1; waiting/submited = 0; inprogress = 1; rejected = 2; approved = 3;
     private String description;
     private String imageLink;
     private BigDecimal price;
