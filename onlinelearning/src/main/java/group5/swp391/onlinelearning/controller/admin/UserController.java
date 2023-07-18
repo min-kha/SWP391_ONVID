@@ -40,18 +40,17 @@ public class UserController {
         List<UserDto> usersDto = new ArrayList<>();
         for (User user : users) {
             usersDto.add(userService.map(user));
-            System.out.println(usersDto);
         }
         String title = "List users - Admin";
         thymeleafBaseCRUD.setBaseForList(model, usersDto, title);
-        return "sample/index";
+        return "admin/user/index";
     }
 
     @GetMapping("/create")
     public String getCreate(Model model) {
         UserDTORegisterRequest user = new UserDTORegisterRequest();
         thymeleafBaseCRUD.setBaseForEntity(model, user, "Create Staff - Admin");
-        return "sample/create";
+        return "admin/user/create";
     }
 
     @PostMapping("/create")
@@ -83,7 +82,7 @@ public class UserController {
         User user = userService.getUserById(id);
         var userDto = userService.map(user);
         thymeleafBaseCRUD.setBaseForEntity(model, userDto, "Edit user - Admin");
-        return "sample/edit";
+        return "admin/user/edit";
     }
 
     @PostMapping("/edit/{id}")
@@ -103,23 +102,41 @@ public class UserController {
             thymeleafBaseCRUD.setBaseForEntity(model, userDto, title);
             return "/sample/edit";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return "/error";
         }
         return "redirect:/admin/users/index";
     }
 
-    @GetMapping("/delete/{id}")
-    public String getDelete(Model model, @PathVariable @NotNull int id) {
-        User user = userService.getUserById(id);
-        thymeleafBaseCRUD.setBaseForEntity(model, user, "Confirm delete user - Admin");
-        return "sample/delete";
+    @GetMapping("/deactive/{id}")
+    public String getDeactive(Model model, @PathVariable @NotNull int id) {
+        try {
+            User user = userService.getUserById(id);
+            UserDto userDto = userService.map(user);
+            thymeleafBaseCRUD.setBaseForEntity(model, userDto, "Confirm deactive user - Admin");
+        } catch (Exception e) {
+            return "/error";
+        }
+        return "admin/user/deactive";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/active/{id}")
+    public String getActive(Model model, @PathVariable @NotNull int id) {
+        try {
+            if (!Boolean.TRUE.equals(userService.getUserById(id).getStatus())) {
+                userService.changeStatus(id);
+            }
+        } catch (Exception e) {
+            return "/error";
+        }
+        return "redirect:/admin/users/index";
+    }
+
+    @PostMapping("/deactive/{id}")
     public String postDelete(Model model, @PathVariable @NotNull int id) {
         try {
-            userService.deleteUser(id);
+            if (Boolean.TRUE.equals(userService.getUserById(id).getStatus())) {
+                userService.changeStatus(id);
+            }
         } catch (Exception e) {
             return "/error";
         }
@@ -135,6 +152,6 @@ public class UserController {
         } catch (Exception e) {
             return "/error";
         }
-        return "sample/detail";
+        return "admin/user/detail";
     }
 }

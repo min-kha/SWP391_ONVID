@@ -77,7 +77,7 @@ public class CourseController {
     // return "redirect:/admin/courses/index";
     // }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/details/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         Course course = courseService.getCourseById(id);
         thymeleafBaseCRUD.setBaseForEntity(model, course, "Detail Course - Admin");
@@ -95,7 +95,7 @@ public class CourseController {
             }
             thymeleafBaseCRUD.setBaseForEntity(model, course, "Review Course - Admin");
         } catch (Exception e) {
-            // TODO: handle exception
+            // handle exception
         }
         return "admin/course/review";
     }
@@ -105,19 +105,18 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         try {
             if (approve.equals("true")) {
-                course.setStatus(2); // set status to approved
+                course.setStatus(3); // set status to approved
                 courseService.updateCourse(course);
 
             }
             if (approve.equals("false")) {
-                course.setStatus(3); // set status to rejected
+                course.setStatus(2); // set status to rejected
                 courseService.updateCourse(course);
             }
-            thymeleafBaseCRUD.setBaseForEntity(model, course, "Detail Course - Admin");
         } catch (Exception e) {
-            // TODO: handle exception
+            // handle exception
             e.printStackTrace();
         }
-        return "redirect:/admin/courses/detail/{id}";
+        return "redirect:/admin/courses/details/{id}";
     }
 }

@@ -42,45 +42,6 @@ public class CVController {
         return "admin/cv/index";
     }
 
-    // @GetMapping("/edit/{id}")
-    // public String getEdit(Model model, @PathVariable @NotNull int id) {
-    // CV cV = cVService.getCVById(id);
-    // thymeleafBaseCRUD.setBaseForEntity(model, cV, "Edit CV - Admin");
-    // return "sample/edit";
-    // }
-
-    // @PostMapping("/edit/{id}")
-    // public String postEdit(@Valid @ModelAttribute("entity") CV cV, BindingResult
-    // bindingResult,
-    // Model model) {
-    // final String title = "Edit CV - Admin";
-    // try {
-    // if (bindingResult.hasErrors()) {
-    // thymeleafBaseCRUD.setBaseForEntity(model, cV, title);
-    // return "/sample/edit";
-    // }
-    // cVService.updateCV(cV);
-    // } catch (InvalidInputException e) {
-    // bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(),
-    // e.getMessage());
-    // thymeleafBaseCRUD.setBaseForEntity(model, cV, title);
-    // return "/sample/edit";
-    // } catch (Exception e) {
-    // return "/error";
-    // }
-    // return "redirect:/admin/cVs/index";
-    // }
-
-    // @PostMapping("/delete/{id}")
-    // public String postDelete(Model model, @PathVariable @NotNull int id) {
-    // try {
-    // cVService.deleteCV(id);
-    // } catch (Exception e) {
-    // return "/error";
-    // }
-    // return "redirect:/admin/cVs/index";
-    // }
-
     @GetMapping("/detail/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         CV cV = cVService.getCVById(id);
@@ -94,7 +55,7 @@ public class CVController {
             CV cV = cVService.getCVById(id);
             if (cV.getStatus() == 0) {
                 // TODO: cV.setStaff(//staff in session);
-                cV.setStatus(1); // set status to In processing
+                cV.setStatus(1); // set status to In progress
                 cVService.updateCV(cV);
             }
             thymeleafBaseCRUD.setBaseForEntity(model, cV, "Review CV - Admin");
