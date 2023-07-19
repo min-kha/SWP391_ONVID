@@ -54,7 +54,7 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Teacher</th>
-                                <th>ImageLink</th>
+                                <th>Image</th>
                                 <th>Price</th>
                                 <th>Date</th>
                                 <th>Topic</th>
@@ -71,15 +71,18 @@
                                 <td th:text="${entity.name}"></td>
                                 <td th:text="${entity.description}"></td>
                                 <td th:text="${entity.teacher?.name}"></td>
-                                <td th:text="${entity.imageLink}"></td>
+                                <td> <img th:src="${entity.imageLink}" alt="Image course" width="100px" /> </td>
                                 <td th:text="${entity.price}"></td>
                                 <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
                                 <td th:text="${entity.topic.name}"></td>
-                                <td th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}"></td>
+                                <td th:text="${entity.views?.![viewNumber]?.get(entity.views.size() - 1)}"></td>
                                 <td th:text=" ${entity.lessons?.size}"></td>
-                                <td th:if="${entity.status == 0}"><span class="btn btn-danger">To
+                                <td th:if="${entity.status == -2}"><span class="btn btn-danger">Deactived</span></td>
+                                <td th:if="${entity.status == -1}"><span class="btn btn-outline-secondary">Draff</span>
+                                </td>
+                                <td th:if="${entity.status == 0}"><span class="btn btn-info">To
                                         Do</span></td>
-                                <td th:if="${entity.status == 1}"><span class="btn btn-primary">In
+                                <td th:if="${entity.status == 1}"><span class="btn-sm btn btn-primary">In
                                         Progressing</span></td>
                                 <td th:if="${entity.status == 2}"><span class="btn btn-dark">Rejected</span>
                                 </td>
@@ -95,8 +98,14 @@
                                         aria-disabled="true">Review</a>
                                 </td>
                                 <td>
-                                    <a th:href="'delete/' + ${entity[fields[0].getName]}" class="btn btn-danger btn-sm "
-                                        tabindex="-1" aria-disabled="true">Deactive</a>
+                                    <a th:unless="*{entity.status==true}"
+                                        th:href="'active/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-success btn-sm" tabindex="-1"
+                                        aria-disabled="true">&ensp;Active&ensp;</a>
+                                    <a th:if="*{entity.status==true}"
+                                        th:href="'deactive/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-danger btn-sm" tabindex="-1"
+                                        aria-disabled="true">Deactive
                                 </td>
                             </tr>
                         </tbody>

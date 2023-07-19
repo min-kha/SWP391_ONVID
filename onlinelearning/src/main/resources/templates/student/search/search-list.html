@@ -15,21 +15,14 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="container-fluid text-center" style="border: 3px solid black">
-                        <form action="size">
-                            <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">Size
-                            </div>
-                            <input type="submit" name="value" value="#java"
+                        <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">
+                            #Hashtag
+                        </div>
+                        <form action="size" th:each="topic : ${topics}" style="display: flex;">
+                            <input type="submit" name="value" th:value="${topic.hashtag}"
                                 style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff"
                                 class="col-md-2" />
-                            <input type="submit" name="value" value="#kha"
-                                style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff"
-                                class="col-md-2" />
-                            <input type="submit" name="value" value="#hungngu"
-                                style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff"
-                                class="col-md-2" />
-                            <input type="submit" name="value" value="39"
-                                style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff"
-                                class="col-md-2" />
+
                         </form>
                     </div>
                     <br>
@@ -67,7 +60,7 @@
                                         </a>
                                         <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
                                         <div class="d-flex">
-                                            <span>3</span>
+                                            <span th:text="${course.ratingStar}"></span>
                                             <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
                                         </div>
                                         <span th:text="${course.price}" class="card-title h2"></span><small>vnđ</small>
@@ -80,7 +73,7 @@
             </div>
         </div>
         <form th:action="@{/student/course/search}" method="get">
-            <input type="hidden" value="${keyword}" name="keyword">
+            <input type="hidden" th:value="${keyword}" name="keyword">
             <nav aria-label="...">
                 <ul class="pagination pagination-lg">
                     <li class="page-item" th:each="number : ${listPageNumber}">

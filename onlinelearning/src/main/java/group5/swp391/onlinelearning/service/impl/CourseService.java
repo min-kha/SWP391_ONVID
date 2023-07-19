@@ -11,6 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
+
+import group5.swp391.onlinelearning.entity.Feedback;
+
+import group5.swp391.onlinelearning.entity.CourseReview;
+
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
@@ -31,6 +36,8 @@ public class CourseService {
     private CourseMapper courseMapper;
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private FeedbackService feedbackService;
 
     private HttpSession session;
 
@@ -123,28 +130,55 @@ public class CourseService {
 
     public void deleteCourse(int id) {
         Course course = courseRepository.findById(id).get();
-        courseRepository.delete(course);
+        if (course != null) {
+            courseRepository.delete(course);
+        }
     }
 
     public List<CourseDtoHomeDetail> getAllCourseDtoHomeDetails() {
         List<Course> courses = getAllCourses();
         List<CourseDtoHomeDetail> courseDtoHomeDetails = new ArrayList<>();
-
+        List<Course> courseAvailable = new ArrayList<>();
         for (Course course : courses) {
-            courseDtoHomeDetails.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+            if (course.getStatus() == 3) {
+                courseAvailable.add(course);
+            }
+        }
+
+        for (Course course : courseAvailable) {
+            List<Feedback> feedbackList = new ArrayList<Feedback>();
+            feedbackList = feedbackService.getFeedbackByCourseId(course.getId());
+            float avg = 0;
+            if (feedbackList.size() == 0) {
+                avg = 0;
+            } else {
+                for (Feedback feedback : feedbackList) {
+                    avg += feedback.getRatingStar();
+                }
+                avg = avg / feedbackList.size();
+            }
+            courseDtoHomeDetails.add(courseMapper.courseToCourseDtoHomeDetail(course, avg));
         }
         return courseDtoHomeDetails;
     }
 
     public Course getCourseAllById(int id) {
-        Course course = courseRepository.findById(id).get();
-        return course;
+        Optional<Course> course = courseRepository.findById(id);
+        if (course.isPresent()) {
+            return course.get();
+        } else {
+            return null;
+        }
     }
 
     public CourseDtoDetailStudent getCourseDetailForStudentById(int id) {
         Course course = getCourseAllById(id);
-        CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
-        return courseRes;
+        if (course != null) {
+            CourseDtoDetailStudent courseRes = CourseMapper.courseToCourseDtoDetailStudent(course);
+            return courseRes;
+        } else {
+            return null;
+        }
     }
 
     public List<Course> getMyCourse(int studentId) {
@@ -156,7 +190,19 @@ public class CourseService {
         List<CourseDtoHomeDetail> courseDtoHomeDetailsPopular = new ArrayList<>();
 
         for (Course course : coursesPopular) {
-            courseDtoHomeDetailsPopular.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+            List<Feedback> feedbackList = new ArrayList<Feedback>();
+            feedbackList = feedbackService.getFeedbackByCourseId(course.getId());
+            float avg = 0;
+            if (feedbackList.size() == 0) {
+                avg = 0;
+            } else {
+                for (Feedback feedback : feedbackList) {
+                    avg += feedback.getRatingStar();
+                }
+                avg = avg / feedbackList.size();
+            }
+
+            courseDtoHomeDetailsPopular.add(courseMapper.courseToCourseDtoHomeDetail(course, avg));
         }
         return courseDtoHomeDetailsPopular;
     }
@@ -166,9 +212,27 @@ public class CourseService {
         keyword = "%" + keyword + "%";
         List<Course> coursesSearch = courseRepository.searchCourseByKeyword(keyword);
         List<CourseDtoHomeDetail> courseDtoHomeDetailsSearch = new ArrayList<>();
-
+        List<Course> courseAvailable = new ArrayList<>();
         for (Course course : coursesSearch) {
-            courseDtoHomeDetailsSearch.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+            if (course.getStatus() == 3) {
+                courseAvailable.add(course);
+            }
+        }
+
+        for (Course course : courseAvailable) {
+            List<Feedback> feedbackList = new ArrayList<Feedback>();
+            feedbackList = feedbackService.getFeedbackByCourseId(course.getId());
+            float avg = 0;
+            if (feedbackList.size() == 0) {
+                avg = 0;
+            } else {
+                for (Feedback feedback : feedbackList) {
+                    avg += feedback.getRatingStar();
+                }
+                avg = avg / feedbackList.size();
+            }
+
+            courseDtoHomeDetailsSearch.add(courseMapper.courseToCourseDtoHomeDetail(course, avg));
         }
         return courseDtoHomeDetailsSearch;
     }
@@ -176,9 +240,27 @@ public class CourseService {
     public List<CourseDtoHomeDetail> getCourseByPrice(Double from, Double to) {
         List<Course> coursesPrice = courseRepository.searchCourseByPrice(from, to);
         List<CourseDtoHomeDetail> courseDtoHomeDetailsPrice = new ArrayList<>();
-
+        List<Course> courseAvailable = new ArrayList<>();
         for (Course course : coursesPrice) {
-            courseDtoHomeDetailsPrice.add(CourseMapper.courseToCourseDtoHomeDetail(course));
+            if (course.getStatus() == 3) {
+                courseAvailable.add(course);
+            }
+        }
+        for (Course course : courseAvailable) {
+
+            List<Feedback> feedbackList = new ArrayList<Feedback>();
+            feedbackList = feedbackService.getFeedbackByCourseId(course.getId());
+            float avg = 0;
+            if (feedbackList.size() == 0) {
+                avg = 0;
+            } else {
+                for (Feedback feedback : feedbackList) {
+                    avg += feedback.getRatingStar();
+                }
+                avg = avg / feedbackList.size();
+            }
+
+            courseDtoHomeDetailsPrice.add(courseMapper.courseToCourseDtoHomeDetail(course, avg));
         }
         return courseDtoHomeDetailsPrice;
     }
@@ -187,5 +269,23 @@ public class CourseService {
         course.setStatus(0);
         courseRepository.save(course);
     }
+
+
+    public void changeStatus(int id) throws Exception {
+        Course course;
+        var value = courseRepository.findById(id);
+        if (value.isPresent()) {
+            course = value.get();
+        } else {
+            throw new Exception("User not found");
+        }
+        if (course.getStatus() != -2) {
+            course.setStatus(-2); // set status to Deactived
+        } else {
+            course.setStatus(3); // set status to Approved
+        }
+        courseRepository.save(course);
+    }
+
 
 }

@@ -2,24 +2,21 @@ package group5.swp391.onlinelearning.controller.admin;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.CV;
-import group5.swp391.onlinelearning.exception.InvalidInputException;
+import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.service.ICVService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
@@ -50,11 +47,12 @@ public class CVController {
     }
 
     @GetMapping("/review/{id}")
-    public String getReview(Model model, @PathVariable @NotNull int id) throws Exception {
+    public String getReview(Model model, @PathVariable @NotNull int id, HttpSession session) throws Exception {
         try {
             CV cV = cVService.getCVById(id);
+            User user = (User) session.getAttribute("user");
             if (cV.getStatus() == 0) {
-                // TODO: cV.setStaff(//staff in session);
+                cV.setStaff(user);
                 cV.setStatus(1); // set status to In progress
                 cVService.updateCV(cV);
             }
