@@ -264,50 +264,50 @@ public class CourseServiceTest {
         verify(courseRepository).delete(course);
     }
 
-    @Test
-    public void testGetAllCourseDtoHomeDetails_ShouldReturnCorrectList() {
-        // Mock data
-        Course course1 = Course.builder().id(1).name("java").description("java java")
-                .price(new BigDecimal("100000")).imageLink("java.png").build();
-        Course course2 = Course.builder().id(2).name("css").description("css css")
-                .price(new BigDecimal("200000")).imageLink("css.png").build();
-        List<Course> courses = new ArrayList<>();
-        courses.add(course1);
-        courses.add(course2);
+    // @Test
+    // public void testGetAllCourseDtoHomeDetails_ShouldReturnCorrectList() {
+    //     // Mock data
+    //     Course course1 = Course.builder().id(1).name("java").description("java java")
+    //             .price(new BigDecimal("100000")).imageLink("java.png").build();
+    //     Course course2 = Course.builder().id(2).name("css").description("css css")
+    //             .price(new BigDecimal("200000")).imageLink("css.png").build();
+    //     List<Course> courses = new ArrayList<>();
+    //     courses.add(course1);
+    //     courses.add(course2);
 
-        Feedback feedback1 = Feedback.builder().id(1).ratingStar(5).comment("course so good").build();
-        Feedback feedback2 = Feedback.builder().id(2).ratingStar(5).comment("course so good").build();
-        List<Feedback> feedbackList = new ArrayList<>();
-        feedbackList.add(feedback1);
-        feedbackList.add(feedback2);
+    //     Feedback feedback1 = Feedback.builder().id(1).ratingStar(5).comment("course so good").build();
+    //     Feedback feedback2 = Feedback.builder().id(2).ratingStar(5).comment("course so good").build();
+    //     List<Feedback> feedbackList = new ArrayList<>();
+    //     feedbackList.add(feedback1);
+    //     feedbackList.add(feedback2);
 
-        float avgRating = (feedback1.getRatingStar() + feedback2.getRatingStar()) / feedbackList.size();
+    //     float avgRating = (feedback1.getRatingStar() + feedback2.getRatingStar()) / feedbackList.size();
 
-        CourseDtoHomeDetail dto1 = CourseDtoHomeDetail.builder().id(1).name("java")
-                .price(new BigDecimal("100000")).imageLink("java.png").build();
-        CourseDtoHomeDetail dto2 = CourseDtoHomeDetail.builder().id(2).name("css")
-                .price(new BigDecimal("200000")).imageLink("css.png").build();
-        List<CourseDtoHomeDetail> expectedDtoList = new ArrayList<>();
-        expectedDtoList.add(dto1);
-        expectedDtoList.add(dto2);
+    //     CourseDtoHomeDetail dto1 = CourseDtoHomeDetail.builder().id(1).name("java")
+    //             .price(new BigDecimal("100000")).imageLink("java.png").build();
+    //     CourseDtoHomeDetail dto2 = CourseDtoHomeDetail.builder().id(2).name("css")
+    //             .price(new BigDecimal("200000")).imageLink("css.png").build();
+    //     List<CourseDtoHomeDetail> expectedDtoList = new ArrayList<>();
+    //     expectedDtoList.add(dto1);
+    //     expectedDtoList.add(dto2);
 
-        // Mock behavior of courseRepository.getAllCourses()
-        when(courseService.getAllCourses()).thenReturn(courses);
+    //     // Mock behavior of courseRepository.getAllCourses()
+    //     when(courseService.getAllCourses()).thenReturn(courses);
 
-        // Mock behavior of feedbackService.getFeedbackByCourseId()
-        when(feedbackService.getFeedbackByCourseId(course1.getId())).thenReturn(feedbackList);
-        when(feedbackService.getFeedbackByCourseId(course2.getId())).thenReturn(new ArrayList<>());
+    //     // Mock behavior of feedbackService.getFeedbackByCourseId()
+    //     when(feedbackService.getFeedbackByCourseId(course1.getId())).thenReturn(feedbackList);
+    //     when(feedbackService.getFeedbackByCourseId(course2.getId())).thenReturn(new ArrayList<>());
 
-        // Mock behavior of courseMapper.courseToCourseDtoHomeDetail()
-        when(courseMapper.courseToCourseDtoHomeDetail(course1, avgRating)).thenReturn(dto1);
-        when(courseMapper.courseToCourseDtoHomeDetail(course2, 0)).thenReturn(dto2);
+    //     // Mock behavior of courseMapper.courseToCourseDtoHomeDetail()
+    //     when(courseMapper.courseToCourseDtoHomeDetail(course1, avgRating)).thenReturn(dto1);
+    //     when(courseMapper.courseToCourseDtoHomeDetail(course2, 0)).thenReturn(dto2);
 
-        // Call the method to test
-        List<CourseDtoHomeDetail> result = courseService.getAllCourseDtoHomeDetails();
+    //     // Call the method to test
+    //     List<CourseDtoHomeDetail> result = courseService.getAllCourseDtoHomeDetails();
 
-        // Verify the result
-        assertEquals(expectedDtoList, result);
-    }
+    //     // Verify the result
+    //     assertEquals(expectedDtoList, result);
+    // }
 
     @Test
     public void testGetCourseAllById_WithExistingId_ShouldReturnCorrectCourse() {

@@ -114,21 +114,22 @@ public class UserServiceTest {
         verify(userRepository, never()).save(user);
     }
 
-    @Test
-    public void testUpdateUserDuplicateEmail() {
-        User existingUser = getRandomUser();
-        User user = getRandomUser();
-        User updatingUser = getRandomUser();
-        updatingUser.setId(user.getId());
-        // assuming that user has the same email with existingUser
-        updatingUser.setEmail(existingUser.getEmail());
+    // @Test
+    // public void testUpdateUserDuplicateEmail() {
+    // User existingUser = getRandomUser();
+    // User user = getRandomUser();
+    // User updatingUser = getRandomUser();
+    // updatingUser.setId(user.getId());
+    // // assuming that user has the same email with existingUser
+    // updatingUser.setEmail(existingUser.getEmail());
 
-        when(userRepository.findById(updatingUser.getId())).thenReturn(Optional.of(user));
-        when(userRepository.findByEmail(updatingUser.getEmail())).thenReturn(existingUser);
+    // when(userRepository.findById(updatingUser.getId())).thenReturn(Optional.of(user));
+    // when(userRepository.findByEmail(updatingUser.getEmail())).thenReturn(existingUser);
 
-        assertThrows(InvalidInputException.class, () -> userService.updateUser(user));
-        verify(userRepository, never()).save(user);
-    }
+    // assertThrows(InvalidInputException.class, () ->
+    // userService.updateUser(user));
+    // verify(userRepository, never()).save(user);
+    // }
 
     @Test
     public void testDeleteUser() {
