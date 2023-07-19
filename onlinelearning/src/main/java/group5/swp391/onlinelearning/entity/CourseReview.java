@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +42,7 @@ public class CourseReview {
     private Course course;
 
     private Date time;
+    @NotBlank(message = "Please add comments for the review")
     private String comment;
     private int status;
 

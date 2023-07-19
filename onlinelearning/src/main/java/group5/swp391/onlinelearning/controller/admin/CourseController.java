@@ -4,22 +4,23 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.CourseReview;
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.model.admin.UserDto;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
@@ -68,32 +69,37 @@ public class CourseController {
                 course.setStatus(1); // set status to In processing
                 courseService.updateCourse(course);
             }
+            model.addAttribute("courseReview", new CourseReview());
             thymeleafBaseCRUD.setBaseForEntity(model, course, title);
-            thymeleafBaseCRUD.setBaseForList(model, (List) course.getCourseReviews(), title);
         } catch (Exception e) {
             // handle exception
         }
         return "admin/course/review";
     }
 
-    @PostMapping("/review/{id}")
-    public String postReview(Model model, @PathVariable @NotNull int id, @RequestParam String approve) {
-        Course course = courseService.getCourseById(id);
+    @PostMapping("/review/{courseId}")
+    public String postReview(Model model, @Valid @ModelAttribute CourseReview courseReview,
+            @PathVariable @NotNull int courseId, BindingResult result, HttpSession session) {
+        Course course = courseService.getCourseById(courseId);
+        User user = (User) session.getAttribute("user");
         try {
-            if (approve.equals("true")) {
-                course.setStatus(3); // set status to approved
-                courseService.updateCourse(course);
-
+            if (result.hasErrors()) {
+                thymeleafBaseCRUD.setBaseForEntity(model, course, "Review Course - Admin");
+                return "admin/course/review";
             }
-            if (approve.equals("false")) {
-                course.setStatus(2); // set status to rejected
-                courseService.updateCourse(course);
-            }
+            courseReview.setTime(new Date());
+            courseReview.setStaff(user);
+            courseReview.setCourse(course);
+            // add new review for course
+            course.getCourseReviews().add(courseReview);
+            // update new status for course after review
+            course.setStatus(courseReview.getStatus());
+            courseService.updateCourse(course); // update course and update course review
         } catch (Exception e) {
             // handle exception
             e.printStackTrace();
         }
-        return "redirect:/admin/courses/details/{id}";
+        return "redirect:/admin/courses/review/{courseId}";
     }
 
     @GetMapping("/deactive/{id}")

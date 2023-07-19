@@ -54,7 +54,7 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Teacher</th>
-                                <th>ImageLink</th>
+                                <th>Image</th>
                                 <th>Price</th>
                                 <th>Date</th>
                                 <th>Topic</th>
@@ -71,16 +71,18 @@
                                 <td th:text="${entity.name}"></td>
                                 <td th:text="${entity.description}"></td>
                                 <td th:text="${entity.teacher?.name}"></td>
-                                <td th:text="${entity.imageLink}"></td>
+                                <td> <img th:src="${entity.imageLink}" alt="Image course" width="100px" /> </td>
                                 <td th:text="${entity.price}"></td>
                                 <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
                                 <td th:text="${entity.topic.name}"></td>
-                                <td th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}"></td>
+                                <td th:text="${entity.views?.![viewNumber]?.get(entity.views.size() - 1)}"></td>
                                 <td th:text=" ${entity.lessons?.size}"></td>
-                                <td th:if="${entity.status == -2}"><span class="btn btn-secondary">Deactived</span></td>
-                                <td th:if="${entity.status == 0}"><span class="btn btn-danger">To
+                                <td th:if="${entity.status == -2}"><span class="btn btn-danger">Deactived</span></td>
+                                <td th:if="${entity.status == -1}"><span class="btn btn-outline-secondary">Draff</span>
+                                </td>
+                                <td th:if="${entity.status == 0}"><span class="btn btn-info">To
                                         Do</span></td>
-                                <td th:if="${entity.status == 1}"><span class="btn btn-primary">In
+                                <td th:if="${entity.status == 1}"><span class="btn-sm btn btn-primary">In
                                         Progressing</span></td>
                                 <td th:if="${entity.status == 2}"><span class="btn btn-dark">Rejected</span>
                                 </td>
