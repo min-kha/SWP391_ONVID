@@ -57,8 +57,8 @@
                         <tbody>
                             <tr th:each="entity : ${entities}">
                                 <td th:text="${entity.name}"></td>
-                                <td> <img style="aspect-ratio: 4/3; object-fit: cover;" class="img-fluid w-100 h-100"
-                                        width="100px" th:src="@{'/image/' + ${entity.image} }" alt="..."
+                                <td> <img style="aspect-ratio: 4/3; object-fit: cover;" width="100px"
+                                        th:src="@{'/image/' + ${entity.image} }" alt="..."
                                         onerror="checkAndReloadImage(this)" />
 
                                 </td>

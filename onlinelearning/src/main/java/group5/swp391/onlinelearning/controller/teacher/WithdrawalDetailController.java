@@ -33,7 +33,7 @@ public class WithdrawalDetailController {
 
     @GetMapping("list")
     public String getListWallet(Model model, HttpSession session) {
-        User teacher = (User) session.getAttribute("userSession");
+        User teacher = (User) session.getAttribute("user");
         List<WithdrawalDetail> lists = withDetailService.getListByTeacherId(teacher.getId());
         String title = "List Wallet";
         model.addAttribute("title", title);
