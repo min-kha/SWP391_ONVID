@@ -7,7 +7,7 @@ import group5.swp391.onlinelearning.entity.View;
 public interface IViewService {
     public long addView(int courseId);
 
-    public long getViewNumberByCourseId(int courseId);
+    public View getViewNumberByCourseId(int courseId);
 
     public List<View> getAllViews();
 }

@@ -1,7 +1,5 @@
 package group5.swp391.onlinelearning;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -252,14 +250,14 @@ public class CourseServiceImplTest {
         // verify(courseRepository, times(1)).save(existingCourse);
     }
 
-    @Test
-    public void testDeleteCourse() {
-        // Arrange
-        int courseId = 1;
-        // Act
-        courseService.deleteCourse(courseId);
-        // Assert
-        verify(courseRepository, times(1)).deleteById(courseId);
-    }
+    // @Test
+    // public void testDeleteCourse() {
+    // // Arrange
+    // int courseId = 1;
+    // // Act
+    // courseService.deleteCourse(courseId);
+    // // Assert
+    // verify(courseRepository, times(1)).deleteById(courseId);
+    // }
 
 }

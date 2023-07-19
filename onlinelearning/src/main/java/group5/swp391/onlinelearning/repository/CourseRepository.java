@@ -16,7 +16,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     @Query(value = "SELECT * FROM course where teacher_id = ?1", nativeQuery = true)
     public List<Course> findAllByTeacherId(int teacherId);
 
-    @Query(value = "SELECT course.id, course.name, course.image_link, course.price, course.date, COUNT(course.id) AS total_orders FROM course join order_detail where course.id = order_detail.course_id GROUP BY course.id, course.name ORDER BY total_orders DESC LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT course.id, course.name, course.image_link, course.price, course.date, COUNT(course.id) AS total_orders FROM course join order_detail where course.id = order_detail.course_id GROUP BY course.id, course.name ORDER BY total_orders DESC LIMIT 4", nativeQuery = true)
     public List<Course> getPopularCourse();
 
     @Query(value = "SELECT * FROM course WHERE name LIKE ?1", nativeQuery = true)

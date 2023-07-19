@@ -62,7 +62,7 @@
                                 </a>
                                 <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
                                 <div style="margin: auto;">
-                                    <span>3</span>
+                                    <span th:text="${course.ratingStar}"></span>
                                     <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
                                 </div>
                                 <span th:text="${course.price}" class="card-title h2"></span><small>vnđ</small>
@@ -88,7 +88,7 @@
                             </a>
                             <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
                             <div class="d-flex">
-                                <span>3</span>
+                                <span th:text="${course.ratingStar}"></span>
                                 <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
                             </div>
                             <span th:text="${course.price}" class="card-title h2"></span><small>vnđ</small>
