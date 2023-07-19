@@ -1,24 +1,30 @@
 package group5.swp391.onlinelearning.controller.admin;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.entity.CourseReview;
+import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
-@Controller("AdminCourseController")
+@Controller("CourseAdminController")
 @RequestMapping("/admin/courses")
 public class CourseController {
 
@@ -37,47 +43,7 @@ public class CourseController {
         return "admin/course/index";
     }
 
-    // @GetMapping("/edit/{id}")
-    // public String getEdit(Model model, @PathVariable @NotNull int id) {
-    // Course course = courseService.getCourseById(id);
-    // thymeleafBaseCRUD.setBaseForEntity(model, course, "Edit Course - Admin");
-    // return "sample/edit";
-    // }
-
-    // @PostMapping("/edit/{id}")
-    // public String postEdit(@Valid @ModelAttribute("entity") Course course,
-    // BindingResult
-    // bindingResult,
-    // Model model) {
-    // final String title = "Edit Course - Admin";
-    // try {
-    // if (bindingResult.hasErrors()) {
-    // thymeleafBaseCRUD.setBaseForEntity(model, course, title);
-    // return "/sample/edit";
-    // }
-    // courseService.updateCourse(course);
-    // } catch (InvalidInputException e) {
-    // bindingResult.rejectValue(e.getFieldName(), e.getErrorCode(),
-    // e.getMessage());
-    // thymeleafBaseCRUD.setBaseForEntity(model, course, title);
-    // return "/sample/edit";
-    // } catch (Exception e) {
-    // return "/error";
-    // }
-    // return "redirect:/admin/courses/index";
-    // }
-
-    // @PostMapping("/delete/{id}")
-    // public String postDelete(Model model, @PathVariable @NotNull int id) {
-    // try {
-    // courseService.deleteCourse(id);
-    // } catch (Exception e) {
-    // return "/error";
-    // }
-    // return "redirect:/admin/courses/index";
-    // }
-
-    @GetMapping("/detail/{id}")
+    @GetMapping("/details/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         Course course = courseService.getCourseById(id);
         thymeleafBaseCRUD.setBaseForEntity(model, course, "Detail Course - Admin");
@@ -85,39 +51,89 @@ public class CourseController {
     }
 
     @GetMapping("/review/{id}")
-    public String getReview(Model model, @PathVariable @NotNull int id) throws Exception {
+    public String getReview(Model model, @PathVariable @NotNull int id, HttpSession session) throws Exception {
+        String title = "Review Course - Admin";
         try {
             Course course = courseService.getCourseById(id);
+            User user = (User) session.getAttribute("user");
+
             if (course.getStatus() == 0) {
-                // TODO: course.setStaff(//staff in session);
+                CourseReview startReview = CourseReview.builder()
+                        .time(new Date())
+                        .comment("Start review course!")
+                        .status(1)
+                        .course(course)
+                        .staff(user)
+                        .build();
+                course.getCourseReviews().add(startReview);
                 course.setStatus(1); // set status to In processing
                 courseService.updateCourse(course);
             }
-            thymeleafBaseCRUD.setBaseForEntity(model, course, "Review Course - Admin");
+            model.addAttribute("courseReview", new CourseReview());
+            thymeleafBaseCRUD.setBaseForEntity(model, course, title);
         } catch (Exception e) {
-            // TODO: handle exception
+            // handle exception
         }
         return "admin/course/review";
     }
 
-    @PostMapping("/review/{id}")
-    public String postReview(Model model, @PathVariable @NotNull int id, @RequestParam String approve) {
-        Course course = courseService.getCourseById(id);
+    @PostMapping("/review/{courseId}")
+    public String postReview(Model model, @Valid @ModelAttribute CourseReview courseReview,
+            @PathVariable @NotNull int courseId, BindingResult result, HttpSession session) {
+        Course course = courseService.getCourseById(courseId);
+        User user = (User) session.getAttribute("user");
         try {
-            if (approve.equals("true")) {
-                course.setStatus(2); // set status to approved
-                courseService.updateCourse(course);
-
+            if (result.hasErrors()) {
+                thymeleafBaseCRUD.setBaseForEntity(model, course, "Review Course - Admin");
+                return "admin/course/review";
             }
-            if (approve.equals("false")) {
-                course.setStatus(3); // set status to rejected
-                courseService.updateCourse(course);
-            }
-            thymeleafBaseCRUD.setBaseForEntity(model, course, "Detail Course - Admin");
+            courseReview.setTime(new Date());
+            courseReview.setStaff(user);
+            courseReview.setCourse(course);
+            // add new review for course
+            course.getCourseReviews().add(courseReview);
+            // update new status for course after review
+            course.setStatus(courseReview.getStatus());
+            courseService.updateCourse(course); // update course and update course review
         } catch (Exception e) {
-            // TODO: handle exception
+            // handle exception
             e.printStackTrace();
         }
-        return "redirect:/admin/courses/detail/{id}";
+        return "redirect:/admin/courses/review/{courseId}";
+    }
+
+    @GetMapping("/deactive/{id}")
+    public String getDeactive(Model model, @PathVariable @NotNull int id) {
+        try {
+            Course course = courseService.getCourseById(id);
+            thymeleafBaseCRUD.setBaseForEntity(model, course, "Confirm deactive course - Admin");
+        } catch (Exception e) {
+            return "/error";
+        }
+        return "admin/course/deactive";
+    }
+
+    @GetMapping("/active/{id}")
+    public String getActive(Model model, @PathVariable @NotNull int id) {
+        try {
+            if (courseService.getCourseById(id).getStatus() == -2) {
+                courseService.changeStatus(id);
+            }
+        } catch (Exception e) {
+            return "/error";
+        }
+        return "redirect:/admin/courses/index";
+    }
+
+    @PostMapping("/deactive/{id}")
+    public String postDelete(Model model, @PathVariable @NotNull int id) {
+        try {
+            if (courseService.getCourseById(id).getStatus() != -2) {
+                courseService.changeStatus(id);
+            }
+        } catch (Exception e) {
+            return "/error";
+        }
+        return "redirect:/admin/users/index";
     }
 }

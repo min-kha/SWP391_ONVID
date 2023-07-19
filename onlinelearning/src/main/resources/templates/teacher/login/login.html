@@ -29,7 +29,7 @@
                                             </path>
                                         </svg>
                                     </div>
-                                    <form class="text-center" method="post" th:action="@{/teacher/login}"
+                                    <form action="/admin/login" class="text-center" method="post"
                                         th:object="${teacher}">
                                         <div class="mb-3">
                                             <input class="form-control" type="email" name="email" placeholder="Email"

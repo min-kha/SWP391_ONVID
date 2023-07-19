@@ -56,6 +56,7 @@ public class LoginTest {
     }
 
     @Test
+
     public void testPostStudentLogin_WithValidCredentials_RedirectToHomePage() {
         // Arrange
         UserDTOLoginRequest validStudent = new UserDTOLoginRequest();
@@ -74,6 +75,21 @@ public class LoginTest {
         assertEquals("redirect:/student/home/1", result);
         verify(session).setAttribute("studentSession", mockUser);
         verify(session).setAttribute("cartStudentSession", mockCart.getCourses());
+
+    public void testPostStudentLogin_WithValidCredentials_RedirectToHomeStudent() {
+        UserDTOLoginRequest student = new UserDTOLoginRequest(" ",
+                "Kha123@");
+        when(bindingResult.hasErrors()).thenReturn(false);
+        User user = new User();
+        when(userService.loginStudent(student, model)).thenReturn(user);
+
+        String result = loginController.postStudentLogin(student, bindingResult,
+                model, session);
+
+        assertEquals("redirect:home-student", result);
+        verify(model, never()).addAttribute(eq("loginError"), anyString());
+        verify(model, never()).addAttribute(eq("EnterFieldError"), anyString());
+
     }
 
     @Test

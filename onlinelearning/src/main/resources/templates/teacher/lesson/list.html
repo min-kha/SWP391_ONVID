@@ -132,12 +132,10 @@
                     <div th:if="${!isVideo}">
 
                         <h2 th:text="${lesson.title}"></h2>
-                        <h5>
+                        <h4>
                             <span class="label label-danger" th:text="${lesson.name}">
                             </span>
-                            <span class="label label-primary" th:text="${lesson.document}">
-                            </span>
-                        </h5>
+                        </h4>
                         <br>
                         <p th:text="${lesson.document}"></p>
                         <button onclick="showOptions()" class="btn btn-labeled btn-info"

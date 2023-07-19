@@ -1,0 +1,89 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <h1 th:text="${title}"></h1>
+                                                <hr>
+                                                <form th:object="${entity}" method="post">
+                                                    <!-- Loop fields -->
+                                                    <div class="form-group mb-3" th:each="field: ${fields}">
+                                                        <label th:text="${field.getName}"
+                                                            class="form-label text-capitalize"></label>
+                                                        <th:block th:if="${field.getName == 'id'}">
+                                                            <input type="number" readonly
+                                                                th:field="*{__${field.getName}__}" th:id="${field.name}"
+                                                                class="form-control">
+                                                        </th:block>
+                                                        <th:block th:unless="${field.getName == 'id'}">
+                                                            <th:block th:switch="${field.getType.getSimpleName}">
+                                                                <th:block th:case="'int'">
+                                                                    <input type="number"
+                                                                        th:field="*{__${field.getName}__}"
+                                                                        th:id="${field.name}" class="form-control">
+                                                                </th:block>
+                                                                <th:block th:case="'double'">
+                                                                    <input type="number" step="0.01"
+                                                                        th:field="*{__${field.getName}__}"
+                                                                        th:id="${field.name}" class="form-control">
+                                                                </th:block>
+                                                                <th:block th:case="'Boolean'">
+                                                                    <select th:placeholder="*{__${field.getName}__}"
+                                                                        th:field="*{__${field.getName}__}"
+                                                                        th:id="${field.name}" class="form-control">
+                                                                        <option value="true">Active</option>
+                                                                        <option value="false">Deactive</option>
+                                                                    </select>
+                                                                </th:block>
+                                                                <th:block th:case="'Collection'">
+                                                                    <input readonly
+                                                                        th:placeholder="*{__${field.getName}__}"
+                                                                        th:id="${field.name}" class="form-control">
+                                                                </th:block>
+                                                                <th:block th:case="*">
+                                                                    <input th:field="*{__${field.getName}__}"
+                                                                        th:id="${field.name}" class="form-control">
+                                                                </th:block>
+                                                            </th:block>
+                                                        </th:block>
+                                                        <label th:if="${#fields.hasErrors('__${field.name}__')}"
+                                                            th:errors="*{__${field.getName}__}"
+                                                            class="form-text text-danger">
+                                                        </label>
+                                                    </div>
+                                                    <div th:if="${#fields.hasGlobalErrors()}"
+                                                        class="alert alert-danger">
+                                                        <ul>
+                                                            <li th:each="error : ${#fields.globalErrors()}"
+                                                                th:text="${error}">
+                                                            </li>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <button type="submit" class="px-3 btn btn-primary">Save</button>
+                                                        <a th:href="'../' + 'index'" class="btn btn-link px-3 "
+                                                            aria-disabled="true">Back
+                                                            to list</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </th:block>
+</th:block>
