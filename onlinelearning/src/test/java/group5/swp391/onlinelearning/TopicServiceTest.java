@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +22,7 @@ import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.repository.TopicRepository;
 import group5.swp391.onlinelearning.service.impl.TopicService;
+import group5.swp391.onlinelearning.utils.TestDataProvider;
 
 public class TopicServiceTest {
 
@@ -40,8 +40,8 @@ public class TopicServiceTest {
     @Test
     public void testGetTopics() {
         List<Topic> mockTopics = new ArrayList<>();
-        mockTopics.add(getRandomTopic());
-        mockTopics.add(getRandomTopic());
+        mockTopics.add(TestDataProvider.createSampleTopic());
+        mockTopics.add(TestDataProvider.createSampleTopic());
         when(topicRepository.findAll()).thenReturn(mockTopics);
 
         List<Topic> result = topicService.getTopics();
@@ -51,7 +51,7 @@ public class TopicServiceTest {
 
     @Test
     public void testAddTopic() throws Exception {
-        Topic topic = getRandomTopic();
+        Topic topic = TestDataProvider.createSampleTopic();
 
         when(topicRepository.findById(topic.getId())).thenReturn(Optional.empty());
         when(topicRepository.findByHashtag(topic.getHashtag())).thenReturn(null);
@@ -62,7 +62,7 @@ public class TopicServiceTest {
 
     @Test
     public void testAddTopicDuplicateId() throws Exception {
-        Topic topic = getRandomTopic();
+        Topic topic = TestDataProvider.createSampleTopic();
 
         when(topicRepository.findById(topic.getId())).thenReturn(Optional.of(topic));
 
@@ -72,10 +72,10 @@ public class TopicServiceTest {
 
     @Test
     public void testAddTopicDuplicateHashtag() throws Exception {
-        Topic topic = getRandomTopic();
+        Topic topic = TestDataProvider.createSampleTopic();
 
         when(topicRepository.findById(topic.getId())).thenReturn(Optional.empty());
-        when(topicRepository.findByHashtag(topic.getHashtag())).thenReturn(getRandomTopic());
+        when(topicRepository.findByHashtag(topic.getHashtag())).thenReturn(TestDataProvider.createSampleTopic());
 
         assertThrows(InvalidInputException.class, () -> topicService.addTopic(topic));
         verify(topicRepository, never()).save(topic);
@@ -91,7 +91,7 @@ public class TopicServiceTest {
 
     @Test
     public void testUpdateTopic() throws Exception {
-        Topic topic = getRandomTopic();
+        Topic topic = TestDataProvider.createSampleTopic();
 
         when(topicRepository.findById(topic.getId())).thenReturn(Optional.of(topic));
         when(topicRepository.findByHashtag(topic.getHashtag())).thenReturn(null);
@@ -102,7 +102,7 @@ public class TopicServiceTest {
 
     @Test
     public void testUpdateTopicNotFound() {
-        Topic topic = getRandomTopic();
+        Topic topic = TestDataProvider.createSampleTopic();
 
         when(topicRepository.findById(topic.getId())).thenReturn(Optional.empty());
 
@@ -112,9 +112,9 @@ public class TopicServiceTest {
 
     @Test
     public void testUpdateTopicDuplicateHashtag() {
-        Topic existingTopic = getRandomTopic();
-        Topic topic = getRandomTopic();
-        Topic updatingTopic = getRandomTopic();
+        Topic existingTopic = TestDataProvider.createSampleTopic();
+        Topic topic = TestDataProvider.createSampleTopic();
+        Topic updatingTopic = TestDataProvider.createSampleTopic();
         updatingTopic.setId(topic.getId());
         // assuming that updatingTopic has the same hashtag with exitingTopic
         updatingTopic.setHashtag(existingTopic.getHashtag());
@@ -130,21 +130,12 @@ public class TopicServiceTest {
     @Test
     public void testGetTopicById() {
         int topicId = 1;
-        Topic mockTopic = getRandomTopic();
+        Topic mockTopic = TestDataProvider.createSampleTopic();
 
         when(topicRepository.findById(topicId)).thenReturn(Optional.of(mockTopic));
 
         Topic result = topicService.getTopicById(topicId);
 
         assertEquals(mockTopic, result);
-    }
-
-    private Topic getRandomTopic() {
-        int randomNumber = new Random().nextInt(100000);
-        return Topic.builder()
-                .id(randomNumber)
-                .name("Topic " + randomNumber)
-                .hashtag("hashtag" + randomNumber)
-                .build();
     }
 }
