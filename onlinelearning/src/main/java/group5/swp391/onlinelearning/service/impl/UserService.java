@@ -78,12 +78,18 @@ public class UserService implements IUserService {
     public User loginStudent(UserDTOLoginRequest student, Model model) {
         boolean checkInvalidAccount = false;
         boolean checkWrongAccountOrPassword = false;
+        boolean checkRole = false;
+
         User user = userRepository.login(student.getEmail());
 
         if (student.getEmail().equals(user.getEmail())
                 && SHA1.toSHA1(student.getPassword()).equals(user.getPassword())) {
             if (Boolean.TRUE.equals(user.getStatus())) {
-                return user;
+                if (user.getRole() != 1) {
+                    return user;
+                } else {
+                    checkRole = true;
+                }
             } else {
                 checkWrongAccountOrPassword = false;
                 checkInvalidAccount = true;
@@ -97,6 +103,9 @@ public class UserService implements IUserService {
         }
         if (checkWrongAccountOrPassword) {
             model.addAttribute("wrongAccountOrPassword", "Email or password not true");
+        }
+        if (checkRole) {
+            model.addAttribute("wrongRole", "Your account don't have permissions");
         }
         return null;
     }

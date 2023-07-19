@@ -18,7 +18,7 @@
                         <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">
                             #Hashtag
                         </div>
-                        <form action="size" th:each="topic : ${topics}" style="display: flex;">
+                        <form action="size" th:each="topic : ${topics}">
                             <input type="submit" name="value" th:value="${topic.hashtag}"
                                 style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff"
                                 class="col-md-2" />
@@ -72,8 +72,12 @@
                 </div>
             </div>
         </div>
-        <form th:action="@{/student/course/search}" method="get">
-            <input type="hidden" th:value="${keyword}" name="keyword">
+        <form th:action="@{/student/course/searchByPrice}" method="get">
+            <input type="hidden" th:value="${from}" name="from">
+            <input type="hidden" th:value="${to}" name="to">
+
+
+
             <nav aria-label="...">
                 <ul class="pagination pagination-lg">
                     <li class="page-item" th:each="number : ${listPageNumber}">
