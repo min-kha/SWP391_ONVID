@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -19,14 +20,11 @@ public class FeedbackService implements IFeedbackServive {
     @Autowired
     HttpSession session;
     @Autowired
-    CourseService coursesService;
-    @Autowired
     FeedbackRepositoty feedbackRepository;
 
     @Override
-    public Feedback createFeedback(int courseId, int ratingStar, String comment) {
+    public Feedback createFeedback(Course course, int ratingStar, String comment) {
         User student = (User) session.getAttribute("studentSession");
-        Course course = coursesService.getCourseByCourseId(courseId);
         Feedback feedback = Feedback.builder().student(student).course(course).ratingStar(ratingStar).comment(comment)
                 .build();
         return feedbackRepository.save(feedback);
@@ -43,5 +41,10 @@ public class FeedbackService implements IFeedbackServive {
         User student = (User) session.getAttribute("studentSession");
         feedbackRepository.updateFeedback(comment, ratingStar, courseId, student.getId());
         return getFeedbackDtoRequest(courseId, student.getId());
+    }
+
+    @Override
+    public List<Feedback> getFeedbackByCourseId(int courseId) {
+        return feedbackRepository.getFeedbackByCourseId(courseId);
     }
 }

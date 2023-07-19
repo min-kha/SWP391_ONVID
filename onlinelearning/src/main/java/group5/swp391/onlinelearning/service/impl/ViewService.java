@@ -1,6 +1,7 @@
 package group5.swp391.onlinelearning.service.impl;
 
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,25 @@ public class ViewService implements IViewService {
     @Override
     public long addView(int courseId) {
         Course course = courseService.getCourseByCourseId(courseId);
-        long millis = System.currentTimeMillis();
-        Date date = new Date(millis);
-
-        View view = View.builder().course(course).date(date).viewNumber(1).build();
-        View viewRes = viewRepositoty.save(view);
-        return getViewNumberByCourseId(courseId);
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = (Date) calendar.getTime();
+        View viewRes = getViewNumberByCourseId(courseId);
+        View view = new View();
+        if (viewRes == null) {
+            view = View.builder().course(course).date(currentDate)
+                    .viewNumber(1).build();
+        } else {
+            view = View.builder().course(course).date(currentDate)
+                    .viewNumber(getViewNumberByCourseId(courseId).getViewNumber() + 1).build();
+        }
+        viewRepositoty.save(view);
+        return getViewNumberByCourseId(courseId).getViewNumber();
     }
 
     @Override
-    public long getViewNumberByCourseId(int courseId) {
-        List<View> views = getAllViews();
-        long totalView = 0;
-        for (View view : views) {
-            if (courseId == view.getCourse().getId()) {
-                totalView = totalView + view.getViewNumber();
-            }
-        }
-        return totalView;
+    public View getViewNumberByCourseId(int courseId) {
+        View view = viewRepositoty.getViewNumberByCourseId(courseId);
+        return view;
     }
 
     @Override

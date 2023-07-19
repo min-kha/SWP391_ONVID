@@ -15,11 +15,16 @@
 	<name>onlinelearning</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<sonar.organization>onvid</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<java.version>11</java.version>
+		<sonar.organization>online-learning-1</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.sonarsource.scanner.maven</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.9.1.2184</version>
+		</dependency>
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
