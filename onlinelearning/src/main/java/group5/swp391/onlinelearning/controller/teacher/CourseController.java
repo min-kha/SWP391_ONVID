@@ -3,6 +3,7 @@ package group5.swp391.onlinelearning.controller.teacher;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,7 +65,7 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(1);
+        User user = userService.getUserById(70);
         req.setAttribute("userSession", user);
         // Check role access site
         if (user.getRole() != 1)
@@ -94,10 +95,12 @@ public class CourseController {
     public String addCourse(@Valid @ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req,
             @RequestParam("image") MultipartFile image, BindingResult result, Model model)
             throws IOException, ServletException {
+        if (courseDTOAdd.getPrice().compareTo(BigDecimal.ZERO) < 0) {
+            result.rejectValue("price", "error.price.invalid", "price must be greater than zero");
+        }
         // check error
         if (result.hasErrors()) {
             model.addAttribute("errorFormat", "");
-            model.addAttribute("course", new CourseDTOAdd());
             model.addAttribute("topics", topicService.getTopics());
             return "teacher/course/add";
         }
@@ -161,9 +164,16 @@ public class CourseController {
     public String postUpdateCourse(@Valid @ModelAttribute CourseDTOEdit course, BindingResult bindingResult,
             HttpServletRequest req,
             Model model) throws IOException, ServletException {
+        if (course.getPrice().compareTo(BigDecimal.ZERO) < 0) {
+            bindingResult.rejectValue("price", "error.price.invalid", "price must be greater than zero");
+        }
         // check error status
+        // TODO: Chưa bắn đc lỗi
         if (bindingResult.hasErrors()) {
-            return "redirect:/teacher/course/edit/" + course.getId();
+            model.addAttribute("errorFormat", "");
+            model.addAttribute("course", course);
+            model.addAttribute("topics", topicService.getTopics());
+            return "teacher/course/edit";
         }
         // get link image and set link image
         // get link image

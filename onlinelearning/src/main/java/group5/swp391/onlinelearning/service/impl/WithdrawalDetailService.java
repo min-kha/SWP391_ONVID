@@ -64,9 +64,11 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
         WithdrawalDetail withdrawalDetail = new WithdrawalDetail();
         // set thuoc tinh
         withdrawalDetail.setDate(date);
-        withdrawalDetail.setStatus(0);
+        withdrawalDetail.setStatus(1);
         withdrawalDetail.setTeacher(user);
         withdrawalDetail.setUser(null);
+        // BigDecimal currentMoney = withdrawalDetail.getMoney();
+        // currentMoney = currentMoney.subtract(money);
         withdrawalDetail.setMoney(money);
         withdrawalDetail.setDescripton("Withdraw money " + money);
         withDrawalDetailRepository.save(withdrawalDetail);
