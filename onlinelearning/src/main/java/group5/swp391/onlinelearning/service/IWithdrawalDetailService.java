@@ -16,4 +16,8 @@ public interface IWithdrawalDetailService {
     public List<WithdrawalDetail> getListByTeacherId(int teacher);
 
     public void removeWithdrawalDetailByWallet(BigDecimal money);
+
+    public BigDecimal getRevenueByMonth();
+
+    public BigDecimal getRevenueByMonthBefore();
 }
