@@ -20,4 +20,5 @@ public class CourseDtoHomeDetail {
     private String imageLink;
     private BigDecimal price;
     private Date date;
+    private float ratingStar;
 }

@@ -67,7 +67,9 @@ public class FeedbackController {
             model.addAttribute("isUpdate", false);
             return "student/course/feedback";
         }
-        Feedback feedbackRes = feedbackServive.createFeedback(Integer.parseInt(courseId), feedback.getRatingStar(),
+
+        Course courseRes = courseService.getCourseByCourseId(Integer.parseInt(courseId));
+        Feedback feedbackRes = feedbackServive.createFeedback(courseRes, feedback.getRatingStar(),
                 feedback.getComment());
         FeedbackDtoRequest feedbackDtoRequest = FeedbackMapper.feedbackToFeedbackDtoRequest(feedbackRes);
         redirectAttributes.addFlashAttribute("feedback", feedbackDtoRequest);
