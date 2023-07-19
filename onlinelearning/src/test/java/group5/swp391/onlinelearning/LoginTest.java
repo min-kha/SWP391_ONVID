@@ -49,7 +49,7 @@ public class LoginTest {
 
     @Test
     public void testPostStudentLogin_WithValidCredentials_RedirectToHomeStudent() {
-        UserDTOLoginRequest student = new UserDTOLoginRequest("user1@example.com",
+        UserDTOLoginRequest student = new UserDTOLoginRequest(" ",
                 "Kha123@");
         when(bindingResult.hasErrors()).thenReturn(false);
         User user = new User();

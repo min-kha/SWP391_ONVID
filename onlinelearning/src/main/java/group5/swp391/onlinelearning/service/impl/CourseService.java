@@ -59,6 +59,8 @@ public class CourseService {
     // hung
     public Course createCourse(CourseDTOAdd courseDTOAdd) {
         Course course = courseMapper.courseDTOAddtoCourse(courseDTOAdd);
+        User teacher = (User) session.getAttribute("userSession");
+        course.setTeacher(teacher);
         return courseRepository.save(course);
     }
 
