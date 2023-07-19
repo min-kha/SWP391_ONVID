@@ -15,63 +15,103 @@
                                                     <div>
                                                         <hr />
                                                         <dl class="row border rounded p-3">
-                                                            <dt th:text="id" class="col-sm-3 fw-bold text-capitalize">
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                id
                                                             </dt>
                                                             <dd th:text="${entity.id}" class="col-sm-9">
                                                             </dd>
                                                             <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                name
+                                                            </dt>
+                                                            <dd th:text="${entity.name}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                description
+                                                            </dt>
+                                                            <dd th:text="${entity.description}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                teacher
+                                                            </dt>
+                                                            <dd th:text="${entity.teacher?.name}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                price
+                                                            </dt>
+                                                            <dd th:text="${entity.price}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
 
-                                                            <dt th:text="date" class="col-sm-3 fw-bold text-capitalize">
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                topic
+                                                            </dt>
+                                                            <dd th:text="${entity.topic?.name}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                view
+                                                            </dt>
+                                                            <dd th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}"
+                                                                class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                lessons
+                                                            </dt>
+                                                            <dd th:text="${entity.lessons?.size}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                date
                                                             </dt>
                                                             <dd th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"
                                                                 class="col-sm-9">
                                                             </dd>
                                                             <hr style="color: #aaaaaa" />
-                                                            <dt th:text="pdfLink"
-                                                                class="col-sm-3 fw-bold text-capitalize">
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                image
                                                             </dt>
                                                             <dd class="col-sm-9">
-                                                                <a th:href="'/pdf/cv/' + ${entity.pdfLink}"
-                                                                    target="_blank" class="btn btn-outline-primary">CV
-                                                                    file</a>
+                                                                <img th:src="${entity.imageLink}" alt="image of course"
+                                                                    class="" width="100px" />
                                                             </dd>
                                                             <hr style="color: #aaaaaa" />
-                                                            <dt th:text="status"
-                                                                class="col-sm-3 fw-bold text-capitalize">
+
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                Go to course
+                                                            </dt>
+                                                            <dd class="col-sm-9">
+                                                                <a th:href="'/student/course/detail/' + ${entity.id}"
+                                                                    target="_blank" class="btn btn-link"
+                                                                    th:text="${entity.name}"></a>
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                status
                                                             </dt>
                                                             <dd class="col-sm-9">
                                                                 <span th:if="${entity.status == 0}"
-                                                                    class="btn btn-danger">To Do
+                                                                    class="btn btn-info">To Do
                                                                 </span>
                                                                 <span th:if="${entity.status == 1}"
                                                                     class="btn btn-primary">In
                                                                     Processing</span>
-                                                                <span th:if="${entity.status == 2}"
-                                                                    class="btn btn-success">Approved</span>
                                                                 <span th:if="${entity.status == 3}"
+                                                                    class="btn btn-success">Approved</span>
+                                                                <span th:if="${entity.status == 2}"
                                                                     class="btn btn-dark">Rejected</span>
                                                             </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt th:text="teacher"
-                                                                class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd th:text="${entity.teacher?.name}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt th:text="staff"
-                                                                class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd th:text="${entity.staff?.name}" class="col-sm-9">
-                                                            </dd>
-
                                                         </dl>
                                                     </div>
                                                     <div class="text-end">
-                                                        <a th:href="'../' + 'index'" class="btn btn-link px-3 "
-                                                            aria-disabled="true">Back
+                                                        <a th:href="'../' + 'index'" class="btn btn-link px-3">Back
                                                             to list</a>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -81,7 +121,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </section>
     </th:block>

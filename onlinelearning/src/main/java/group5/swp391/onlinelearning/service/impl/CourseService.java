@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
+
 import group5.swp391.onlinelearning.entity.Feedback;
+
+import group5.swp391.onlinelearning.entity.CourseReview;
+
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
@@ -61,6 +65,8 @@ public class CourseService {
     // hung
     public Course createCourse(CourseDTOAdd courseDTOAdd) {
         Course course = courseMapper.courseDTOAddtoCourse(courseDTOAdd);
+        User teacher = (User) session.getAttribute("userSession");
+        course.setTeacher(teacher);
         return courseRepository.save(course);
     }
 
@@ -263,4 +269,23 @@ public class CourseService {
         course.setStatus(0);
         courseRepository.save(course);
     }
+
+
+    public void changeStatus(int id) throws Exception {
+        Course course;
+        var value = courseRepository.findById(id);
+        if (value.isPresent()) {
+            course = value.get();
+        } else {
+            throw new Exception("User not found");
+        }
+        if (course.getStatus() != -2) {
+            course.setStatus(-2); // set status to Deactived
+        } else {
+            course.setStatus(3); // set status to Approved
+        }
+        courseRepository.save(course);
+    }
+
+
 }

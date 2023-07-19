@@ -36,7 +36,8 @@ public class WithdrawalDetailController {
         User teacher = (User) session.getAttribute("userSession");
         List<WithdrawalDetail> lists = withDetailService.getListByTeacherId(teacher.getId());
         String title = "List Wallet";
-        thymeleafBaseCRUD.setBaseForList(model, lists, title);
+        model.addAttribute("title", title);
+        model.addAttribute("wallets", lists);
         return "teacher/withDrawalDetail/list";
     }
 
@@ -67,7 +68,7 @@ public class WithdrawalDetailController {
                 throw new Exception();
                 // TODO: get wallet and compare with money
             } else if (money.compareTo(wallet) < 0) {
-                errorName = "Input is not < wallet";
+                errorName = "Input is not > wallet";
                 throw new Exception();
                 // TODO: create withdrawal detail and change wallet
             } else {
@@ -81,8 +82,8 @@ public class WithdrawalDetailController {
         } catch (Exception e) {
             error = true;
             model.addAttribute("title", "Create Request Wallet");
-            model.addAttribute("error", false);
-            model.addAttribute("error", errorName);
+            model.addAttribute("error", true);
+            model.addAttribute("errorName", errorName);
             return "teacher/withDrawalDetail/create";
         }
 

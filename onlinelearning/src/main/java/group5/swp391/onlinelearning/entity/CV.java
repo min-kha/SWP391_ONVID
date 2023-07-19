@@ -39,5 +39,5 @@ public class CV {
     private User staff;
 
     private int status;
-    // 0 = todo, 1 = inprogress, 2 = approved, 3 = rejected
+    // 0 = todo, 1 = inprogress, 2 = approved, 3 = rejected 
 }
