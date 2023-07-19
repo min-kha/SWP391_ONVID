@@ -9,7 +9,7 @@ import group5.swp391.onlinelearning.entity.User;
 
 import java.io.IOException;
 
-@WebFilter("//*")
+@WebFilter("/teacherrr/")
 public class TeacherFilter implements Filter {
 
     @Override
