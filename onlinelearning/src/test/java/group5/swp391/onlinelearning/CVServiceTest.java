@@ -1,22 +1,28 @@
 package group5.swp391.onlinelearning;
 
-import group5.swp391.onlinelearning.entity.CV;
-import group5.swp391.onlinelearning.exception.InvalidInputException;
-import group5.swp391.onlinelearning.repository.CVRepository;
-import group5.swp391.onlinelearning.service.impl.CVService;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import group5.swp391.onlinelearning.entity.CV;
+import group5.swp391.onlinelearning.exception.InvalidInputException;
+import group5.swp391.onlinelearning.repository.CVRepository;
+import group5.swp391.onlinelearning.service.impl.CVService;
+import group5.swp391.onlinelearning.utils.TestDataProvider;
 
 public class CVServiceTest {
 
@@ -34,8 +40,8 @@ public class CVServiceTest {
     @Test
     public void testGetCVs() {
         List<CV> mockCVs = new ArrayList<>();
-        mockCVs.add(getRamdomCV());
-        mockCVs.add(getRamdomCV());
+        mockCVs.add(TestDataProvider.createSampleCV());
+        mockCVs.add(TestDataProvider.createSampleCV());
         when(cVRepository.findAll()).thenReturn(mockCVs);
 
         List<CV> result = cVService.getCVs();
@@ -45,7 +51,7 @@ public class CVServiceTest {
 
     @Test
     public void testAddCV() throws Exception {
-        CV cV = getRamdomCV();
+        CV cV = TestDataProvider.createSampleCV();
 
         when(cVRepository.findById(cV.getId())).thenReturn(Optional.empty());
 
@@ -55,7 +61,7 @@ public class CVServiceTest {
 
     @Test
     public void testAddCVDuplicate() throws Exception {
-        CV cV = getRamdomCV();
+        CV cV = TestDataProvider.createSampleCV();
 
         when(cVRepository.findById(cV.getId())).thenReturn(Optional.of(cV));
 
@@ -73,7 +79,7 @@ public class CVServiceTest {
 
     @Test
     public void testUpdateCV() throws Exception {
-        CV cV = getRamdomCV();
+        CV cV = TestDataProvider.createSampleCV();
 
         when(cVRepository.findById(cV.getId())).thenReturn(Optional.of(cV));
 
@@ -83,7 +89,7 @@ public class CVServiceTest {
 
     @Test
     public void testUpdateCVNotFound() {
-        CV cV = getRamdomCV();
+        CV cV = TestDataProvider.createSampleCV();
 
         when(cVRepository.findById(cV.getId())).thenReturn(Optional.empty());
 
@@ -94,18 +100,12 @@ public class CVServiceTest {
     @Test
     public void testGetCVById() {
         int cvId = 1;
-        CV mockCV = getRamdomCV();
+        CV mockCV = TestDataProvider.createSampleCV();
 
         when(cVRepository.findById(cvId)).thenReturn(Optional.of(mockCV));
 
         CV result = cVService.getCVById(cvId);
 
         assertEquals(mockCV, result);
-    }
-
-    public CV getRamdomCV() {
-        int randomNumber = new Random().nextInt(100000);
-        return CV.builder().pdfLink("pdfLink " + randomNumber + ".pdf")
-                .build();
     }
 }
