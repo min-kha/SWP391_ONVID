@@ -20,11 +20,24 @@ public class HomeController {
     public String getHomePage(Model model) {
         // TODO: Get Luot xem trong ngày
 
-        // TODO: Get revenue in month
+        // Get revenue in month
         BigDecimal revenue = withdrawalDetailService.getRevenueByMonth();
         BigDecimal revenueBefore = withdrawalDetailService.getRevenueByMonthBefore();
+        BigDecimal sub = revenueBefore.subtract(revenue);
+        boolean isIncrease = true;
+        if (sub.compareTo(BigDecimal.ZERO) < 0) {
+            isIncrease = false;
+            sub = sub.multiply(new BigDecimal(-1));
+        }
+        if (revenueBefore.compareTo(BigDecimal.ZERO) != 0) {
+            BigDecimal percentRevenue = sub.divide(revenueBefore).multiply(new BigDecimal(100));
+            model.addAttribute("percentRevenue", percentRevenue);
+        } else {
+            model.addAttribute("percentRevenue", false);
+        }
+        model.addAttribute("isIncreaseRevenue", isIncrease);
         model.addAttribute("revenue", revenue);
-        // TODO: Get customer in year
+        // Get customer in year
 
         // TODO: Get 5 course vừa bán
         // TODO: Get top cousrse đã bán

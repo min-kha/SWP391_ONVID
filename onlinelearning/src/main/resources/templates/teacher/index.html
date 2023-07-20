@@ -81,8 +81,17 @@
                           </div>
                           <div class="ps-3">
                             <h6 th:text="${revenue} + 'vnđ'"></h6>
-                            <span class="text-success small pt-1 fw-bold">8%</span> <span
-                              class="text-muted small pt-2 ps-1">increase</span>
+                            <div th:if="@{percentRevenue}">
+                              <div th:if="${isIncreaseRevenue}">
+                                <span class=" text-success small pt-1 fw-bold"
+                                  th:text="${percentRevenue} + '%' "></span>
+                                <span class="text-muted small pt-2 ps-1">increase</span>
+                              </div>
+                              <div th:if="${isIncreaseRevenue}">
+                                <span class="text-danger small pt-1 fw-bold" th:text="${percentRevenue} + '%' "></span>
+                                <span class="text-muted small pt-2 ps-1">decrease</span>
+                              </div>
+                            </div>
 
                           </div>
                         </div>
