@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +44,8 @@ public class CartManagerTest {
 
     @Test
     void testCreateCart() {
-        User student = new User(); // Tạo một đối tượng User giả định
+        User student = User.builder().id(1).name("thai").email("leanthai02@gmail.com").build(); // Tạo một đối tượng //
+                                                                                                // User giả định
 
         Cart expectedCart = new Cart(); // Tạo một đối tượng Cart giả định
         when(cartRepository.save(any(Cart.class))).thenReturn(expectedCart); // Giả lập phương thức save của
@@ -57,9 +59,28 @@ public class CartManagerTest {
     }
 
     @Test
+    void testCreateCartInvalid() {
+        User student = User.builder().id(2).name("thai").email("leanthai03@gmail.com").build(); // Tạo một đối tượng //
+                                                                                                // User giả định
+
+        Cart expectedCart = new Cart(); // Tạo một đối tượng Cart giả định
+        when(cartRepository.save(any(Cart.class))).thenReturn(null); // Giả lập phương thức save của
+                                                                     // cartRepository
+        Cart createdCart = cartService.createCart(student); // Gọi phương thức createCart
+
+        assertNull(createdCart); // Kiểm tra xem cart được tạo ra không phải là null
+        // Kiểm tra xem cart trả về có phải là cart giả định không
+        // Kiểm tra xem phương thức save đã được gọi đúng 1 lần
+        // với đối tượng cart
+    }
+
+    @Test
     void addCourseToCart() {
         Cart cart = new Cart();
         Course course = new Course();
+        course.setName("New Course");
+        course.setDescription("Course Description");
+        course.setPrice(BigDecimal.valueOf(99.99));
         cart.setCourses(new ArrayList<>());
 
         cartService.addCourseToCart(cart, course);
