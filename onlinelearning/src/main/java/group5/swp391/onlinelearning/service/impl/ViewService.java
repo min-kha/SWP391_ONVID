@@ -24,7 +24,7 @@ public class ViewService implements IViewService {
     public long addView(int courseId) {
         Course course = courseService.getCourseByCourseId(courseId);
         Calendar calendar = Calendar.getInstance();
-        Date currentDate = (Date) calendar.getTime();
+        Date currentDate = calendar.getTime();
         View viewRes = getViewNumberByCourseId(courseId);
         View view = new View();
         if (viewRes == null) {
@@ -40,8 +40,7 @@ public class ViewService implements IViewService {
 
     @Override
     public View getViewNumberByCourseId(int courseId) {
-        View view = viewRepositoty.getViewNumberByCourseId(courseId);
-        return view;
+        return viewRepositoty.getViewNumberByCourseId(courseId);
     }
 
     @Override

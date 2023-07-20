@@ -5,16 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
-
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
 
 import group5.swp391.onlinelearning.entity.Feedback;
-
-import group5.swp391.onlinelearning.entity.CourseReview;
 
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
@@ -50,7 +46,12 @@ public class CourseService {
     }
 
     public Course getCourseByCourseId(int id) {
-        return courseRepository.findById(id).get();
+        Optional<Course> courseRes = courseRepository.findById(id);
+        if (courseRes.isPresent()) {
+            return courseRes.get();
+        } else {
+            return null;
+        }
     }
 
     public Course getCourseById(int id) {
@@ -110,7 +111,12 @@ public class CourseService {
         if (courseOptional.isPresent()) {
             Course existingCourse = courseOptional.get();
             existingCourse.setName(courseDTOEdit.getName());
-            Topic topic = topicRepository.findById(courseDTOEdit.getTopic_id()).get();
+
+            Optional<Topic> topicRes = topicRepository.findById(courseDTOEdit.getTopic_id());
+            Topic topic = new Topic();
+            if (topicRes.isPresent()) {
+                topic = topicRes.get();
+            }
             existingCourse.setTopic(topic);
             existingCourse.setPrice(courseDTOEdit.getPrice());
             existingCourse.setDescription(courseDTOEdit.getDescription());
@@ -129,9 +135,10 @@ public class CourseService {
     }
 
     public void deleteCourse(int id) {
-        Course course = courseRepository.findById(id).get();
-        if (course != null) {
-            courseRepository.delete(course);
+        Optional<Course> course = courseRepository.findById(id);
+
+        if (course.isPresent()) {
+            courseRepository.delete(course.get());
         }
     }
 

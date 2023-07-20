@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -44,34 +43,25 @@ public class CartManagerTest {
 
     @Test
     void testCreateCart() {
-        User student = User.builder().id(1).name("thai").email("leanthai02@gmail.com").build(); // Tạo một đối tượng //
-                                                                                                // User giả định
+        User student = User.builder().id(1).name("thai").email("leanthai02@gmail.com").build();
 
-        Cart expectedCart = new Cart(); // Tạo một đối tượng Cart giả định
-        when(cartRepository.save(any(Cart.class))).thenReturn(expectedCart); // Giả lập phương thức save của
-                                                                             // cartRepository
-        Cart createdCart = cartService.createCart(student); // Gọi phương thức createCart
+        Cart expectedCart = new Cart();
+        when(cartRepository.save(any(Cart.class))).thenReturn(expectedCart);
+        Cart createdCart = cartService.createCart(student);
 
-        assertNotNull(createdCart); // Kiểm tra xem cart được tạo ra không phải là null
-        assertSame(expectedCart, createdCart); // Kiểm tra xem cart trả về có phải là cart giả định không
-        verify(cartRepository, times(1)).save(any(Cart.class)); // Kiểm tra xem phương thức save đã được gọi đúng 1 lần
-                                                                // với đối tượng cart
+        assertNotNull(createdCart);
+        assertSame(expectedCart, createdCart);
+        verify(cartRepository, times(1)).save(any(Cart.class));
     }
 
     @Test
     void testCreateCartInvalid() {
-        User student = User.builder().id(2).name("thai").email("leanthai03@gmail.com").build(); // Tạo một đối tượng //
-                                                                                                // User giả định
+        User student = User.builder().id(2).name("thai").email("leanthai03@gmail.com").build();
 
-        Cart expectedCart = new Cart(); // Tạo một đối tượng Cart giả định
-        when(cartRepository.save(any(Cart.class))).thenReturn(null); // Giả lập phương thức save của
-                                                                     // cartRepository
-        Cart createdCart = cartService.createCart(student); // Gọi phương thức createCart
+        when(cartRepository.save(any(Cart.class))).thenReturn(null);
+        Cart createdCart = cartService.createCart(student);
 
-        assertNull(createdCart); // Kiểm tra xem cart được tạo ra không phải là null
-        // Kiểm tra xem cart trả về có phải là cart giả định không
-        // Kiểm tra xem phương thức save đã được gọi đúng 1 lần
-        // với đối tượng cart
+        assertNull(createdCart);
     }
 
     @Test

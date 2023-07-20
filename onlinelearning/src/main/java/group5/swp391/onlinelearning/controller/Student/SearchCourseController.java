@@ -1,6 +1,5 @@
 package group5.swp391.onlinelearning.controller.student;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-import group5.swp391.onlinelearning.service.impl.TopicService;
 import group5.swp391.onlinelearning.utils.PagingUtils;
 
 @Controller

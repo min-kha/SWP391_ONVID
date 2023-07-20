@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +31,7 @@ public class CourseController {
     private CourseService courseService;
     @Autowired
     private ThymeleafBaseCRUD thymeleafBaseCRUD;
-    @Autowired
-    private ModelMapper modelMapper;
+    private final String error = "/error";
 
     @GetMapping("/index")
     public String getIndex(Model model) {
@@ -108,7 +106,7 @@ public class CourseController {
             Course course = courseService.getCourseById(id);
             thymeleafBaseCRUD.setBaseForEntity(model, course, "Confirm deactive course - Admin");
         } catch (Exception e) {
-            return "/error";
+            return error;
         }
         return "admin/course/deactive";
     }
@@ -120,7 +118,7 @@ public class CourseController {
                 courseService.changeStatus(id);
             }
         } catch (Exception e) {
-            return "/error";
+            return error;
         }
         return "redirect:/admin/courses/index";
     }
@@ -132,7 +130,7 @@ public class CourseController {
                 courseService.changeStatus(id);
             }
         } catch (Exception e) {
-            return "/error";
+            return error;
         }
         return "redirect:/admin/users/index";
     }

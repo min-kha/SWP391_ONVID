@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 public class MainApp {
 
 	public static void main(String[] args) {
-		var context = SpringApplication.run(MainApp.class, args);
+		SpringApplication.run(MainApp.class, args);
 	}
 
 	@Bean

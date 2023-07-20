@@ -118,6 +118,7 @@ public class CourseController {
             try (InputStream inputStream = filePart.getInputStream()) {
                 Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
+                throw new IOException("error");
             }
             // fileName is not valid ( != jpg and png files)
         } else {
@@ -129,8 +130,8 @@ public class CourseController {
 
         // set link to model directory
         courseDTOAdd.setImageLink(fileName);
-        int topic_id = Integer.parseInt(req.getParameter("topic"));
-        courseDTOAdd.setTopic_id(topic_id);
+        int topicId = Integer.parseInt(req.getParameter("topic"));
+        courseDTOAdd.setTopic_id(topicId);
         // create a new Course
         courseService.createCourse(courseDTOAdd);
         // redirect to course list
@@ -190,17 +191,21 @@ public class CourseController {
             try (InputStream inputStream = filePart.getInputStream()) {
                 Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
+                throw new IOException("Error");
             }
             course.setImageLink(fileName);
             // fileName is not valid ( != jpg and png files)
-        } else {
+        } else
+
+        {
             model.addAttribute("errorFormat", "Image in not correct");
             model.addAttribute("course", course);
             model.addAttribute("topics", topicService.getTopics());
             return "teacher/course/edit";
         }
         // set other parameters and save them
-        int topic_id = Integer.parseInt(req.getParameter("topic"));
+        int topic_id = Integer.parseInt(req.getParameter(
+                "topic"));
         course.setTopic_id(topic_id);
         courseService.updateCourse(course);
         return "redirect:/teacher/course/detail/" + course.getId();

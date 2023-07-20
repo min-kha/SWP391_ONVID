@@ -17,16 +17,12 @@ import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.entity.WithdrawalDetail;
 import group5.swp391.onlinelearning.service.IWalletService;
 import group5.swp391.onlinelearning.service.IWithdrawalDetailService;
-import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
 @Controller
 @RequestMapping("/teacher/wallet/")
 public class WithdrawalDetailController {
     @Autowired
     IWithdrawalDetailService withDetailService;
-
-    @Autowired
-    private ThymeleafBaseCRUD thymeleafBaseCRUD;
 
     @Autowired
     IWalletService walletService;

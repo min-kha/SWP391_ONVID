@@ -20,7 +20,6 @@ import group5.swp391.onlinelearning.entity.Lesson;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.LessonDtoDetail;
 import group5.swp391.onlinelearning.model.mapper.LearnMapper;
-import group5.swp391.onlinelearning.service.ICourseTeacherService;
 import group5.swp391.onlinelearning.service.ILearnService;
 import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.impl.CourseService;

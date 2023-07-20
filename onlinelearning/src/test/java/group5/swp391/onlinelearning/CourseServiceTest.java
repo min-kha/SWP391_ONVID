@@ -2,10 +2,7 @@ package group5.swp391.onlinelearning;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -27,12 +23,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
-import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
@@ -214,8 +207,6 @@ public class CourseServiceTest {
         CourseDTOEdit courseDTOEdit = CourseDTOEdit.builder().id(1).name("java").description("java java")
                 .price(new BigDecimal("100000")).topic_id(1).imageLink("java.png").build();
 
-        CourseDTOEdit existingCourse = CourseDTOEdit.builder().id(1).name("java meo meo").description("java introduce")
-                .price(new BigDecimal("50000")).topic_id(3).imageLink("old_image_url").build();
         // Mock behavior của courseRepository
         Course course = Course.builder().id(1).name("java").description("java java")
                 .price(new BigDecimal("100000")).imageLink("java.png").build();
@@ -348,7 +339,7 @@ public class CourseServiceTest {
     public void testGetCourseDetailForStudentById_WithExistingId_ShouldReturnCorrectCourseDtoDetailStudent() {
         // Create the mock Course object
         int courseId = 1;
-        String courseName = "Java Programming";
+
         Course course = Course.builder().id(1).name("java").description("java java")
                 .price(new BigDecimal("100000")).imageLink("java.png").build();
         // Mock behavior of getCourseAllById

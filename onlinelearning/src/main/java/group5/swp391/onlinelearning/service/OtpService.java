@@ -13,8 +13,6 @@ public class OtpService {
     @Autowired
     private HttpSession session;
 
-    private String secretKey = "onVid896@2$";
-
     public boolean checkValidOtp(String userInputOTP, Model model) {
         long otpCreationTime = (long) session.getAttribute("otpCreationTime");
         long currentTime = System.currentTimeMillis();
@@ -29,7 +27,7 @@ public class OtpService {
         } else {
             String otpCode = session.getAttribute("otp").toString();
             String userInputOTPEncrypt = SHA1.toSHA1(userInputOTP);
-            System.out.println("2sss: " + userInputOTPEncrypt);
+
             if (otpCode != null && otpCode.equals(userInputOTPEncrypt)) {
                 return true;
             } else {

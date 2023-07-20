@@ -56,7 +56,7 @@ public class FeedbackServiceTest {
 
         Mockito.when(session.getAttribute("studentSession")).thenReturn(student);
         // Call the method under test
-        Feedback createdFeedback = feedbackService.createFeedback(course, ratingStar, comment);
+      feedbackService.createFeedback(course, ratingStar, comment);
 
         // Verify that the feedback was saved using the repository
         verify(feedbackRepository, times(1)).save(any(Feedback.class));
@@ -132,7 +132,7 @@ public class FeedbackServiceTest {
         when(session.getAttribute("studentSession")).thenReturn(student);
 
         // Call the method under test
-        Optional<Feedback> updatedFeedback = feedbackService.updateFeedback(courseId, ratingStar, comment);
+       feedbackService.updateFeedback(courseId, ratingStar, comment);
 
         // Verify that the session.getAttribute method was called with the correct
         // attribute name

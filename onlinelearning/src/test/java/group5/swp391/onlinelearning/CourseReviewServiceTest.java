@@ -18,8 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.mysql.cj.util.TestUtils;
-
 import group5.swp391.onlinelearning.entity.CourseReview;
 import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.repository.CourseReviewRepository;

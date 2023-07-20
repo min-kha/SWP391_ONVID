@@ -1,7 +1,6 @@
 package group5.swp391.onlinelearning.controller.student;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import group5.swp391.onlinelearning.entity.Cart;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.entity.WithdrawalDetail;
 import group5.swp391.onlinelearning.service.IWalletService;
 import group5.swp391.onlinelearning.service.IWithdrawalDetailService;
 import group5.swp391.onlinelearning.service.impl.CartService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-import group5.swp391.onlinelearning.service.impl.WalletService;
 
 @Controller
 @RequestMapping("/student")
@@ -39,14 +36,14 @@ public class CartController {
 
     @PostMapping("/addToCart")
     public String addToCart(HttpSession session, HttpServletRequest request) {
-        int CourseId = Integer.parseInt(request.getParameter("courseId"));
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
         User student = (User) session.getAttribute("studentSession");
         cartService.addCourseToCart(cartService.getCartByStudentId(student.getId()),
-                courseService.getCourseByCourseId(CourseId));
+                courseService.getCourseByCourseId(courseId));
         Cart cart = cartService.getCartByStudentId(student.getId());
 
         session.setAttribute("cartStudentSession", cartService.getCoursebyCartId(cart.getId()));
-        return "redirect:/student/course/detail/" + CourseId;
+        return "redirect:/student/course/detail/" + courseId;
     }
 
     @GetMapping("/cart/detail")
