@@ -38,6 +38,7 @@ import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
@@ -57,6 +58,8 @@ public class CourseController {
     CourseMapper mapper;
     @Autowired
     ThymeleafBaseCRUD thymeleafBaseCRUD;
+    @Autowired
+    IViewService viewService;
 
     // TODO: remove req nhá
     @Autowired
@@ -126,13 +129,15 @@ public class CourseController {
             model.addAttribute("topics", topicService.getTopics());
             return "teacher/course/add";
         }
-
+        fileName = "/image/" + fileName;
         // set link to model directory
         courseDTOAdd.setImageLink(fileName);
         int topic_id = Integer.parseInt(req.getParameter("topic"));
         courseDTOAdd.setTopic_id(topic_id);
         // create a new Course
-        courseService.createCourse(courseDTOAdd);
+        Course course = courseService.createCourse(courseDTOAdd);
+        // create a new view
+        viewService.createEmptyView(course);
         // redirect to course list
         return "redirect:/teacher/course/list";
     }
@@ -191,6 +196,7 @@ public class CourseController {
                 Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
             }
+            fileName = "/image/" + fileName;
             course.setImageLink(fileName);
             // fileName is not valid ( != jpg and png files)
         } else {

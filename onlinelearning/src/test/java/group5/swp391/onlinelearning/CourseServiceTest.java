@@ -2,10 +2,7 @@ package group5.swp391.onlinelearning;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -30,7 +26,6 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
-import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
@@ -264,7 +259,6 @@ public class CourseServiceTest {
         verify(courseRepository).delete(course);
     }
 
-
     @Test
     public void testGetAllCourseDtoHomeDetails_ShouldReturnCorrectList() {
         // Mock data
@@ -309,7 +303,6 @@ public class CourseServiceTest {
         // Verify the result
         assertEquals(expectedDtoList, result);
     }
-
 
     @Test
     public void testGetCourseAllById_WithExistingId_ShouldReturnCorrectCourse() {

@@ -10,4 +10,8 @@ public interface IViewService {
     public View getViewNumberByCourseId(int courseId);
 
     public List<View> getAllViews();
+
+    public Long getViewNumberByTeacherIdInDay(int teacherId);
+
+    public Long getViewNumberByTeacherIdInYesterday(int teacherId);
 }

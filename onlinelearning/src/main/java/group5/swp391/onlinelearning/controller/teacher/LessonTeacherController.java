@@ -107,6 +107,7 @@ public class LessonTeacherController {
             } catch (IOException e) {
                 return "404";
             }
+            fileName = "/video/" + fileName;
         } else {
             Lesson lesson = new Lesson();
             lesson.setCourse(courseService.getCourseById(courseId));
@@ -263,6 +264,7 @@ public class LessonTeacherController {
             @Valid @ModelAttribute("lesson") LessonDtoEditVideo lessonDtoEditVideo, BindingResult result,
             HttpServletRequest req, @PathVariable Integer courseId, @PathVariable Integer lessonId,
             @RequestParam("video") MultipartFile video, Model model) throws IOException, ServletException {
+        // check error conditions
         if (result.hasErrors()) {
             model.addAttribute("options", 0);
             return "teacher/lesson/edit";
@@ -282,12 +284,13 @@ public class LessonTeacherController {
             } catch (IOException e) {
                 return "404";
             }
-            oldVideo = fileName;
+            oldVideo = "/video/" + fileName;
         } else {
-            // TODO:
+            // video not formatted properly
             Lesson lesson = modelMapper.map(lessonDtoEditVideo, Lesson.class);
             model.addAttribute("errorFormat", "Video format not supported");
             model.addAttribute("options", 0);
+            // set lai gia tri
             if (lesson.getDocument() != null || lesson.getDocument() != "") {
                 LessonDtoEditDocument lessonEditDocument = new LessonDtoEditDocument();
                 lessonEditDocument = modelMapper.map(lesson, LessonDtoEditDocument.class);

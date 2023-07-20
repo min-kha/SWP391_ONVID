@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import group5.swp391.onlinelearning.entity.User;
 
 import java.io.IOException;
-@WebFilter("/admin/*")
+
+@WebFilter("")
 
 public class StaffFilter implements Filter {
 
