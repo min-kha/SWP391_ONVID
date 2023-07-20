@@ -32,7 +32,7 @@ public class WalletService implements IWalletService {
     @Override
     // lấy số dư hiện tại của người dùng
     public BigDecimal getRevenue() {
-        User teacher = (User) session.getAttribute("userSession");
+        User teacher = (User) session.getAttribute("user");
         Wallet wallet = walletRepository.getWalletByTeacherId(teacher.getId());
         return wallet.getRevenue();
     }
@@ -52,7 +52,7 @@ public class WalletService implements IWalletService {
     @Override
     // Thay đổi số dư khi rút tiền
     public void subRevenue(BigDecimal money) {
-        User teacher = (User) session.getAttribute("userSession");
+        User teacher = (User) session.getAttribute("user");
         Wallet wallet = walletRepository.getWalletByTeacherId(teacher.getId());
         BigDecimal revenue = wallet.getRevenue().subtract(money);
         wallet.setRevenue(revenue);

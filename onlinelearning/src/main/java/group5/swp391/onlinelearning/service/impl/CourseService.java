@@ -65,13 +65,13 @@ public class CourseService {
     // hung
     public Course createCourse(CourseDTOAdd courseDTOAdd) {
         Course course = courseMapper.courseDTOAddtoCourse(courseDTOAdd);
-        User teacher = (User) session.getAttribute("userSession");
+        User teacher = (User) session.getAttribute("user");
         course.setTeacher(teacher);
         return courseRepository.save(course);
     }
 
     public List<CourseDTOTeacher> getCourseDTOTeacherList() {
-        User teacher = (User) session.getAttribute("userSession");
+        User teacher = (User) session.getAttribute("user");
         int id = teacher.getId();
         List<Course> courses = courseRepository.findAllByTeacherId(id);
         List<CourseDTOTeacher> cDtoTeachers = new ArrayList<CourseDTOTeacher>();
@@ -94,7 +94,7 @@ public class CourseService {
 
     // Check course have true teacher owener
     public boolean checkCourseOwner(int courseId) {
-        User teacher = (User) session.getAttribute("userSession");
+        User teacher = (User) session.getAttribute("user");
         int id = teacher.getId();
         List<Course> courses = courseRepository.findAllByTeacherId(id);
         for (Course course : courses) {
@@ -270,7 +270,6 @@ public class CourseService {
         courseRepository.save(course);
     }
 
-
     public void changeStatus(int id) throws Exception {
         Course course;
         var value = courseRepository.findById(id);
@@ -286,6 +285,5 @@ public class CourseService {
         }
         courseRepository.save(course);
     }
-
 
 }

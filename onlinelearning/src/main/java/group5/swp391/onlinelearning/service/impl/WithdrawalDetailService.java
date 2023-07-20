@@ -58,18 +58,43 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
     @Override
     // thêm withdrawal khi teacher yêu cầu rút tiền
     public void removeWithdrawalDetailByWallet(BigDecimal money) {
-        User user = (User) session.getAttribute("userSession");
+        User user = (User) session.getAttribute("user");
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
         WithdrawalDetail withdrawalDetail = new WithdrawalDetail();
         // set thuoc tinh
         withdrawalDetail.setDate(date);
-        withdrawalDetail.setStatus(0);
+        withdrawalDetail.setStatus(1);
         withdrawalDetail.setTeacher(user);
         withdrawalDetail.setUser(null);
+        // BigDecimal currentMoney = withdrawalDetail.getMoney();
+        // currentMoney = currentMoney.subtract(money);
         withdrawalDetail.setMoney(money);
         withdrawalDetail.setDescripton("Withdraw money " + money);
         withDrawalDetailRepository.save(withdrawalDetail);
+    }
+
+    @Override
+    public BigDecimal getRevenueByMonth() {
+        User user = (User) session.getAttribute("user");
+        List<WithdrawalDetail> list = withDrawalDetailRepository.getRevenueByMonth(user.getId());
+        BigDecimal revenue = BigDecimal.ZERO;
+        for (WithdrawalDetail withdrawalDetail : list) {
+            if (withdrawalDetail.getUser() != null) {
+                revenue = revenue.add(withdrawalDetail.getMoney());
+                if (withdrawalDetail.getUser().getRole() != 0) {
+                    revenue = revenue.subtract(withdrawalDetail.getMoney());
+                    list.remove(withdrawalDetail);
+                }
+            }
+        }
+        return revenue;
+    }
+
+    @Override
+    public BigDecimal getRevenueByMonthBefore() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRevenueByMonthBefore'");
     }
 
 }

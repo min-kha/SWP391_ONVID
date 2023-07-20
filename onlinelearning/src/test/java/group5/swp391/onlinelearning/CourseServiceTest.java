@@ -121,12 +121,12 @@ public class CourseServiceTest {
         expectedDTOTeachers.add(dtoTeacher2);
         Mockito.when(courseRepository.findAllByTeacherId(1)).thenReturn(courses);
         Mockito.when(courseMapper.courseToCourseDTOTeacher(Mockito.any())).thenReturn(dtoTeacher1, dtoTeacher2);
-        Mockito.when(session.getAttribute("userSession")).thenReturn(teacher);
+        Mockito.when(session.getAttribute("user")).thenReturn(teacher);
 
         List<CourseDTOTeacher> result = courseService.getCourseDTOTeacherList();
 
         assertEquals(expectedDTOTeachers, result);
-        Mockito.verify(session, Mockito.times(1)).getAttribute("userSession");
+        Mockito.verify(session, Mockito.times(1)).getAttribute("user");
         Mockito.verify(courseRepository, Mockito.times(1)).findAllByTeacherId(1);
         Mockito.verify(courseMapper, Mockito.times(2)).courseToCourseDTOTeacher(Mockito.any());
     }
@@ -169,7 +169,7 @@ public class CourseServiceTest {
         List<Course> mockCourses = new ArrayList<>();
         mockCourses.add(course1);
         mockCourses.add(course2);
-        Mockito.when(session.getAttribute("userSession")).thenReturn(teacher);
+        Mockito.when(session.getAttribute("user")).thenReturn(teacher);
         when(courseRepository.findAllByTeacherId(1)).thenReturn(mockCourses);
 
         // Kiểm tra kết quả trả về từ phương thức
@@ -186,7 +186,7 @@ public class CourseServiceTest {
         List<Course> mockCourses = new ArrayList<>();
         mockCourses.add(course1);
         mockCourses.add(course2);
-        Mockito.when(session.getAttribute("userSession")).thenReturn(teacher);
+        Mockito.when(session.getAttribute("user")).thenReturn(teacher);
 
         when(courseRepository.findAllByTeacherId(1)).thenReturn(mockCourses);
 
@@ -200,7 +200,7 @@ public class CourseServiceTest {
         // Giả lập dữ liệu trả về từ courseRepository là một danh sách rỗng
         User teacher = User.builder().id(1).name("thai").build();
         when(courseRepository.findAllByTeacherId(1)).thenReturn(Collections.emptyList());
-        Mockito.when(session.getAttribute("userSession")).thenReturn(teacher);
+        Mockito.when(session.getAttribute("user")).thenReturn(teacher);
 
         // Kiểm tra kết quả trả về từ phương thức
         boolean result = courseService.checkCourseOwner(1);
