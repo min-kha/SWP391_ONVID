@@ -4,13 +4,9 @@
             <div class="bg-image h-100">
                 <div class="mask d-flex align-items-center h-100">
                     <div class="container">
-                        <div class="text-end">
-                            <a th:href="'../' + 'index'" class="btn btn-outline-primary px-3 " aria-disabled="true">Back
-                                to list</a>
-                        </div>
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-md-6 mt-4 col-12">
-                                <div class="card">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
                                     <div class="row justify-content-center">
                                         <div class="d-flex align-items-center">
                                             <div class="card-body py-5 px-4 p-md-5">
@@ -112,79 +108,15 @@
                                                             </dd>
                                                         </dl>
                                                     </div>
-                                                    <div class="text-end">
+                                                    <form class="text-end" method="post">
+                                                        <button type="submit" class="btn btn-danger px-3 "
+                                                            aria-disabled="true">Deactive</button>
                                                         <a th:href="'../' + 'index'" class="btn btn-link px-3 "
                                                             aria-disabled="true">Back
                                                             to list</a>
-                                                    </div>
-
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-body col-md-6 col-12" style="border-radius: 1rem;">
-                                <div class="card mb-4">
-                                    <h3 class="card-header text-center">
-                                        History review
-                                    </h3>
-                                    <div class="card-body">
-                                        <div th:each="courseReview : ${entity.courseReviews}" class="card mb-4">
-                                            <div class="card-body">
-                                                <p th:text="${courseReview.comment}"></p>
-
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="d-flex flex-row align-items-center">
-                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp"
-                                                            alt="avatar" width="25" height="25" />
-                                                        <p class="small mb-0 ms-2"
-                                                            th:text="${courseReview.staff?.name}"></p>
-                                                        <p class="small mb-0 ms-2"
-                                                            th:text="'• ' + ${#dates.format(courseReview.time, 'dd/MM/yyyy')}">
-                                                        </p>
-                                                    </div>
-                                                    <div class="d-flex flex-row align-items-center text-primary">
-                                                        <label th:switch="${courseReview.status}">
-                                                            <span th:case="1" class="btn btn-sm btn-primary">In
-                                                                Progressing</span>
-                                                            <span th:case="2"
-                                                                class="btn btn-dark btn-sm">Rejected</span>
-                                                            <span th:case="3"
-                                                                class="btn btn-success btn-sm">Approved</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
-                                            <form method="post" th:object="${courseReview}">
-                                                <div class="d-flex flex-start w-100">
-                                                    <img class="rounded-circle shadow-1-strong me-3"
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-                                                        alt="avatar" width="40" height="40" />
-                                                    <div class="form-outline w-100">
-                                                        <textarea required th:field="*{comment}" class="form-control"
-                                                            id="textAreaExample" rows="4" style="background: #fff;"
-                                                            placeholder="Comment your review in here....."></textarea>
-                                                        <label th:if="${#fields.hasErrors('comment')}"
-                                                            th:errors="*{comment}" class="form-text text-danger">
-                                                    </div>
-                                                </div>
-                                                <div class="float-end mt-2 pt-1 d-flex">
-                                                    <select th:field="*{status}" class="form-select form-select mx-2"
-                                                        aria-label="Danh sách chọn">
-                                                        <option value="1" selected>In Progressing</option>
-                                                        <option value="2">Reject</option>
-                                                        <option value="3">Approve</option>
-                                                    </select>
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-sm  mx-2">Review</button>
-                                                    <button type="reset"
-                                                        class="btn btn-outline-secondary btn-sm  mx-2">Cancel</button>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +124,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </section>
     </th:block>

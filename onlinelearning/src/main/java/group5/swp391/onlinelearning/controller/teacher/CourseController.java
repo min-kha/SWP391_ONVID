@@ -65,11 +65,9 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(70);
-        req.setAttribute("user", user);
+        // User user = userService.getUserById(70);
+        // req.setAttribute("user", user);
         // Check role access site
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // Create List course of teacher and send to front end
         List<CourseDTOTeacher> courses = courseService.getCourseDTOTeacherList();
         String title = "Course List";
@@ -80,10 +78,6 @@ public class CourseController {
 
     @GetMapping("/create")
     public String getCreateCourse(Model model, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // create a new model
         model.addAttribute("errorFormat", "");
         model.addAttribute("course", new CourseDTOAdd());
@@ -139,10 +133,6 @@ public class CourseController {
 
     @GetMapping("/edit/{id}")
     public String getUpdateCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
@@ -208,10 +198,6 @@ public class CourseController {
 
     @GetMapping("/delete/{id}")
     public String getDeleteCourse(@PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
@@ -235,10 +221,6 @@ public class CourseController {
 
     @GetMapping("/submit/{id}")
     public String getSubmitCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
