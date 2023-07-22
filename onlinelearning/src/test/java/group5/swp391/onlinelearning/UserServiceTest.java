@@ -114,6 +114,7 @@ public class UserServiceTest {
         verify(userRepository, never()).save(user);
     }
 
+
     // TODO: COMMENT BY HUNG
     // @Test
     // public void testUpdateUserDuplicateEmail() {
@@ -121,6 +122,13 @@ public class UserServiceTest {
     // User existingUser = getRandomUser();
     // User user = getRandomUser();
     // User updatingUser = getRandomUser();
+
+
+    // @Test
+    // public void testUpdateUserDuplicateEmail() {
+    // User existingUser = TestDataProvider.createSampleUser();
+    // User user = TestDataProvider.createSampleUser();
+    // User updatingUser = TestDataProvider.createSampleUser();
 
     // updatingUser.setId(user.getId());
     // // assuming that user has the same email with existingUser
