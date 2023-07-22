@@ -46,8 +46,8 @@
 
                                                     </div>
                                                     <div class="form-group">
-                                                        <img class="img-fluid"
-                                                            th:src="@{'/image/' + ${course.imageLink} }" alt="..." />
+                                                        <img class="img-fluid" th:src="@{${course.imageLink} }"
+                                                            alt="..." />
                                                         <label for="image">Image:</label>
                                                         <input type="file" class="form-control-file" id="image"
                                                             name="image">

@@ -81,7 +81,7 @@
                             <input type="hidden" th:value="${courseId}" name="courseId">
                             <input type="hidden" th:value="${lesson.id}" name="lessonId">
                             <video controls preload="auto" width="100%">
-                                <source th:src="@{'/video/' + ${lesson.video}}">
+                                <source th:src="@{ ${lesson.video}}">
                             </video>
                             <h2 th:text="${lesson.title}"></h2>
                             <h5 th:text="${lesson.name}">

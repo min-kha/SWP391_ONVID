@@ -2,6 +2,7 @@ package group5.swp391.onlinelearning.service;
 
 import java.util.List;
 
+import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.View;
 
 public interface IViewService {
@@ -10,4 +11,10 @@ public interface IViewService {
     public View getViewNumberByCourseId(int courseId);
 
     public List<View> getAllViews();
+
+    public Long getViewNumberByTeacherIdInDay(int teacherId);
+
+    public Long getViewNumberByTeacherIdInYesterday(int teacherId);
+
+    public void createEmptyView(Course course);
 }

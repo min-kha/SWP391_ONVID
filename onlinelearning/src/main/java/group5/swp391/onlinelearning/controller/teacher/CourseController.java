@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.entity.CourseReview;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
@@ -38,6 +40,7 @@ import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
@@ -57,6 +60,8 @@ public class CourseController {
     CourseMapper mapper;
     @Autowired
     ThymeleafBaseCRUD thymeleafBaseCRUD;
+    @Autowired
+    IViewService viewService;
 
     // TODO: remove req nhá
     @Autowired
@@ -65,11 +70,9 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(70);
-        req.setAttribute("user", user);
+        // User user = userService.getUserById(70);
+        // req.setAttribute("user", user);
         // Check role access site
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // Create List course of teacher and send to front end
         List<CourseDTOTeacher> courses = courseService.getCourseDTOTeacherList();
         String title = "Course List";
@@ -80,10 +83,6 @@ public class CourseController {
 
     @GetMapping("/create")
     public String getCreateCourse(Model model, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // create a new model
         model.addAttribute("errorFormat", "");
         model.addAttribute("course", new CourseDTOAdd());
@@ -126,23 +125,21 @@ public class CourseController {
             model.addAttribute("topics", topicService.getTopics());
             return "teacher/course/add";
         }
-
+        fileName = "/image/" + fileName;
         // set link to model directory
         courseDTOAdd.setImageLink(fileName);
         int topic_id = Integer.parseInt(req.getParameter("topic"));
         courseDTOAdd.setTopic_id(topic_id);
         // create a new Course
-        courseService.createCourse(courseDTOAdd);
+        Course course = courseService.createCourse(courseDTOAdd);
+        // create a new view
+        viewService.createEmptyView(course);
         // redirect to course list
         return "redirect:/teacher/course/list";
     }
 
     @GetMapping("/edit/{id}")
     public String getUpdateCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
@@ -191,6 +188,7 @@ public class CourseController {
                 Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
             }
+            fileName = "/image/" + fileName;
             course.setImageLink(fileName);
             // fileName is not valid ( != jpg and png files)
         } else {
@@ -208,10 +206,6 @@ public class CourseController {
 
     @GetMapping("/delete/{id}")
     public String getDeleteCourse(@PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
@@ -235,10 +229,6 @@ public class CourseController {
 
     @GetMapping("/submit/{id}")
     public String getSubmitCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("user");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
@@ -252,5 +242,18 @@ public class CourseController {
         // change status of course
         courseService.submitCourse(course);
         return "redirect:/teacher/course/list";
+    }
+
+    @GetMapping("/review/{id}")
+    public String getReview(Model model, @PathVariable @NotNull int id, HttpSession session) throws Exception {
+        String title = "Review Course - Teacher";
+        try {
+            Course course = courseService.getCourseById(id);
+            User user = (User) session.getAttribute("user");
+            thymeleafBaseCRUD.setBaseForEntity(model, course, title);
+        } catch (Exception e) {
+            // handle exception
+        }
+        return "teacher/course/review";
     }
 }

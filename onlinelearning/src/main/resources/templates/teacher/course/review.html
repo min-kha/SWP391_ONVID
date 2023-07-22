@@ -4,10 +4,6 @@
             <div class="bg-image h-100">
                 <div class="mask d-flex align-items-center h-100">
                     <div class="container">
-                        <div class="text-end">
-                            <a th:href="'../' + 'index'" class="btn btn-outline-primary px-3 " aria-disabled="true">Back
-                                to list</a>
-                        </div>
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-6 mt-4 col-12">
                                 <div class="card">
@@ -112,11 +108,6 @@
                                                             </dd>
                                                         </dl>
                                                     </div>
-                                                    <div class="text-end">
-                                                        <a th:href="'../' + 'index'" class="btn btn-link px-3 "
-                                                            aria-disabled="true">Back
-                                                            to list</a>
-                                                    </div>
 
                                                 </div>
                                             </div>
@@ -159,32 +150,6 @@
                                             </div>
                                         </div>
                                         <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
-                                            <form method="post" th:object="${courseReview}">
-                                                <div class="d-flex flex-start w-100">
-                                                    <img class="rounded-circle shadow-1-strong me-3"
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-                                                        alt="avatar" width="40" height="40" />
-                                                    <div class="form-outline w-100">
-                                                        <textarea required th:field="*{comment}" class="form-control"
-                                                            id="textAreaExample" rows="4" style="background: #fff;"
-                                                            placeholder="Comment your review in here....."></textarea>
-                                                        <label th:if="${#fields.hasErrors('comment')}"
-                                                            th:errors="*{comment}" class="form-text text-danger">
-                                                    </div>
-                                                </div>
-                                                <div class="float-end mt-2 pt-1 d-flex">
-                                                    <select th:field="*{status}" class="form-select form-select mx-2"
-                                                        aria-label="Danh sách chọn">
-                                                        <option value="1" selected>In Progressing</option>
-                                                        <option value="2">Reject</option>
-                                                        <option value="3">Approve</option>
-                                                    </select>
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-sm  mx-2">Review</button>
-                                                    <button type="reset"
-                                                        class="btn btn-outline-secondary btn-sm  mx-2">Cancel</button>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>

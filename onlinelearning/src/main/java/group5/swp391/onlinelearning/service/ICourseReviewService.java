@@ -18,4 +18,6 @@ public interface ICourseReviewService {
 
     public CourseReview getCourseReviewById(int id);
 
+    public List<CourseReview> getCourseReview(int teacherId);
+
 }
