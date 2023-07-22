@@ -44,9 +44,9 @@
             <div class="card mb-4">
                 <h1 class="card-header" th:text="${title}">
                 </h1>
+                <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
                 <div class="card-body table-responsive">
                     <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
-                        <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
                         <!-- Name	Status	Description	ImageLink	Price	Date	
                             Topic	Views	CourseReviews	Feedbacks	Carts	Teacher	OrderDetails	Lessons -->
                         <thead>
@@ -98,14 +98,15 @@
                                         aria-disabled="true">Review</a>
                                 </td>
                                 <td>
-                                    <a th:unless="*{entity.status==true}"
-                                        th:href="'active/' + ${entity[fields[0]?.getName]}"
+                                    <a th:if="*{entity.status==-2}" th:href="'active/' + ${entity[fields[0]?.getName]}"
                                         class="btn btn-outline-success btn-sm" tabindex="-1"
-                                        aria-disabled="true">&ensp;Active&ensp;</a>
-                                    <a th:if="*{entity.status==true}"
+                                        aria-disabled="true">&ensp;Active&ensp;
+                                    </a>
+                                    <a th:unless="*{entity.status==-2}"
                                         th:href="'deactive/' + ${entity[fields[0]?.getName]}"
                                         class="btn btn-outline-danger btn-sm" tabindex="-1"
                                         aria-disabled="true">Deactive
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
