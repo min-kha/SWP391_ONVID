@@ -34,31 +34,6 @@ public class CourseController {
         model.addAttribute("course", course);
         long view = viewService.addView(courseId);
         model.addAttribute("view", view);
-        // List<Course> courses = (List<Course>)
-        // session.getAttribute("cartStudentSession");
-        // boolean checkCart = false;
-        // for (Course c : courses) {
-        // if (c.getId() == courseId) {
-        // checkCart = true;
-        // break;
-        // }
-        // }
-        // User student = (User) session.getAttribute("studentSession");
-        // List<Course> myCourses = courseService.getMyCourse(student.getId());
-        // boolean checkBought = false;
-        // for (Course c : myCourses) {
-        // if (c.getId() == courseId) {
-        // checkBought = true;
-        // break;
-        // }
-        // }
-        // if (checkCart) {
-        // model.addAttribute("textCart", "already in cart");
-        // } else if (checkBought) {
-        // model.addAttribute("textCart", "you already bought");
-        // } else {
-        // model.addAttribute("textCart", "add to cart");
-        // }
         return "/guest/course/detail";
     }
 }

@@ -1,5 +1,9 @@
 package group5.swp391.onlinelearning.service;
 
-public interface IQuestionService {
+import java.util.List;
 
+import group5.swp391.onlinelearning.entity.Question;
+
+public interface IQuestionService {
+    public List<Question> getQuestionsByCourseId(int courseId);
 }
