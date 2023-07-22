@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.student;
+package group5.swp391.onlinelearning.controller.Student;
 
 import javax.servlet.http.HttpSession;
 

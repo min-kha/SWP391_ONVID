@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class CVController {
     private ICVService cVService;
     @Autowired
     private ThymeleafBaseCRUD thymeleafBaseCRUD;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("/index")
     public String getIndex(Model model) {

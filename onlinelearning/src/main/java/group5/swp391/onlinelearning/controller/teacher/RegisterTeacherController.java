@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +37,8 @@ import group5.swp391.onlinelearning.service.OtpService;
 @Controller
 @RequestMapping("/teacher/")
 public class RegisterTeacherController {
-
+    @Autowired
+    private JavaMailSender sender;
     @Autowired
     private EmailSenderService emailSenderService;
     @Autowired

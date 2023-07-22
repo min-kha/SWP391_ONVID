@@ -50,8 +50,9 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
 
     @Override
     // lấy hết tất cả các withdraw của teacher
-    public List<WithdrawalDetail> getListByTeacherId(int teacherId) {
-        return withDrawalDetailRepository.findByTeacherId(teacherId);
+    public List<WithdrawalDetail> getListByTeacherId(int teacher_id) {
+        List<WithdrawalDetail> list = withDrawalDetailRepository.findByTeacherId(teacher_id);
+        return list;
     }
 
     @Override
@@ -66,7 +67,8 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
         withdrawalDetail.setStatus(1);
         withdrawalDetail.setTeacher(user);
         withdrawalDetail.setUser(null);
-
+        // BigDecimal currentMoney = withdrawalDetail.getMoney();
+        // currentMoney = currentMoney.subtract(money);
         withdrawalDetail.setMoney(money);
         withdrawalDetail.setDescripton("Withdraw money " + money);
         withDrawalDetailRepository.save(withdrawalDetail);

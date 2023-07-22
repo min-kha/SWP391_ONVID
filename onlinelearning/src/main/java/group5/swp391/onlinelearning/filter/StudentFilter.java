@@ -9,7 +9,6 @@ import group5.swp391.onlinelearning.entity.User;
 
 import java.io.IOException;
 
-// @WebFilter("/student/addToCart")
 public class StudentFilter implements Filter {
 
     @Override

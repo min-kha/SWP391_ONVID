@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.utils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Random;
 
@@ -8,6 +9,8 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.CourseReview;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
+import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
 
 public class TestDataProvider {
     public static CV createSampleCV() {

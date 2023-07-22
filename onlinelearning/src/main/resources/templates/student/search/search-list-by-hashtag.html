@@ -76,9 +76,10 @@
                 </div>
             </div>
         </div>
-        <form th:action="@{/student/course/searchByPrice}" method="get">
-            <input type="hidden" th:value="${from}" name="from">
-            <input type="hidden" th:value="${to}" name="to">
+        <form th:action="'/student/course/search-by-hashtag'" method="get">
+            <input type="hidden" th:value="${topicId}" name="topicId">
+            <input type="hidden" th:value="${hashtag}" name="hashtag">
+
             <nav aria-label="...">
                 <ul class="pagination pagination-lg">
                     <li class="page-item" th:each="number : ${listPageNumber}">

@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
-
+import group5.swp391.onlinelearning.service.ICartService;
 import group5.swp391.onlinelearning.service.IUserService;
 
 @Controller
@@ -23,6 +23,8 @@ import group5.swp391.onlinelearning.service.IUserService;
 public class LoginTeacherController {
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ICartService cartService;
 
     @GetMapping("/login")
     public String getStudentLogin(Model model, RedirectAttributes redirectAttributes) {

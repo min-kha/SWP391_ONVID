@@ -1,7 +1,9 @@
 package group5.swp391.onlinelearning.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -18,13 +20,12 @@ public class PagingUtils {
             page = Integer.parseInt(pageChooes);
         }
 
-        int begin;
-        int end;
+        int begin, end;
         begin = (page - 1) * numberPerPage;
 
         end = Math.min(listAll.size(), page * numberPerPage);
 
-        List<T> listPerPage = new ArrayList<>();
+        List<T> listPerPage = new ArrayList<T>();
         listPerPage = getListByPage(begin, end, listAll);
 
         return listPerPage;

@@ -2,7 +2,10 @@ package group5.swp391.onlinelearning;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -10,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -23,9 +27,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
+import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
@@ -207,6 +214,8 @@ public class CourseServiceTest {
         CourseDTOEdit courseDTOEdit = CourseDTOEdit.builder().id(1).name("java").description("java java")
                 .price(new BigDecimal("100000")).topic_id(1).imageLink("java.png").build();
 
+        CourseDTOEdit existingCourse = CourseDTOEdit.builder().id(1).name("java meo meo").description("java introduce")
+                .price(new BigDecimal("50000")).topic_id(3).imageLink("old_image_url").build();
         // Mock behavior của courseRepository
         Course course = Course.builder().id(1).name("java").description("java java")
                 .price(new BigDecimal("100000")).imageLink("java.png").build();
@@ -255,56 +264,52 @@ public class CourseServiceTest {
         verify(courseRepository).delete(course);
     }
 
-    // @Test
-    // public void testGetAllCourseDtoHomeDetails_ShouldReturnCorrectList() {
-    // // Mock data
-    // Course course1 = Course.builder().id(1).name("java").description("java java")
-    // .price(new BigDecimal("100000")).imageLink("java.png").build();
-    // Course course2 = Course.builder().id(2).name("css").description("css css")
-    // .price(new BigDecimal("200000")).imageLink("css.png").build();
-    // List<Course> courses = new ArrayList<>();
-    // courses.add(course1);
-    // courses.add(course2);
 
-    // Feedback feedback1 = Feedback.builder().id(1).ratingStar(5).comment("course
-    // so good").build();
-    // Feedback feedback2 = Feedback.builder().id(2).ratingStar(5).comment("course
-    // so good").build();
-    // List<Feedback> feedbackList = new ArrayList<>();
-    // feedbackList.add(feedback1);
-    // feedbackList.add(feedback2);
+    @Test
+    public void testGetAllCourseDtoHomeDetails_ShouldReturnCorrectList() {
+        // Mock data
+        Course course1 = Course.builder().id(1).name("java").description("java java")
+                .price(new BigDecimal("100000")).imageLink("java.png").build();
+        Course course2 = Course.builder().id(2).name("css").description("css css")
+                .price(new BigDecimal("200000")).imageLink("css.png").build();
+        List<Course> courses = new ArrayList<>();
+        courses.add(course1);
+        courses.add(course2);
 
-    // float avgRating = (feedback1.getRatingStar() + feedback2.getRatingStar()) /
-    // feedbackList.size();
+        Feedback feedback1 = Feedback.builder().id(1).ratingStar(5).comment("course so good").build();
+        Feedback feedback2 = Feedback.builder().id(2).ratingStar(5).comment("course so good").build();
+        List<Feedback> feedbackList = new ArrayList<>();
+        feedbackList.add(feedback1);
+        feedbackList.add(feedback2);
 
-    // CourseDtoHomeDetail dto1 = CourseDtoHomeDetail.builder().id(1).name("java")
-    // .price(new BigDecimal("100000")).imageLink("java.png").build();
-    // CourseDtoHomeDetail dto2 = CourseDtoHomeDetail.builder().id(2).name("css")
-    // .price(new BigDecimal("200000")).imageLink("css.png").build();
-    // List<CourseDtoHomeDetail> expectedDtoList = new ArrayList<>();
-    // expectedDtoList.add(dto1);
-    // expectedDtoList.add(dto2);
+        float avgRating = (feedback1.getRatingStar() + feedback2.getRatingStar()) / feedbackList.size();
 
-    // // Mock behavior of courseRepository.getAllCourses()
-    // when(courseService.getAllCourses()).thenReturn(courses);
+        CourseDtoHomeDetail dto1 = CourseDtoHomeDetail.builder().id(1).name("java")
+                .price(new BigDecimal("100000")).imageLink("java.png").build();
+        CourseDtoHomeDetail dto2 = CourseDtoHomeDetail.builder().id(2).name("css")
+                .price(new BigDecimal("200000")).imageLink("css.png").build();
+        List<CourseDtoHomeDetail> expectedDtoList = new ArrayList<>();
+        expectedDtoList.add(dto1);
+        expectedDtoList.add(dto2);
 
-    // // Mock behavior of feedbackService.getFeedbackByCourseId()
-    // when(feedbackService.getFeedbackByCourseId(course1.getId())).thenReturn(feedbackList);
-    // when(feedbackService.getFeedbackByCourseId(course2.getId())).thenReturn(new
-    // ArrayList<>());
+        // Mock behavior of courseRepository.getAllCourses()
+        when(courseService.getAllCourses()).thenReturn(courses);
 
-    // // Mock behavior of courseMapper.courseToCourseDtoHomeDetail()
-    // when(courseMapper.courseToCourseDtoHomeDetail(course1,
-    // avgRating)).thenReturn(dto1);
-    // when(courseMapper.courseToCourseDtoHomeDetail(course2, 0)).thenReturn(dto2);
+        // Mock behavior of feedbackService.getFeedbackByCourseId()
+        when(feedbackService.getFeedbackByCourseId(course1.getId())).thenReturn(feedbackList);
+        when(feedbackService.getFeedbackByCourseId(course2.getId())).thenReturn(new ArrayList<>());
 
-    // // Call the method to test
-    // List<CourseDtoHomeDetail> result =
-    // courseService.getAllCourseDtoHomeDetails();
+        // Mock behavior of courseMapper.courseToCourseDtoHomeDetail()
+        when(courseMapper.courseToCourseDtoHomeDetail(course1, avgRating)).thenReturn(dto1);
+        when(courseMapper.courseToCourseDtoHomeDetail(course2, 0)).thenReturn(dto2);
 
-    // // Verify the result
-    // assertEquals(expectedDtoList, result);
-    // }
+        // Call the method to test
+        List<CourseDtoHomeDetail> result = courseService.getAllCourseDtoHomeDetails();
+
+        // Verify the result
+        assertEquals(expectedDtoList, result);
+    }
+
 
     @Test
     public void testGetCourseAllById_WithExistingId_ShouldReturnCorrectCourse() {
@@ -339,7 +344,7 @@ public class CourseServiceTest {
     public void testGetCourseDetailForStudentById_WithExistingId_ShouldReturnCorrectCourseDtoDetailStudent() {
         // Create the mock Course object
         int courseId = 1;
-
+        String courseName = "Java Programming";
         Course course = Course.builder().id(1).name("java").description("java java")
                 .price(new BigDecimal("100000")).imageLink("java.png").build();
         // Mock behavior of getCourseAllById

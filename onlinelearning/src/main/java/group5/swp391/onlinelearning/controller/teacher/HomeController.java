@@ -22,6 +22,7 @@ public class HomeController {
 
         // TODO: Get revenue in month
         BigDecimal revenue = withdrawalDetailService.getRevenueByMonth();
+        BigDecimal revenueBefore = withdrawalDetailService.getRevenueByMonthBefore();
         model.addAttribute("revenue", revenue);
         // TODO: Get customer in year
 

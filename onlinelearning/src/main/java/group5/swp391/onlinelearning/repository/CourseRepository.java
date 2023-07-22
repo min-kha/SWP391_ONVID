@@ -1,5 +1,6 @@
 package group5.swp391.onlinelearning.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,5 +24,8 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 
     @Query(value = "SELECT * FROM course WHERE price >= ?1 and price <= ?2", nativeQuery = true)
     public List<Course> searchCourseByPrice(Double from, Double to);
+
+    @Query(value = "SELECT * FROM course WHERE topic_id = ?1", nativeQuery = true)
+    public List<Course> searchCourseHashtag(int topicId);
 
 }

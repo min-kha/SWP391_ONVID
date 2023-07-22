@@ -214,7 +214,7 @@ public class LessonTeacherController {
         // Check lesson in course or not
         if (!lessonService.isLessonOfCourse(lessonId, courseId))
             return "404";
-        // Course course = courseService.getCourseById(lessonId);
+        Course course = courseService.getCourseById(lessonId);
         Lesson lesson = lessonService.getLessonById(lessonId);
         // check lesson has video
         boolean isLessonVideo = lessonService.isLessonVideo(lessonId);
@@ -288,7 +288,7 @@ public class LessonTeacherController {
             Lesson lesson = modelMapper.map(lessonDtoEditVideo, Lesson.class);
             model.addAttribute("errorFormat", "Video format not supported");
             model.addAttribute("options", 0);
-            if (lesson.getDocument() != null || lesson.getDocument().equals("")) {
+            if (lesson.getDocument() != null || lesson.getDocument() != "") {
                 LessonDtoEditDocument lessonEditDocument = new LessonDtoEditDocument();
                 lessonEditDocument = modelMapper.map(lesson, LessonDtoEditDocument.class);
                 model.addAttribute("lesson", lessonEditDocument);

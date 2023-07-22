@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Course;
 
 import group5.swp391.onlinelearning.entity.Feedback;
+
+import group5.swp391.onlinelearning.entity.CourseReview;
 
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
@@ -46,12 +50,7 @@ public class CourseService {
     }
 
     public Course getCourseByCourseId(int id) {
-        Optional<Course> courseRes = courseRepository.findById(id);
-        if (courseRes.isPresent()) {
-            return courseRes.get();
-        } else {
-            return null;
-        }
+        return courseRepository.findById(id).get();
     }
 
     public Course getCourseById(int id) {
@@ -111,12 +110,7 @@ public class CourseService {
         if (courseOptional.isPresent()) {
             Course existingCourse = courseOptional.get();
             existingCourse.setName(courseDTOEdit.getName());
-
-            Optional<Topic> topicRes = topicRepository.findById(courseDTOEdit.getTopic_id());
-            Topic topic = new Topic();
-            if (topicRes.isPresent()) {
-                topic = topicRes.get();
-            }
+            Topic topic = topicRepository.findById(courseDTOEdit.getTopic_id()).get();
             existingCourse.setTopic(topic);
             existingCourse.setPrice(courseDTOEdit.getPrice());
             existingCourse.setDescription(courseDTOEdit.getDescription());
@@ -135,10 +129,9 @@ public class CourseService {
     }
 
     public void deleteCourse(int id) {
-        Optional<Course> course = courseRepository.findById(id);
-
-        if (course.isPresent()) {
-            courseRepository.delete(course.get());
+        Course course = courseRepository.findById(id).get();
+        if (course != null) {
+            courseRepository.delete(course);
         }
     }
 
@@ -270,6 +263,34 @@ public class CourseService {
             courseDtoHomeDetailsPrice.add(courseMapper.courseToCourseDtoHomeDetail(course, avg));
         }
         return courseDtoHomeDetailsPrice;
+    }
+
+    public List<CourseDtoHomeDetail> getCourseByHashtag(int topicId) {
+        List<Course> coursesPrice = courseRepository.searchCourseHashtag(topicId);
+        List<CourseDtoHomeDetail> courseDtoHomeDetailsHashtag = new ArrayList<>();
+        List<Course> courseAvailable = new ArrayList<>();
+        for (Course course : coursesPrice) {
+            if (course.getStatus() == 3) {
+                courseAvailable.add(course);
+            }
+        }
+        for (Course course : courseAvailable) {
+
+            List<Feedback> feedbackList = new ArrayList<Feedback>();
+            feedbackList = feedbackService.getFeedbackByCourseId(course.getId());
+            float avg = 0;
+            if (feedbackList.size() == 0) {
+                avg = 0;
+            } else {
+                for (Feedback feedback : feedbackList) {
+                    avg += feedback.getRatingStar();
+                }
+                avg = avg / feedbackList.size();
+            }
+
+            courseDtoHomeDetailsHashtag.add(courseMapper.courseToCourseDtoHomeDetail(course, avg));
+        }
+        return courseDtoHomeDetailsHashtag;
     }
 
     public void submitCourse(Course course) {

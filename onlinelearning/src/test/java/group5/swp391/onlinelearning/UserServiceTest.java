@@ -116,9 +116,11 @@ public class UserServiceTest {
 
     // @Test
     // public void testUpdateUserDuplicateEmail() {
+
     // User existingUser = getRandomUser();
     // User user = getRandomUser();
     // User updatingUser = getRandomUser();
+
     // updatingUser.setId(user.getId());
     // // assuming that user has the same email with existingUser
     // updatingUser.setEmail(existingUser.getEmail());

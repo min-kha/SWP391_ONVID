@@ -24,8 +24,7 @@ public class CartService implements ICartService {
     @Override
     @Transactional
     public Cart createCart(User student) {
-        List<Course> courses = new ArrayList<>();
-        Cart cart = Cart.builder().user(student).courses(courses).build();
+        Cart cart = Cart.builder().user(student).courses(new ArrayList()).build();
         return cartRepository.save(cart);
     }
 
@@ -49,12 +48,7 @@ public class CartService implements ICartService {
 
     @Override
     public List<Course> getCoursebyCartId(int cartId) {
-        Optional<Cart> cart = cartRepository.findById(cartId);
-        List<Course> courses = new ArrayList<>();
-        if (cart.isPresent()) {
-            courses = (List<Course>) cart.get().getCourses();
-        }
-        return courses;
+        return (List<Course>) cartRepository.findById(cartId).get().getCourses();
     }
 
     @Override
