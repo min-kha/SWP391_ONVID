@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.student;
+package group5.swp391.onlinelearning.controller.Student;
 
 import java.math.BigDecimal;
 import java.util.List;

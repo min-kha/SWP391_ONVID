@@ -48,7 +48,9 @@ public class TestDataProvider {
     }
 
 
+
     // COMMENT BY HUNG: LOI
+
 
     // public static CourseDTOEdit createSampleCourseDTOEdit() {
     // int randomNumber = new Random().nextInt(100000);

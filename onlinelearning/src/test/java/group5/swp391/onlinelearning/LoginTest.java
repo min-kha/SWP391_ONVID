@@ -22,7 +22,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import group5.swp391.onlinelearning.controller.student.LoginController;
+import group5.swp391.onlinelearning.controller.Student.LoginController;
 import group5.swp391.onlinelearning.entity.Cart;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
@@ -57,23 +57,24 @@ public class LoginTest {
 
     // @Test
     // public void testPostStudentLogin_WithValidCredentials_RedirectToHomePage() {
-    //     // Arrange
-    //     UserDTOLoginRequest validStudent = new UserDTOLoginRequest();
-    //     Model model = mock(Model.class);
-    //     HttpSession session = mock(HttpSession.class);
-    //     User mockUser = new User();
-    //     Cart mockCart = new Cart();
+    // // Arrange
+    // UserDTOLoginRequest validStudent = new UserDTOLoginRequest();
+    // Model model = mock(Model.class);
+    // HttpSession session = mock(HttpSession.class);
+    // User mockUser = new User();
+    // Cart mockCart = new Cart();
 
-    //     when(userService.loginStudent(any(), any())).thenReturn(mockUser);
-    //     // when(cartService.getCartByStudentId(anyLong())).thenReturn(mockCart);
+    // when(userService.loginStudent(any(), any())).thenReturn(mockUser);
+    // // when(cartService.getCartByStudentId(anyLong())).thenReturn(mockCart);
 
-    //     // Act
-    //     String result = loginController.postStudentLogin(validStudent, mock(BindingResult.class), model, session);
+    // // Act
+    // String result = loginController.postStudentLogin(validStudent,
+    // mock(BindingResult.class), model, session);
 
-    //     // Assert
-    //     assertEquals("redirect:/student/home/1", result);
-    //     verify(session).setAttribute("studentSession", mockUser);
-    //     verify(session).setAttribute("cartStudentSession", mockCart.getCourses());
+    // // Assert
+    // assertEquals("redirect:/student/home/1", result);
+    // verify(session).setAttribute("studentSession", mockUser);
+    // verify(session).setAttribute("cartStudentSession", mockCart.getCourses());
     // }
 
     @Test

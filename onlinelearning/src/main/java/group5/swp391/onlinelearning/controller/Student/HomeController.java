@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.student;
+package group5.swp391.onlinelearning.controller.Student;
 
 import java.util.List;
 import java.util.Map;
