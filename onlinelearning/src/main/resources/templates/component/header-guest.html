@@ -1,4 +1,4 @@
-<div class="p-3 bg-dark text-white mb-3">
+<div class="p-3 bg-dark text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -13,8 +13,8 @@
                     </a>
                 </li>
             </ul>
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" style="margin-left: 450px;"
-                th:action="@{/student/course/search}" method="get">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" style="margin-left: 420px;"
+                th:action="@{/course/search}" method="get">
                 <div class="input-group">
                     <div class="form-outline">
                         <input th:if="${keyword != null}" type="search" id="form1" name="keyword" class="form-control"
@@ -31,10 +31,11 @@
 
             <div class=" nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <a th:if="${session.studentSession == null}" href="/student/login">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
+                    <button type="button" class="btn btn-outline-light me-2">Login as student</button>
                 </a>
-                <a th:if="${session.studentSession == null}" href="/register">
-                    <button type="button" class="btn btn-warning">Sign-up</button>
+
+                <a th:if="${session.studentSession == null}" href="/teacher/login">
+                    <button type="button" class="btn btn-outline-light me-2">Login as teacher</button>
                 </a>
                 <a th:if="${session.cartStudentSession != null}" href="/student/cart/detail" style="margin-left: 15px;">
                     <button type="button" class="btn btn-warning">

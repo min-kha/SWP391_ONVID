@@ -55,9 +55,9 @@
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <div class="col" th:each="course : ${popularCourses}">
                         <div class="card shadow-sm">
-                            <img th:src="@{'/image/' + ${course.imageLink} }" width="100%" height="225">
+                            <img th:src="@{${course.imageLink} }" width="100%" height="225">
                             <div class=" card-body">
-                                <a th:href="'/student/course/detail/' + ${course.id}">
+                                <a th:href="'/course/detail/' + ${course.id}">
                                     <h3 th:text="${course.name}"></h3>
                                 </a>
                                 <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
@@ -81,9 +81,9 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
                 <div class="col" th:each="course : ${courses}">
                     <div class="card shadow-sm">
-                        <img th:src="@{'/image/' + ${course.imageLink} }" width="100%" height="225">
+                        <img th:src="@{${course.imageLink} }" width="100%" height="225">
                         <div class=" card-body">
-                            <a th:href="'/student/course/detail/' + ${course.id}">
+                            <a th:href="'/course/detail/' + ${course.id}">
                                 <h3 th:text="${course.name}"></h3>
                             </a>
                             <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
@@ -101,7 +101,7 @@
         <nav aria-label="...">
             <ul class="pagination pagination-lg">
                 <li class="page-item" th:each="number : ${listPageNumber}">
-                    <a class="page-link" th:href="'/student/home/' + ${number}" th:text="${number}"
+                    <a class="page-link" th:href="'/home/' + ${number}" th:text="${number}"
                         th:style="'background-color: ' + ${number == pageChoose ? 'pink' : 'white'} + ';'"></a>
                 </li>
             </ul>

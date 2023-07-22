@@ -1,0 +1,35 @@
+<th:block th:replace="/layout-guest.html">
+    <th:block th:fragment="main-content">
+        <style>
+            #student:hover {
+                background-color: palevioletred;
+            }
+
+            #teacher:hover {
+                background-color: palevioletred;
+            }
+
+            #container {
+                background-color: rgb(33, 37, 41);
+
+            }
+        </style>
+        <div id="container">
+            <h3 style="text-align: center; color: white;">You need to login first!</h3>
+            <div style="display: flex; height: 650px;">
+                <a th:href="'/student/login'" style="width: 50%; text-decoration: none" id="student">
+                    <h1
+                        style="color: white; display: flex; align-items: center; height: 100%; justify-content: center;">
+                        Student
+                    </h1>
+                </a>
+                <a th:href="'/teacher/login'" style="width: 50%; text-decoration: none" id="teacher">
+                    <h1
+                        style="color: white; display: flex; align-items: center; height: 100%; justify-content: center;">
+                        Teacher
+                    </h1>
+                </a>
+            </div>
+        </div>
+    </th:block>
+</th:block>
