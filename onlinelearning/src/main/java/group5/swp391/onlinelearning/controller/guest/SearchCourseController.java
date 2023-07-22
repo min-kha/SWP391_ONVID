@@ -1,6 +1,5 @@
-package group5.swp391.onlinelearning.controller.student;
+package group5.swp391.onlinelearning.controller.guest;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.PagingUtils;
 
-@Controller
-@RequestMapping(value = "/student/course")
+@Controller(value = "SearchCourseController")
+@RequestMapping(value = "/course")
 public class SearchCourseController {
 
         @Autowired
@@ -49,7 +48,7 @@ public class SearchCourseController {
                 model.addAttribute("pageChoose", pageChooseInt);
                 model.addAttribute("listPageNumber", listPageNumber);
 
-                return "/student/search/search-list";
+                return "/guest/search/search-list";
         }
 
         @GetMapping("/searchByPrice")
@@ -76,7 +75,7 @@ public class SearchCourseController {
                 model.addAttribute("to", to);
                 model.addAttribute("pageChoose", pageChooseInt);
                 model.addAttribute("listPageNumber", listPageNumber);
-                return "/student/search/search-list-by-price";
+                return "/guest/search/search-list-by-price";
         }
 
         @GetMapping("/search-by-hashtag")
@@ -97,9 +96,8 @@ public class SearchCourseController {
                 model.addAttribute("courses", listOnPage);
                 model.addAttribute("hashtag", hashtag);
                 model.addAttribute("topicId", topicId);
-
                 model.addAttribute("pageChoose", pageChooseInt);
                 model.addAttribute("listPageNumber", listPageNumber);
-                return "/student/search/search-list-by-hashtag";
+                return "/guest/search/search-list-by-hashtag";
         }
 }

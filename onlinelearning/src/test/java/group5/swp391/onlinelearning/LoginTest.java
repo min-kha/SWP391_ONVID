@@ -22,7 +22,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import group5.swp391.onlinelearning.controller.Student.LoginController;
+import group5.swp391.onlinelearning.controller.student.LoginController;
 import group5.swp391.onlinelearning.entity.Cart;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <!-- Insert from linkStyte.html -->
+    <th:block th:insert="/component/linkStyte.html"></th:block>
+
+</head>
+
+<body>
+    <header th:insert="/component/header-guest.html"></header>
+
+    <main>
+        <th:block th:insert=":: main-content"></th:block>
+    </main>
+
+    <footer th:insert="/component/footer.html"></footer>
+    <!-- Insert from linkScript.html -->
+    <th:block th:insert="/component/linkScript.html"></th:block>
+</body>
+
+</html>

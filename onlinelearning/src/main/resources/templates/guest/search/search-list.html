@@ -1,4 +1,4 @@
-<th:block th:replace="/layout.html">
+<th:block th:replace="/layout-guest.html">
     <th:block th:fragment="main-content">
         <style>
             body {
@@ -18,7 +18,7 @@
                         <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">
                             #Hashtag
                             <div style="display: flex;">
-                                <form th:action="'/student/course/search-by-hashtag'" th:each="topic : ${topics}"
+                                <form th:action="'/course/search-by-hashtag'" th:each="topic : ${topics}"
                                     class="col-md-3" method="get">
                                     <input type="hidden" value="1" name="pageChoose">
                                     <input type="hidden" th:value="${topic.id}" name="topicId">
@@ -31,8 +31,7 @@
                     </div>
                     <br>
                     <div style="border: 3px solid black">
-                        <form th:action="@{/student/course/searchByPrice}" method="get">
-
+                        <form th:action="@{/course/searchByPrice}" method="get">
                             <div class="container-fluid"
                                 style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
                                 <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">
@@ -59,7 +58,7 @@
                                 <div class="card shadow-sm">
                                     <img th:src="@{${course.imageLink} }" width="100%" height="225">
                                     <div class=" card-body">
-                                        <a th:href="'/student/course/detail/' + ${course.id}">
+                                        <a th:href="'/course/detail/' + ${course.id}">
                                             <h3 th:text="${course.name}"></h3>
                                         </a>
                                         <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
@@ -76,10 +75,8 @@
                 </div>
             </div>
         </div>
-        <form th:action="'/student/course/search-by-hashtag'" method="get">
-            <input type="hidden" th:value="${topicId}" name="topicId">
-            <input type="hidden" th:value="${hashtag}" name="hashtag">
-
+        <form th:action="@{/course/search}" method="get">
+            <input type="hidden" th:value="${keyword}" name="keyword">
             <nav aria-label="...">
                 <ul class="pagination pagination-lg">
                     <li class="page-item" th:each="number : ${listPageNumber}">
