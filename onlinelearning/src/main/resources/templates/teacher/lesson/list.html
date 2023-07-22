@@ -108,7 +108,7 @@
                         <h2 th:text="${lesson.title}"></h2>
                         <h5 th:text="${lesson.name}"><span class="glyphicon glyphicon-time"></span></h5>
                         <video controls preload="auto" autoplay width="100%">
-                            <source th:src="@{'/video/' + ${lesson.video}}" onerror="checkAndReloadImage(this)">
+                            <source th:src="@{${lesson.video}}" onerror="checkAndReloadImage(this)">
                         </video>
                         <button onclick="showOptions()" class="btn btn-labeled btn-info"
                             th:if="${course.status ne 3 and course.status ne 0 and course.status ne 1}">Edit

@@ -70,7 +70,7 @@
                                                         <div class="form-group">
                                                             <div th:if="${oldVideo!=null} ">
                                                                 <video controls preload="auto" autoplay width="100%">
-                                                                    <source th:src="@{'/video/' + ${oldVideo}}">
+                                                                    <source th:src="@{${oldVideo}}">
                                                                 </video>
                                                             </div>
                                                             <!-- <input type="hidden" th:field="*{video}"

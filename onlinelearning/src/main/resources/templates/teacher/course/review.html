@@ -1,0 +1,164 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-6 mt-4 col-12">
+                                <div class="card">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <div class="pb-3">
+                                                    <h1 th:text="${title}"></h1>
+                                                    <div>
+                                                        <hr />
+                                                        <dl class="row border rounded p-3">
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                id
+                                                            </dt>
+                                                            <dd th:text="${entity.id}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                name
+                                                            </dt>
+                                                            <dd th:text="${entity.name}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                description
+                                                            </dt>
+                                                            <dd th:text="${entity.description}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                teacher
+                                                            </dt>
+                                                            <dd th:text="${entity.teacher?.name}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                price
+                                                            </dt>
+                                                            <dd th:text="${entity.price}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                topic
+                                                            </dt>
+                                                            <dd th:text="${entity.topic?.name}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                view
+                                                            </dt>
+                                                            <dd th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}"
+                                                                class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                lessons
+                                                            </dt>
+                                                            <dd th:text="${entity.lessons?.size}" class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                date
+                                                            </dt>
+                                                            <dd th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"
+                                                                class="col-sm-9">
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                image
+                                                            </dt>
+                                                            <dd class="col-sm-9">
+                                                                <img th:src="${entity.imageLink}" alt="image of course"
+                                                                    class="" width="100px" />
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                Go to course
+                                                            </dt>
+                                                            <dd class="col-sm-9">
+                                                                <a th:href="'/student/course/detail/' + ${entity.id}"
+                                                                    target="_blank" class="btn btn-link"
+                                                                    th:text="${entity.name}"></a>
+                                                            </dd>
+                                                            <hr style="color: #aaaaaa" />
+                                                            <dt class="col-sm-3 fw-bold text-capitalize">
+                                                                status
+                                                            </dt>
+                                                            <dd class="col-sm-9">
+                                                                <span th:if="${entity.status == 0}"
+                                                                    class="btn btn-info">To Do
+                                                                </span>
+                                                                <span th:if="${entity.status == 1}"
+                                                                    class="btn btn-primary">In
+                                                                    Processing</span>
+                                                                <span th:if="${entity.status == 3}"
+                                                                    class="btn btn-success">Approved</span>
+                                                                <span th:if="${entity.status == 2}"
+                                                                    class="btn btn-dark">Rejected</span>
+                                                            </dd>
+                                                        </dl>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body col-md-6 col-12" style="border-radius: 1rem;">
+                                <div class="card mb-4">
+                                    <h3 class="card-header text-center">
+                                        History review
+                                    </h3>
+                                    <div class="card-body">
+                                        <div th:each="courseReview : ${entity.courseReviews}" class="card mb-4">
+                                            <div class="card-body">
+                                                <p th:text="${courseReview.comment}"></p>
+
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-flex flex-row align-items-center">
+                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp"
+                                                            alt="avatar" width="25" height="25" />
+                                                        <p class="small mb-0 ms-2"
+                                                            th:text="${courseReview.staff?.name}"></p>
+                                                        <p class="small mb-0 ms-2"
+                                                            th:text="'• ' + ${#dates.format(courseReview.time, 'dd/MM/yyyy')}">
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex flex-row align-items-center text-primary">
+                                                        <label th:switch="${courseReview.status}">
+                                                            <span th:case="1" class="btn btn-sm btn-primary">In
+                                                                Progressing</span>
+                                                            <span th:case="2"
+                                                                class="btn btn-dark btn-sm">Rejected</span>
+                                                            <span th:case="3"
+                                                                class="btn btn-success btn-sm">Approved</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </th:block>
+</th:block>
