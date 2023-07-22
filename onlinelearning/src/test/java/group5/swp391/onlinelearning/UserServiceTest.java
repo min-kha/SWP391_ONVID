@@ -114,7 +114,6 @@ public class UserServiceTest {
         verify(userRepository, never()).save(user);
     }
 
-    // TODO: COMMENT BY HUNG
     // @Test
     // public void testUpdateUserDuplicateEmail() {
 
