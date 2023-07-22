@@ -1,7 +1,6 @@
-package group5.swp391.onlinelearning.controller.Student;
+package group5.swp391.onlinelearning.controller.student;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;

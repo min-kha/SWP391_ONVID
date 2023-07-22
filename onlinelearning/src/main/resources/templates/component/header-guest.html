@@ -1,0 +1,66 @@
+<div class="p-3 bg-dark text-white mb-3">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap" />
+                </svg>
+            </a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li>
+                    <a href="/home/1" class="nav-link px-2 text-white">
+                        Home
+                    </a>
+                </li>
+            </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" style="margin-left: 450px;"
+                th:action="@{/student/course/search}" method="get">
+                <div class="input-group">
+                    <div class="form-outline">
+                        <input th:if="${keyword != null}" type="search" id="form1" name="keyword" class="form-control"
+                            placeholder="Search" th:value="${keyword}" />
+                        <input th:if="${keyword == null}" type="search" id="form1" name="keyword" class="form-control"
+                            placeholder="Search" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <input type="hidden" value="1" name="pageChoose">
+            </form>
+
+            <div class=" nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <a th:if="${session.studentSession == null}" href="/student/login">
+                    <button type="button" class="btn btn-outline-light me-2">Login</button>
+                </a>
+                <a th:if="${session.studentSession == null}" href="/register">
+                    <button type="button" class="btn btn-warning">Sign-up</button>
+                </a>
+                <a th:if="${session.cartStudentSession != null}" href="/student/cart/detail" style="margin-left: 15px;">
+                    <button type="button" class="btn btn-warning">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <span th:with="cartStudentSession = ${session.cartStudentSession}">
+                            <span th:text="${#lists.size(cartStudentSession)}"></span>
+                        </span>
+                    </button>
+                </a>
+                <div th:if="${session.studentSession != null}" class="dropdown text-end" style="margin-left: 15px;">
+                    <button type="button" class="btn btn-warning" style="padding: 2px;">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/image/7542670.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="/student/information">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/student/sign-out">Sign out</a></li>
+                        </ul>
+                    </button>
+                </div>
+                <h4 th:if="${student != null}" th:text="'Welcome, ' + ${student?.name}" style="margin-left: 15px;"></h4>
+            </div>
+        </div>
+    </div>
+</div>

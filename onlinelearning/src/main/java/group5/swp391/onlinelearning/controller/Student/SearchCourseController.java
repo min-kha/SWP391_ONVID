@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.Student;
+package group5.swp391.onlinelearning.controller.student;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,7 +14,6 @@ import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-import group5.swp391.onlinelearning.service.impl.TopicService;
 import group5.swp391.onlinelearning.utils.PagingUtils;
 
 @Controller
@@ -98,7 +97,6 @@ public class SearchCourseController {
                 model.addAttribute("courses", listOnPage);
                 model.addAttribute("hashtag", hashtag);
                 model.addAttribute("topicId", topicId);
-
                 model.addAttribute("pageChoose", pageChooseInt);
                 model.addAttribute("listPageNumber", listPageNumber);
                 return "/student/search/search-list-by-hashtag";
