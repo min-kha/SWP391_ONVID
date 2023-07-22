@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.entity.CourseReview;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
@@ -258,5 +260,18 @@ public class CourseController {
         // change status of course
         courseService.submitCourse(course);
         return "redirect:/teacher/course/list";
+    }
+
+    @GetMapping("/review/{id}")
+    public String getReview(Model model, @PathVariable @NotNull int id, HttpSession session) throws Exception {
+        String title = "Review Course - Teacher";
+        try {
+            Course course = courseService.getCourseById(id);
+            User user = (User) session.getAttribute("user");
+            thymeleafBaseCRUD.setBaseForEntity(model, course, title);
+        } catch (Exception e) {
+            // handle exception
+        }
+        return "teacher/course/review";
     }
 }
