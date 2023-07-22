@@ -44,7 +44,13 @@
             <div class="card mb-4">
                 <h1 class="card-header" th:text="${title}">
                 </h1>
-                <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
+                <a th:unless="${#httpServletRequest.getParameter('reviewMode') eq 'true'}" href="index?reviewMode=true"
+                    class="btn btn-outline-primary px-3 " aria-disabled="true">Focus to review
+                    mode</a>
+                <a th:if="${#httpServletRequest.getParameter('reviewMode') eq 'true'}" href="index"
+                    class="btn btn-primary px-3 " aria-disabled="true">Focus
+                    to review
+                    mode</a>
                 <div class="card-body table-responsive">
                     <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
                         <!-- Name	Status	Description	ImageLink	Price	Date	
