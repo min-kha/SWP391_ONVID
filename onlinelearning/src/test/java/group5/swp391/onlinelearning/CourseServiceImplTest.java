@@ -1,5 +1,7 @@
 package group5.swp391.onlinelearning;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -128,55 +130,6 @@ public class CourseServiceImplTest {
         // verify(userService, times(1)).getUserById(2);
         // verify(courseRepository, times(1)).save(course);
     }
-
-    // @Test
-    // public void testGetAllCourses() {
-    // // Arrange
-    // Course course1 = new Course();
-    // course1.setId(1);
-    // course1.setName("Course 1");
-
-    // Course course2 = new Course();
-    // course2.setId(1);
-    // course2.setName("Course 2");
-
-    // List<Course> courses = new ArrayList<>();
-    // courses.add(course1);
-    // courses.add(course2);
-
-    // when(courseRepository.findAll()).thenReturn(courses);
-
-    // // Act
-    // List<Course> result = courseService.getAllCourses();
-
-    // // Assert
-    // assertEquals(2, result.size());
-    // assertEquals("Course 1", result.get(0).getName());
-    // assertEquals("Course 2", result.get(1).getName());
-    // }
-
-    // @Test
-    // public void testGetCourseById() {
-    // // Arrange
-    // int courseId = 1;
-    // Course course = new Course();
-    // course.setId(courseId);
-    // course.setName("Course 1");
-    // course.setStatus(1);
-    // // Set other properties for the course
-
-    // Optional<Course> courseOptional = Optional.of(course);
-    // when(courseRepository.findById(courseId)).thenReturn(courseOptional);
-
-    // // Act
-    // CourseDtoDetail result = courseService.getCourseById(courseId);
-
-    // // Assert
-    // assertEquals(courseId, result.getCourseId());
-    // assertEquals("Course 1", result.getCourseName());
-    // assertEquals(1, result.getStatus());
-    // // Assert other properties for the result
-    // }
 
     // @Test
     // public void testCreateCourse() {
