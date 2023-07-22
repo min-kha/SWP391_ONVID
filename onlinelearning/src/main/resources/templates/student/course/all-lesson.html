@@ -60,6 +60,29 @@
                         <a class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
                             style="background-color:  red;">
                             <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">Do test</strong>
+                            </div>
+                            <div class="col-10 mb-1 small">Not available</div>
+                        </a>
+                    </div>
+                    <form th:action="@{/student/course/test}" method="get">
+                        <button type="submit" class="list-group list-group-flush border-bottom scrollarea"
+                            th:if="${isDone == 'true'}" style="width: 100%; border: 0px; margin: 0px; padding: 0px;">
+                            <input type="hidden" th:value="${courseId}" name="courseId">
+                            <input type="hidden" th:value="1" name="questionChoose">
+                            <span class="list-group-item list-group-item-action active py-3 lh-tight"
+                                aria-current="true" style="background-color:  rgb(13,110,253);">
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <strong class="mb-1">Do test</strong>
+                                </div>
+                                <div class="col-10 small" style="margin-left: -85px;">Available</div>
+                            </span>
+                        </button>
+                    </form>
+                    <div class="list-group list-group-flush border-bottom scrollarea" th:if="${isDone == 'false'}">
+                        <a class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
+                            style="background-color:  red;">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
                                 <strong class="mb-1">feedback</strong>
                             </div>
                             <div class="col-10 mb-1 small">Not available</div>
