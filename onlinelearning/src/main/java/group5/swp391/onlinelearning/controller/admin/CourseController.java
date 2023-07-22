@@ -134,6 +134,6 @@ public class CourseController {
         } catch (Exception e) {
             return "/error";
         }
-        return "redirect:/admin/users/index";
+        return "redirect:/admin/courses/index";
     }
 }

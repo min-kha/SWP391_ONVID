@@ -47,11 +47,12 @@ public class TestDataProvider {
                 .build();
     }
 
-    public static CourseDTOEdit createSampleCourseDTOEdit() {
-        int randomNumber = new Random().nextInt(100000);
-        return new CourseDTOEdit(randomNumber, "Course " + randomNumber, "description " + randomNumber,
-                BigDecimal.valueOf(randomNumber), 1, null);
-    }
+    // public static CourseDTOEdit createSampleCourseDTOEdit() {
+    // int randomNumber = new Random().nextInt(100000);
+    // return new CourseDTOEdit(randomNumber, "Course " + randomNumber, "description
+    // " + randomNumber,
+    // BigDecimal.valueOf(randomNumber), 1, null);
+    // }
 
     public static CourseReview createSampleCourseReview() {
         int randomNumber = new Random().nextInt(100000);
