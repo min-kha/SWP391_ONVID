@@ -10,7 +10,7 @@
                 <div class="col-md-3">
                     <div class="card bg-success text-white mb-4">
                         <div class="card-body">Total Users: </div>
-                        <h3 class="card-body text-center"></h3>
+                        <h3 class="card-body text-center" th:text="${numberOfUsers}"></h3>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="/admin/users/index">View
                                 Details</a>
@@ -21,7 +21,7 @@
                 <div class="col-md-3">
                     <div class="card bg-success text-white mb-4">
                         <div class="card-body">Total Courses: </div>
-                        <h3 class="card-body text-center"></h3>
+                        <h3 class="card-body text-center" th:text="${numberOfCourses}"></h3>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="/admin/courses/index">View
                                 Details</a>
@@ -32,7 +32,7 @@
                 <div class="col-md-3">
                     <div class="card bg-success text-white mb-4">
                         <div class="card-body">Total CVs: </div>
-                        <h3 class="card-body text-center"></h3>
+                        <h3 class="card-body text-center" th:text="${numberOfCVs}"></h3>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="/admin/cvs/index">View
                                 Details</a>
@@ -43,7 +43,7 @@
                 <div class="col-md-3">
                     <div class="card bg-success text-white mb-4">
                         <div class="card-body">Total Topics: </div>
-                        <h3 class="card-body text-center"></h3>
+                        <h3 class="card-body text-center" th:text="${numberOfTopics}"></h3>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="/admin/topics/index">View
                                 Details</a>
@@ -54,11 +54,34 @@
                 <div class="col-md-3">
                     <div class="card bg-success text-white mb-4">
                         <div class="card-body">Total Withdrawal: </div>
-                        <h3 class="card-body text-center"></h3>
+                        <h3 class="card-body text-center" th:text="${numberOfWithdrawalDetails}"></h3>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="/admin/withdrawalDetails/index">View
                                 Details</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Total Orders: </div>
+                        <h3 class="card-body text-center" th:text="${numberOfOrders}"></h3>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/admin/orders/index">View
+                                Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Total Course Purchases: </div>
+                        <h3 class="card-body text-center" th:text="${numberOfOrders}"></h3>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <span class="small text-white"></span>
+                            <div class="small text-white">
+                                <!-- <i class="fas fa-angle-right"></i> -->
+                            </div>
                         </div>
                     </div>
                 </div>

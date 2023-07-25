@@ -28,6 +28,7 @@ public class OrderDetailService implements IOrderDetailService {
         return getOrderDetailsByOrderId(orderId);
     }
 
+    @Override
     public List<OrderDetail> getAllOrderDetails() {
         return orderDetailRepository.findAll();
     }

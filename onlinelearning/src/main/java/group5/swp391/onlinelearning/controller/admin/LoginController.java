@@ -31,14 +31,6 @@ public class LoginController {
         return "/admin/auth/login";
     }
 
-    @GetMapping("/home")
-    public String getHome(Model model, RedirectAttributes redirectAttributes) {
-        if (model.getAttribute("user") == null) {
-            model.addAttribute("user", new UserDTOLoginRequest());
-        }
-        return "/admin/home";
-    }
-
     @PostMapping("/login")
     public String postLogin(@Valid @ModelAttribute("user") UserDTOLoginRequest teacher,
             BindingResult bindingResult, Model model, HttpSession session) {
