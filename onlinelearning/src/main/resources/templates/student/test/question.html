@@ -1,9 +1,20 @@
 <th:block th:replace="/layout.html">
     <th:block th:fragment="main-content">
+
+        <style>
+            #answers {
+                text-align: left;
+                width: 1020px;
+            }
+        </style>
         <section class="h-100 h-custom" style="background-color: #ffffff;">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-12">
+                        <h1 style="text-align: center;">Practice Quiz</h1>
+                        <br>
+                        <br>
+                        <br>
                         <div class="card card-registration card-registration-2" style="border-radius: 15px;">
                             <div class="card-body p-0">
                                 <div class="row g-0">
@@ -13,12 +24,33 @@
                                             </h1>
                                             <h4 th:text="${q.name}"></h4>
                                             <hr style="width: 1020px;">
-                                            <div th:each="a : ${q.answerChoices}">
-                                                <form method="post" th:action="@{/student/order}">
-                                                    <input type="submit" readonly th:value="${a.answer}">
+                                            <form method="get" th:action="@{/student/course/test/get-answer/}">
+                                                <input type="hidden" th:value="${q.id}" name="questionId">
+                                                <input type="hidden" th:value="${courseId}" name="courseId">
+                                                <input type="hidden" th:value="${questionChoose}" name="questionChoose">
+                                                <div th:each="a : ${q.answerChoices}">
+                                                    <span th:switch="${checkChooseCorrectAnswer}">
+                                                        <input th:case="true" id="answers" th:readonly="true"
+                                                            th:value="${a.answer}" th:name="answer"
+                                                            th:type="${correctAnswer == null ? 'submit' : 'text'}"
+                                                            th:style="'background-color: ' + ${answerChoice == a ? 'rgb(13,110,253)' : 'white'} + ';'">
+                                                        <input th:case="false" id="answers" th:readonly="true"
+                                                            th:value="${a.answer}" th:name="answer"
+                                                            th:type="${correctAnswer == null ? 'submit' : 'text'}"
+                                                            th:style="'background-color: ' + ${answerChoice == a ? 'red' : 'white'} + ';'">
+                                                        <input th:case="null" id="answers" th:readonly="true"
+                                                            th:value="${a.answer}" th:name="answer"
+                                                            th:type="${correctAnswer == null ? 'submit' : 'text'}"
+                                                            style="background-color: rgb(255, 255, 255);">
+                                                    </span>
                                                     <br>
                                                     <br>
-                                                </form>
+                                                </div>
+                                            </form>
+                                            <div th:if="${correctAnswer != null}" style="color: rgb(21, 89, 208);">
+                                                <hr style="width: 1020px;">
+                                                <div th:text="'Correct answer is: ' + ${correctAnswer.answer}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

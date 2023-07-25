@@ -17,4 +17,6 @@ public interface IQuestionService {
     public Question getQuestionById(int questionId);
 
     public List<Question> getQuestionsByCourseId(int courseId);
+
+    public Question getQuestionByCourseIdAndQuestionId(int courseId, int questionId);
 }
