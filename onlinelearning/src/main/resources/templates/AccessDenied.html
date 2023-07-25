@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <h1>Access Denined</h1>
-</body>
-
-</html>
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <div class="vh-100 text-center">
+            <h1>Access Denined</h1>
+            <a class="btn btn-primary m-4" href="/home/1">Back to home</a>
+        </div>
+    </th:block>
+</th:block>
