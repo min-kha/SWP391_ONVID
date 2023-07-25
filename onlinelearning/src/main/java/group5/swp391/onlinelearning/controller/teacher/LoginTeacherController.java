@@ -48,7 +48,7 @@ public class LoginTeacherController {
                 return "redirect:/teacher/home";
             } else {
                 if ((Boolean) model.getAttribute("cVProcess")) {
-                    return "/teacher/login/watting";
+                    return "teacher/register/watting";
                 }
                 model.addAttribute("loginError", "Login failed");
                 return "/teacher/login/login";

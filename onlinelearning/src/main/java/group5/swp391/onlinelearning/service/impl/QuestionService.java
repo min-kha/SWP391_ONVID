@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.swp391.onlinelearning.entity.Question;
-
-import group5.swp391.onlinelearning.repository.CourseRepository;
-
 import group5.swp391.onlinelearning.repository.QuestionRepository;
 import group5.swp391.onlinelearning.service.IQuestionService;
 
