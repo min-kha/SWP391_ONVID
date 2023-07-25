@@ -48,9 +48,10 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Date</th>
+                                <th>Money</th>
+                                <th>Description</th>
                                 <th>Teacher</th>
                                 <th>Reviewer</th>
-                                <th>CV</th>
                                 <th>Status</th>
                                 <th>Action</th>
                                 <th>Review</th>
@@ -60,12 +61,11 @@
                             <tr th:each="entity : ${entities}">
                                 <td th:text="${entity.id}"></td>
                                 <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${entity.money}"></td>
+                                <td th:text="${entity.description}"></td>
                                 <td th:text="${entity.teacher?.name}"></td>
-                                <td th:text="${entity.staff?.name}"></td>
-                                <td>
-                                    <a class="btn btn-outline-primary" th:href="'/pdf/cv/' + ${entity.pdfLink}"
-                                        tabindex="-1" aria-disabled="true">CV File</a>
-                                </td>
+                                <td th:text="${entity.user?.name}"></td>
+
                                 <td th:if="${entity.status == 0}"><span class="btn btn-danger w-75">To
                                         Do</span></td>
                                 <td th:if="${entity.status == 1}"><span class="btn btn-primary w-75">In
@@ -80,7 +80,7 @@
                                 </td>
                                 <td>
                                     <!-- TODO: Check if status == 0,1 and entity.staff.id = id in session then show review -->
-                                    <a th:if="${entity.status == 0  || entity.staff?.id == session?.user?.id || session?.user?.role == 3}"
+                                    <a th:if="${entity.status == 0 || entity.user?.id == session?.user?.id}"
                                         th:href="'review/' + ${entity.id}" class="btn btn-warning" tabindex="-1"
                                         aria-disabled="true">Review</a>
                                 </td>
