@@ -47,9 +47,6 @@ public class QuestionService implements IQuestionService {
         return question;
     }
 
-    @Autowired
-    QuestionRepository questionRepository;
-
     @Override
     public List<Question> getQuestionsByCourseId(int courseId) {
         return questionRepository.getQuestionsByCourseId(courseId);
