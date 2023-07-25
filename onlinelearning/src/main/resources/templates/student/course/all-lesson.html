@@ -37,7 +37,7 @@
             <progress th:value="${progress}" max="100"></progress>
             <hr>
             <div class="row content" style="display: flex;">
-                <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 350px;">
+                <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 330px;">
                     <div
                         class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                         <svg class="bi me-2" width="30" height="24">
@@ -56,6 +56,29 @@
                             <div class="col-10 mb-1 small" th:text="${lessonDtoDetail.status}">learning</div>
                         </a>
                     </div>
+                    <div class="list-group list-group-flush border-bottom scrollarea" th:if="${isDone == 'false'}">
+                        <a class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
+                            style="background-color:  red;">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">Do test</strong>
+                            </div>
+                            <div class="col-10 mb-1 small">Not available</div>
+                        </a>
+                    </div>
+                    <form th:action="@{/student/course/test}" method="get">
+                        <button type="submit" class="list-group list-group-flush border-bottom scrollarea"
+                            th:if="${isDone == 'true'}" style="width: 100%; border: 0px; margin: 0px; padding: 0px;">
+                            <input type="hidden" th:value="${courseId}" name="courseId">
+                            <input type="hidden" th:value="1" name="questionChoose">
+                            <span class="list-group-item list-group-item-action active py-3 lh-tight"
+                                aria-current="true" style="background-color:  rgb(13,110,253);">
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <strong class="mb-1">Do test</strong>
+                                </div>
+                                <div class="col-10 small" style="margin-left: -85px;">Available</div>
+                            </span>
+                        </button>
+                    </form>
                     <div class="list-group list-group-flush border-bottom scrollarea" th:if="${isDone == 'false'}">
                         <a class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true"
                             style="background-color:  red;">

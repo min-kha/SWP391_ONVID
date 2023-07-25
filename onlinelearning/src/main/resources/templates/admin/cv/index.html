@@ -80,8 +80,9 @@
                                 </td>
                                 <td>
                                     <!-- TODO: Check if status == 0,1 and entity.staff.id = id in session then show review -->
-                                    <a th:if="${entity.status == 0}" th:href="'review/' + ${entity.id}"
-                                        class="btn btn-warning" tabindex="-1" aria-disabled="true">Review</a>
+                                    <a th:if="${entity.status == 0  || entity.staff?.id == session?.user?.id || session?.user?.role == 3}"
+                                        th:href="'review/' + ${entity.id}" class="btn btn-warning" tabindex="-1"
+                                        aria-disabled="true">Review</a>
                                 </td>
                             </tr>
                         </tbody>

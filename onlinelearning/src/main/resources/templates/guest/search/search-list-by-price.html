@@ -1,0 +1,92 @@
+<th:block th:replace="/layout-guest.html">
+    <th:block th:fragment="main-content">
+        <style>
+            body {
+                background: #ffffff;
+
+                min-height: 100vh;
+            }
+
+            .text-gray {
+                color: #aaa;
+            }
+        </style>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="container-fluid text-center" style="border: 3px solid black">
+                        <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">
+                            #Hashtag
+                            <div style="display: flex;">
+                                <form th:action="'/course/search-by-hashtag'" th:each="topic : ${topics}"
+                                    class="col-md-3" method="get">
+                                    <input type="hidden" value="1" name="pageChoose">
+                                    <input type="hidden" th:value="${topic.id}" name="topicId">
+
+                                    <input type="submit" name="hashtag" th:value="${topic.hashtag}"
+                                        style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="border: 3px solid black">
+                        <form th:action="@{/course/searchByPrice}" method="get">
+
+                            <div class="container-fluid"
+                                style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                                <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">
+                                    Price
+                                </div>
+                                <br>
+                                <input type="search" id="form1" name="from" class="form-control" placeholder="From"
+                                    th:value="${from}" />
+                                <input type="search" id="form1" name="to" class="form-control" placeholder="To"
+                                    style="margin-top: 10px;" th:value="${to}" />
+                                <button type=" submit" class="btn btn-primary" style="margin-top: 10px; width: 100%;">
+                                    submit
+                                </button>
+                            </div>
+                            <input type="hidden" value="1" name="pageChoose">
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-8 mx-auto">
+                    <div class="album">
+                        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3">
+                            <div class="col" th:each="course : ${courses}">
+                                <div class="card shadow-sm">
+                                    <img th:src="@{${course.imageLink} }" width="100%" height="225">
+                                    <div class=" card-body">
+                                        <a th:href="'/course/detail/' + ${course.id}">
+                                            <h3 th:text="${course.name}"></h3>
+                                        </a>
+                                        <p th:text="${course.teacherName}" class="card-text text-secondary"></p>
+                                        <div class="d-flex">
+                                            <span th:text="${course.ratingStar}"></span>
+                                            <i class="fas fa-star" style="color: rgb(223, 223, 16);"></i>
+                                        </div>
+                                        <span th:text="${course.price}" class="card-title h2"></span><small>vnđ</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form th:action="@{/course/searchByPrice}" method="get">
+            <input type="hidden" th:value="${from}" name="from">
+            <input type="hidden" th:value="${to}" name="to">
+            <nav aria-label="...">
+                <ul class="pagination pagination-lg">
+                    <li class="page-item" th:each="number : ${listPageNumber}">
+                        <input class="page-link" th:value="${number}" name="pageChoose" type="submit"
+                            th:style="'background-color: ' + ${number == pageChoose ? 'pink' : 'white'} + ';'"></input>
+                    </li>
+                </ul>
+            </nav>
+        </form>
+    </th:block>
+</th:block>

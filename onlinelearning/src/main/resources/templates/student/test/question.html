@@ -1,0 +1,43 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <section class="h-100 h-custom" style="background-color: #ffffff;">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12">
+                        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                            <div class="card-body p-0">
+                                <div class="row g-0">
+                                    <div class="col-lg-8">
+                                        <div class="p-5" th:each="q : ${question}">
+                                            <h1 class="fw-bold text-black" th:text="'Question ' + ${questionChoose}">
+                                            </h1>
+                                            <h4 th:text="${q.name}"></h4>
+                                            <hr style="width: 1020px;">
+                                            <div th:each="a : ${q.answerChoices}">
+                                                <form method="post" th:action="@{/student/order}">
+                                                    <input type="submit" readonly th:value="${a.answer}">
+                                                    <br>
+                                                    <br>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <form th:action="@{/student/course/test}" method="get">
+            <input type="hidden" th:value="${courseId}" name="courseId">
+            <nav aria-label="...">
+                <ul class="pagination pagination-lg">
+                    <li class="page-item" th:each="number : ${listQuestionNumber}">
+                        <input class="page-link" th:value="${number}" name="questionChoose" type="submit"
+                            th:style="'background-color: ' + ${number == questionChoose ? 'pink' : 'white'} + ';'"></input>
+                    </li>
+                </ul>
+            </nav>
+        </form>
+    </th:block>
+</th:block>

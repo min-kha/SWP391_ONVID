@@ -14,7 +14,6 @@ import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
-import group5.swp391.onlinelearning.service.impl.TopicService;
 import group5.swp391.onlinelearning.utils.PagingUtils;
 
 @Controller
@@ -78,5 +77,29 @@ public class SearchCourseController {
                 model.addAttribute("pageChoose", pageChooseInt);
                 model.addAttribute("listPageNumber", listPageNumber);
                 return "/student/search/search-list-by-price";
+        }
+
+        @GetMapping("/search-by-hashtag")
+        public String getSearchHashtag(@RequestParam("topicId") int topicId, @RequestParam("hashtag") String hashtag,
+                        @RequestParam("pageChoose") String pageChoose,
+                        Model model) {
+
+                List<CourseDtoHomeDetail> courseDtoHomeDetailsSearchByPrice = courseService.getCourseByHashtag(topicId);
+                int numberPerPage = 9;
+                List<CourseDtoHomeDetail> listOnPage = (List<CourseDtoHomeDetail>) pagingUtils.getPagingList(pageChoose,
+                                courseDtoHomeDetailsSearchByPrice, numberPerPage);
+                int numberOfPage = pagingUtils.getNumberOfPage(courseDtoHomeDetailsSearchByPrice, numberPerPage);
+                int pageChooseInt = Integer.parseInt(pageChoose);
+                List<Integer> listPageNumber = pagingUtils.getListPageNumber(numberOfPage);
+
+                List<Topic> topics = topicService.getTopics();
+                model.addAttribute("topics", topics);
+                model.addAttribute("courses", listOnPage);
+                model.addAttribute("hashtag", hashtag);
+                model.addAttribute("topicId", topicId);
+
+                model.addAttribute("pageChoose", pageChooseInt);
+                model.addAttribute("listPageNumber", listPageNumber);
+                return "/student/search/search-list-by-hashtag";
         }
 }

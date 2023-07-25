@@ -37,9 +37,10 @@ public class CVController {
     private IUserService userService;
 
     @GetMapping("/index")
-    public String getIndex(Model model) {
+    public String getIndex(Model model, HttpSession session) {
         List<CV> cVs = cVService.getCVs();
         String title = "List CVs - Admin";
+        model.addAttribute("session", session);
         thymeleafBaseCRUD.setBaseForList(model, cVs, title);
         return "admin/cv/index";
     }

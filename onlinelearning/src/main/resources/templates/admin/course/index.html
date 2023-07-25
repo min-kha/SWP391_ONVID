@@ -44,7 +44,11 @@
             <div class="card mb-4">
                 <h1 class="card-header" th:text="${title}">
                 </h1>
-                <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
+                <a th:unless="${#httpServletRequest.getParameter('reviewMode') eq 'true'}" href="index?reviewMode=true"
+                    class="btn btn-outline-primary px-3 " aria-disabled="true">Focus to review
+                    mode</a>
+                <a th:if="${#httpServletRequest.getParameter('reviewMode') eq 'true'}" href="index"
+                    class="btn btn-primary px-3 " aria-disabled="true">List all courses</a>
                 <div class="card-body table-responsive">
                     <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
                         <!-- Name	Status	Description	ImageLink	Price	Date	
@@ -75,7 +79,12 @@
                                 <td th:text="${entity.price}"></td>
                                 <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
                                 <td th:text="${entity.topic.name}"></td>
-                                <td th:text="${entity.views?.![viewNumber]?.get(entity.views.size() - 1)}"></td>
+                                <td>
+                                    <th:block th:unless="${entity.views.isEmpty}"
+                                        th:text="${entity.views?.![viewNumber]?.get(entity.views.size() - 1)}">
+                                    </th:block>
+                                    <th:block th:if="${entity.views.isEmpty}" th:text="0"></th:block>
+                                </td>
                                 <td th:text=" ${entity.lessons?.size}"></td>
                                 <td th:if="${entity.status == -2}"><span class="btn btn-danger">Deactived</span></td>
                                 <td th:if="${entity.status == -1}"><span class="btn btn-outline-secondary">Draff</span>
