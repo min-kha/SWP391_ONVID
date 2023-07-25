@@ -1,38 +1,32 @@
 <!-- Header component -->
-<div class="p-3 mb-3 border-bottom ">
+<div class="p-2 border-bottom " style="background-color: #213458;">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
+            <a style=" margin-right: 20px;" href="/admin/home"
+                class="d-flex align-items-center text-light text-decoration-none">
+                <img width="60" style="border-radius: 0.5rem;" alt="logo" src="/image/logo_2.png" />
+                <h1 style="font-size: 2rem; font-family: 'Ultra';">ONVID</h1>
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">Courses</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>
+                <li><a href="/admin/home" class="nav-link px-2 link-light">Home</a></li>
+                <li><a href="/admin/courses/index" class="nav-link px-2 link-light">Courses</a></li>
+                <li><a href="/admin/orders/index" class="nav-link px-2 link-light">Orders</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </form>
-
             <div class="dropdown text-end">
-                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://cdn3.iconfinder.com/data/icons/team-management/136/19-1024.png" alt="mdo"
-                        width="32" height="32" class="rounded-circle">
+                        width="40" height="40" class="rounded-circle">
                 </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" th:href="'/admin/users/detail/' + ${session?.user?.id}">Profile</a>
                     </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <li>
+                        <hr class="dropdown-divider" style="color: aliceblue;">
+                    </li>
+                    <li><a class="dropdown-item" href="/sign-out">Sign out</a></li>
                 </ul>
             </div>
         </div>
