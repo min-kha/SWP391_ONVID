@@ -1,0 +1,35 @@
+<div>
+    <hr />
+    <dl class="row border rounded p-3">
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            id
+        </dt>
+        <dd th:text="${entity.id}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            total
+        </dt>
+        <dd th:text="${entity.amount}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            date
+        </dt>
+        <dd th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            student
+        </dt>
+        <dd th:text="${entity.student?.name}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            amount
+        </dt>
+        <dd th:text="${entity.orderDetails?.size}" class="col-sm-9">
+        </dd>
+    </dl>
+</div>

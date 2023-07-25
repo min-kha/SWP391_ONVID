@@ -114,7 +114,7 @@ public class TopicController {
         return "redirect:/admin/topics/index";
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/detail/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         try {
             Topic topic = topicService.getTopicById(id);

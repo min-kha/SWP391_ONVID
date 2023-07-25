@@ -29,12 +29,17 @@
         <dt class="col-sm-3 fw-bold text-capitalize">
             Teacher(Request)
         </dt>
-        <dd th:text="${entity.teacher?.name}" class="col-sm-9">
+        <dd class="col-sm-9">
+            <a th:href="'/admin/users/detail/' + ${entity.teacher?.id}" class="bold shadow-lg" tabindex="-1"
+                aria-disabled="true" th:text="${entity.teacher?.name}"></a>
         </dd>
         <hr style="color: #aaaaaa" />
         <dt th:text="Reviewer" class="col-sm-3 fw-bold text-capitalize">
         </dt>
-        <dd th:text="${entity.user?.name}" class="col-sm-9">
+        <dd class="col-sm-9">
+            <a th:href="'/admin/users/detail/' + ${entity.user?.id}" class="bold shadow-lg" tabindex="-1"
+                aria-disabled="true" th:text="${entity.user?.name}"></a>
+
         </dd>
         <hr style="color: #aaaaaa" />
         <dt th:text="status" class="col-sm-3 fw-bold text-capitalize">

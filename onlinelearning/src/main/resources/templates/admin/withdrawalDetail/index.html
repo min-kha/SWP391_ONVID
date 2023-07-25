@@ -63,8 +63,14 @@
                                 <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
                                 <td th:text="${entity.money}"></td>
                                 <td th:text="${entity.description}"></td>
-                                <td th:text="${entity.teacher?.name}"></td>
-                                <td th:text="${entity.user?.name}"></td>
+                                <td>
+                                    <a th:href="'/admin/users/detail/' + ${entity.teacher?.id}" class="bold shadow-lg"
+                                        tabindex="-1" aria-disabled="true" th:text="${entity.teacher?.name}"></a>
+                                </td>
+                                <td>
+                                    <a th:href="'/admin/users/detail/' + ${entity.user?.id}" class="bold shadow-lg"
+                                        tabindex="-1" aria-disabled="true" th:text="${entity.user?.name}"></a>
+                                </td>
 
                                 <td th:if="${entity.status == 0}"><span class="btn btn-danger w-75">To
                                         Do</span></td>

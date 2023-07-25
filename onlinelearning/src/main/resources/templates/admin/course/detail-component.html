@@ -22,7 +22,9 @@
         <dt class="col-sm-3 fw-bold text-capitalize">
             teacher
         </dt>
-        <dd th:text="${entity.teacher?.name}" class="col-sm-9">
+        <dd class="col-sm-9">
+            <a th:href="'/admin/users/detail/' + ${entity.teacher?.id}" class="bold shadow-lg" tabindex="-1"
+                aria-disabled="true" th:text="${entity.teacher?.name}"></a>
         </dd>
         <hr style="color: #aaaaaa" />
         <dt class="col-sm-3 fw-bold text-capitalize">
@@ -35,13 +37,25 @@
         <dt class="col-sm-3 fw-bold text-capitalize">
             topic
         </dt>
-        <dd th:text="${entity.topic?.name}" class="col-sm-9">
+        <dd class="col-sm-9">
+            <a th:href="'/admin/topics/detail/' + ${entity.topic?.id}" class="bold shadow-lg" tabindex="-1"
+                aria-disabled="true" th:text="${entity.topic?.name}"></a>
         </dd>
         <hr style="color: #aaaaaa" />
         <dt class="col-sm-3 fw-bold text-capitalize">
             view
         </dt>
-        <dd th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}" class="col-sm-9">
+        <dd class="col-sm-9">
+            <th:block th:unless="${entity.views.isEmpty}"
+                th:text="${entity.views?.![viewNumber]?.get(entity.views.size() - 1)}">
+            </th:block>
+            <th:block th:if="${entity.views.isEmpty}" th:text="0"></th:block>
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            student
+        </dt>
+        <dd th:unless="${entity.lessons.empty}" th:text="${entity.lessons[0]?.learns?.size}" class="col-sm-9">
         </dd>
         <hr style="color: #aaaaaa" />
         <dt class="col-sm-3 fw-bold text-capitalize">
