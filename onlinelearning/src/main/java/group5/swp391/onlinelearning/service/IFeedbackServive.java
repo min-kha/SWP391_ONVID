@@ -15,4 +15,5 @@ public interface IFeedbackServive {
 
     public List<Feedback> getFeedbackByCourseId(int courseId);
 
+    public List<Feedback> getFeedbackByTeacherId(int teacherId);
 }

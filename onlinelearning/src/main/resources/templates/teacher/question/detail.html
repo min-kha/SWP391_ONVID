@@ -1,0 +1,248 @@
+<th:block th:replace="/layout-no-cart.html">
+    <th:block th:fragment="main-content">
+
+        <head>
+            <title>Quizizz Clone - Add Question</title>
+            <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+            <style>
+                table {
+                    width: 100%;
+                }
+
+                .datatable-search {
+                    position: relative;
+                }
+
+                .datatable-input,
+                .datatable-selector {
+                    padding: 8px 12px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    font-size: 14px;
+                }
+
+                .datatable-input:focus,
+                .datatable-selector:focus {
+                    outline: none;
+                    border-color: #5c7cfa;
+                    box-shadow: 0 0 0 2px rgba(92, 124, 250, 0.5);
+                }
+
+                th {
+                    color: #5c7cfa;
+                }
+            </style>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    background-color: #f5f5f5;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .container {
+                    width: 60%;
+                    margin: 0 auto;
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+
+                h1 {
+                    text-align: center;
+                    margin: 20px 0;
+                }
+
+                label,
+                input,
+                button {
+                    display: block;
+                    margin-bottom: 10px;
+                }
+
+                .answer {
+                    display: flex;
+                    margin-bottom: 10px;
+                    align-items: center;
+                }
+
+                .answer label {
+                    flex: 1;
+                }
+
+                .answer input[type="text"] {
+                    flex: 4;
+                    padding: 5px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+
+                .answer input[type="radio"] {
+                    flex: 1;
+                    margin-left: 10px;
+                }
+
+                #deleteButton {
+                    display: none;
+                }
+
+                #answersContainer {
+                    border-top: 1px solid #ccc;
+                    padding-top: 10px;
+                    padding-bottom: 20px;
+                }
+
+                .action-buttons {
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                .action-buttons button {
+                    flex: 1;
+                    margin: 0 5px;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                .action-buttons button.delete-button {
+                    background-color: #dc3545;
+                    color: #fff;
+                }
+
+                .action-buttons button.add-button {
+                    background-color: #007bff;
+                    color: #fff;
+                }
+
+                .action-buttons button.submit-button {
+                    background-color: #28a745;
+                    color: #fff;
+                }
+
+                #questionList {
+                    list-style: none;
+                    margin-top: 20px;
+                    padding: 0;
+                }
+
+                #questionList li {
+                    padding: 5px 0;
+                    border-bottom: 1px solid #ccc;
+                }
+            </style>
+        </head>
+
+        <body>
+            <div class="container">
+                <h1>Add Question</h1>
+                <form id="questionForm" th:action="@{/teacher/question/update}" method="post">
+                    <label for="questionText">Question:</label>
+                    <input type="text" id="questionText" name="question" th:value="${question.name}" required
+                        style="width: 100%;">
+                    <div id="answersContainer">
+
+                        <div class="answer" th:each="item, itemIndex : ${question.answerChoices}">
+                            <label th:text="'Answer ' + ${itemIndex.index + 1}"
+                                for="'answer' + ${itemIndex.index + 1}"></label>
+                            <input type="text" th:id="'answer' + ${itemIndex.index + 1}"
+                                th:name="'answer' + ${itemIndex.index + 1}" th:value="${item.answer}" required>
+                            <input type="radio" name="correctRadio" th:value="${itemIndex.index + 1}"
+                                th:checked="${item.id == question.answer.id}" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="numberOfAnswerInput" id="numberOfAnswerInput"
+                        th:value="${question.answerChoices.size()}">
+                    <input type="hidden" name="courseId" id="courseId" th:value="${course.id}">
+                    <input type="hidden" name="questionId" id="questionId" th:value="${question.id}">
+                    <div class="action-buttons">
+                        <button type="button" onclick="removeAnswer()" class="delete-button"
+                            id="deleteButton">Delete</button>
+                        <button type="button" onclick="addAnswer()" class="add-button">Add Answer</button>
+                        <button type="submit" class="submit-button">Add Question</button>
+                    </div>
+
+                </form>
+            </div>
+            <script>
+                let answerCount = parseInt(document.getElementById('numberOfAnswerInput').value);
+
+                function addAnswer() {
+                    const answersContainer = document.getElementById('answersContainer');
+                    const newAnswerDiv = document.createElement('div');
+                    newAnswerDiv.className = 'answer';
+
+                    const answerLabel = document.createElement('label');
+                    answerLabel.textContent = `Answer ${answerCount + 1}:`;
+
+                    const answerInput = document.createElement('input');
+                    answerInput.type = 'text';
+                    answerInput.id = `answer${answerCount + 1}`;
+                    answerInput.name = `answer${answerCount + 1}`;
+                    answerInput.required = true;
+
+                    const correctRadio = document.createElement('input');
+                    correctRadio.type = 'radio';
+                    correctRadio.name = 'correctRadio';
+                    correctRadio.value = answerCount;
+                    correctRadio.required = true;
+
+                    newAnswerDiv.appendChild(answerLabel);
+                    newAnswerDiv.appendChild(answerInput);
+                    newAnswerDiv.appendChild(correctRadio);
+
+                    answersContainer.appendChild(newAnswerDiv);
+
+                    answerCount++;
+                    checkDeleteButtonVisibility();
+                    updateNumberOfAnswer();
+                }
+
+                function removeAnswer() {
+                    if (answerCount > 2) {
+                        const answersContainer = document.getElementById('answersContainer');
+                        const newAnswerDivs = answersContainer.getElementsByClassName('answer');
+                        const lastAnswerDiv = newAnswerDivs[newAnswerDivs.length - 1];
+                        lastAnswerDiv.remove();
+                        answerCount--;
+                        checkDeleteButtonVisibility();
+                        updateNumberOfAnswer();
+                    } else {
+                        alert("You must have at least 2 answers.");
+                    }
+                }
+
+                function checkDeleteButtonVisibility() {
+                    const deleteButton = document.getElementById('deleteButton');
+                    if (answerCount > 2) {
+                        deleteButton.style.display = 'inline-block';
+                    } else {
+                        deleteButton.style.display = 'none';
+                    }
+                    updateNumberOfAnswer();
+                }
+
+                function addQuestionToList(question) {
+                    const questionList = document.getElementById('questionList');
+                    const li = document.createElement('li');
+                    li.textContent = question;
+                    questionList.appendChild(li);
+                    updateNumberOfAnswer();
+                }
+                function updateNumberOfAnswer() {
+                    const numberOfAnswerInput = document.getElementById('numberOfAnswerInput');
+                    numberOfAnswerInput.value = answerCount;
+                }
+
+                const questionForm = document.getElementById('questionForm');
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+            <script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
+        </body>
+    </th:block>
+</th:block>

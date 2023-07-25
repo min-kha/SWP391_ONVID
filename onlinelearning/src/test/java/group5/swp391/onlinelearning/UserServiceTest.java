@@ -114,7 +114,6 @@ public class UserServiceTest {
         verify(userRepository, never()).save(user);
     }
 
-
     // @Test
     // public void testUpdateUserDuplicateEmail() {
 
@@ -129,8 +128,6 @@ public class UserServiceTest {
     // when(userRepository.findById(updatingUser.getId())).thenReturn(Optional.of(user));
     // when(userRepository.findByEmail(updatingUser.getEmail())).thenReturn(existingUser);
 
-
-
     // TODO: COMMENT BY HUNG
     // @Test
     // public void testUpdateUserDuplicateEmail() {
@@ -138,7 +135,6 @@ public class UserServiceTest {
     // User existingUser = getRandomUser();
     // User user = getRandomUser();
     // User updatingUser = getRandomUser();
-
 
     // @Test
     // public void testUpdateUserDuplicateEmail() {
@@ -152,7 +148,6 @@ public class UserServiceTest {
 
     // when(userRepository.findById(updatingUser.getId())).thenReturn(Optional.of(user));
     // when(userRepository.findByEmail(updatingUser.getEmail())).thenReturn(existingUser);
-
 
     // assertThrows(InvalidInputException.class, () ->
     // userService.updateUser(user));

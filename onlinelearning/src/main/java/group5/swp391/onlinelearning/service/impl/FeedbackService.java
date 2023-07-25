@@ -47,4 +47,9 @@ public class FeedbackService implements IFeedbackServive {
     public List<Feedback> getFeedbackByCourseId(int courseId) {
         return feedbackRepository.getFeedbackByCourseId(courseId);
     }
+
+    @Override
+    public List<Feedback> getFeedbackByTeacherId(int teacherId) {
+        return feedbackRepository.getFeedbackByTeacherId(teacherId);
+    }
 }

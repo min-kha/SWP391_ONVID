@@ -1,6 +1,7 @@
 package group5.swp391.onlinelearning.controller.teacher;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.service.IFeedbackServive;
 import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.IWithdrawalDetailService;
 
@@ -22,6 +25,9 @@ public class HomeController {
 
     @Autowired
     IViewService viewService;
+
+    @Autowired
+    IFeedbackServive feedbackServive;
 
     @GetMapping("home")
     public String getHomePage(Model model, HttpSession session) {
@@ -62,8 +68,19 @@ public class HomeController {
 
         // TODO: Get top cousrse đã bán
 
-        // TODO: get 5 review moi nhat
+        // get 5 new feedback
+        // lay list feedback according to teacher id
+        List<Feedback> listFeedback = feedbackServive.getFeedbackByTeacherId(teacher.getId());
 
+        // lay 5 feedback gan nhat
+        if (listFeedback.size() > 5) {
+            int lastIndex = listFeedback.size() - 1;
+            int firstIndex = lastIndex - 4;
+            listFeedback = listFeedback.subList(firstIndex, lastIndex + 1);
+        }
+        model.addAttribute("isFeedback", listFeedback.size() != 0);
+        model.addAttribute("feedbacks", listFeedback);
+        // end get 5 feedback
         return "teacher/index";
     }
 }

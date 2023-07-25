@@ -1,11 +1,11 @@
 package group5.swp391.onlinelearning.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,6 +40,8 @@ public class Course {
     private int status;
     // deactive = -2; draff = -1; waiting/submited = 0; inprogress = 1;
     // rejected = 2; approved = 3;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
     private String imageLink;
     private BigDecimal price;
@@ -85,4 +87,9 @@ public class Course {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Lesson> lessons;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Question> questions;
 }
