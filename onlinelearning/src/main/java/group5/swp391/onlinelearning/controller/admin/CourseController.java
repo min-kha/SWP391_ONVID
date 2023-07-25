@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
+import org.hibernate.collection.internal.PersistentBag;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,7 @@ public class CourseController {
         return "admin/course/index";
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/detail/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         Course course = courseService.getCourseById(id);
         thymeleafBaseCRUD.setBaseForEntity(model, course, "Detail Course - Admin");

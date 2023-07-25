@@ -20,22 +20,31 @@ public class StudentFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         // Kiểm tra vai trò của người dùng
-        User user = (User) httpRequest.getSession().getAttribute("user");
-        if (user != null) {
+        User user = (User) httpRequest.getSession().getAttribute("studentSession");
+        String requestURI = httpRequest.getRequestURI();
+        boolean allowAccess = false; // Biến để theo dõi xem có cho phép truy cập không
+
+        if (requestURI.equals("/student/login")) {
+            allowAccess = true;
+        }
+
+        if (!allowAccess && user != null) {
             int role = user.getRole();
-            if (role == 0) {
+            if (role >= 0) {
                 // Cho phép truy cập vào các trang bắt đầu bằng "/admin/*"
-                chain.doFilter(request, response);
+                allowAccess = true;
             } else {
                 // Redirect hoặc trả về thông báo lỗi nếu không có quyền truy cập
                 httpResponse.sendRedirect("/access-denied");
             }
-        } else {
-            httpResponse.sendRedirect("/access-denied");
         }
 
+        if (allowAccess) {
+            chain.doFilter(request, response);
+        } else {
+            httpResponse.sendRedirect("/student/login");
+        }
     }
-
     // Các phương thức khác của Interface Filter
     // ...
 }

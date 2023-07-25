@@ -73,7 +73,7 @@
                             <span class="list-group-item list-group-item-action active py-3 lh-tight"
                                 aria-current="true" style="background-color:  rgb(13,110,253);">
                                 <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <strong class="mb-1">Do test</strong>
+                                    <strong class="mb-1">Practice quiz</strong>
                                 </div>
                                 <div class="col-10 small" style="margin-left: -85px;">Available</div>
                             </span>
@@ -104,7 +104,7 @@
                             <input type="hidden" th:value="${courseId}" name="courseId">
                             <input type="hidden" th:value="${lesson.id}" name="lessonId">
                             <video controls preload="auto" width="100%">
-                                <source th:src="@{ ${lesson.video}}">
+                                <source th:src="@{${lesson.video}}">
                             </video>
                             <h2 th:text="${lesson.title}"></h2>
                             <h5 th:text="${lesson.name}">

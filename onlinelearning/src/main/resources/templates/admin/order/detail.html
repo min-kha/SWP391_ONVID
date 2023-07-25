@@ -1,9 +1,15 @@
 <th:block th:replace="/layout.html">
     <th:block th:fragment="main-content">
         <section class="intro">
+
             <div class="bg-image h-100">
                 <div class="mask d-flex align-items-center h-100">
                     <div class="container-fluid">
+                        <div class="text-end mb-3">
+                            <a style="border-radius: 0.5rem;" th:href="'../' + 'index'"
+                                class="btn btn-outline-primary px-3 " aria-disabled="true">Back
+                                to list</a>
+                        </div>
                         <div class="row d-flex">
                             <div class="col-12 col-lg-5">
                                 <div class="card" style="border-radius: 1rem;">
@@ -12,12 +18,8 @@
                                             <div class="card-body py-5 px-4 p-md-5">
                                                 <div class="pb-3">
                                                     <h1 th:text="${title}"></h1>
-                                                    <th:block th:insert="admin/course/detail-component.html">
+                                                    <th:block th:insert="admin/order/detail-component.html">
                                                     </th:block>
-                                                    <div class="text-end">
-                                                        <a th:href="'../' + 'index'" class="btn btn-link px-3">Back
-                                                            to list</a>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -30,8 +32,8 @@
                                         <div class="d-flex align-items-center">
                                             <div class="card-body py-5 px-2">
                                                 <div class="pb-3">
-                                                    <th:block th:with="entities=${entity.lessons}"
-                                                        th:insert="admin/course/list-lesson-component.html">
+                                                    <th:block th:with="entities=${entity.OrderDetails}"
+                                                        th:insert="admin/order/list-order-details-component.html">
                                                     </th:block>
                                                 </div>
                                             </div>

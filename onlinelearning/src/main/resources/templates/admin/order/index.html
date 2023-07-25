@@ -47,48 +47,23 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Total</th>
+                                <th>Amount(Courses)</th>
                                 <th>Date</th>
-                                <th>Teacher</th>
-                                <th>Reviewer</th>
-                                <th>CV</th>
-                                <th>Status</th>
+                                <th>Student</th>
                                 <th>Action</th>
-                                <th>Review</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="entity : ${entities}">
                                 <td th:text="${entity.id}"></td>
+                                <td th:text="${entity.amount}"></td>
+                                <td th:text="${entity.orderDetails?.size}"></td>
                                 <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${entity.student?.name}"></td>
                                 <td>
-                                    <a th:href="'/admin/users/detail/' + ${entity.teacher?.id}" class="bold shadow-lg"
-                                        tabindex="-1" aria-disabled="true" th:text="${entity.teacher?.name}"></a>
-                                </td>
-                                <td>
-                                    <a th:href="'/admin/users/detail/' + ${entity.staff?.id}" class="bold shadow-lg"
-                                        tabindex="-1" aria-disabled="true" th:text="${entity.staff?.name}"></a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-outline-primary" th:href="'/pdf/cv/' + ${entity.pdfLink}"
-                                        tabindex="-1" aria-disabled="true">CV File</a>
-                                </td>
-                                <td th:if="${entity.status == 0}"><span class="btn btn-danger w-75">To
-                                        Do</span></td>
-                                <td th:if="${entity.status == 1}"><span class="btn btn-primary w-75">In
-                                        Processing</span></td>
-                                <td th:if="${entity.status == 2}"><span class="btn btn-success w-75">Approved</span>
-                                </td>
-                                <td th:if="${entity.status == 3}"><span class="btn btn-dark w-75">Rejected</span>
-                                </td>
-                                <td>
-                                    <a th:href="'detail/' + ${entity[fields[0].getName]}" class="btn btn-secondary"
-                                        tabindex="-1" aria-disabled="true">Detail</a>
-                                </td>
-                                <td>
-                                    <!-- TODO: Check if status == 0,1 and entity.staff.id = id in session then show review -->
-                                    <a th:if="${entity.status == 0  || entity.staff?.id == session?.user?.id || session?.user?.role == 3}"
-                                        th:href="'review/' + ${entity.id}" class="btn btn-warning" tabindex="-1"
-                                        aria-disabled="true">Review</a>
+                                    <a th:href="'detail/' + ${entity.id}" class="btn btn-secondary" tabindex="-1"
+                                        aria-disabled="true">Detail</a>
                                 </td>
                             </tr>
                         </tbody>

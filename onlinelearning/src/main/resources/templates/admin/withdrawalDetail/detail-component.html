@@ -1,0 +1,55 @@
+<div>
+    <hr />
+    <dl class="row border rounded p-3">
+        <dt th:text="id" class="col-sm-3 fw-bold text-capitalize">
+
+        </dt>
+        <dd th:text="${entity.id}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            date
+        </dt>
+        <dd th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            Money
+        </dt>
+        <dd th:text="${entity.money}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            Description
+        </dt>
+        <dd th:text="${entity.description}" class="col-sm-9">
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt class="col-sm-3 fw-bold text-capitalize">
+            Teacher(Request)
+        </dt>
+        <dd class="col-sm-9">
+            <a th:href="'/admin/users/detail/' + ${entity.teacher?.id}" class="bold shadow-lg" tabindex="-1"
+                aria-disabled="true" th:text="${entity.teacher?.name}"></a>
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt th:text="Reviewer" class="col-sm-3 fw-bold text-capitalize">
+        </dt>
+        <dd class="col-sm-9">
+            <a th:href="'/admin/users/detail/' + ${entity.user?.id}" class="bold shadow-lg" tabindex="-1"
+                aria-disabled="true" th:text="${entity.user?.name}"></a>
+
+        </dd>
+        <hr style="color: #aaaaaa" />
+        <dt th:text="status" class="col-sm-3 fw-bold text-capitalize">
+        </dt>
+        <dd class="col-sm-9">
+            <span th:if="${entity.status == 0}" class="btn btn-info">To Do
+            </span>
+            <span th:if="${entity.status == 1}" class="btn btn-primary">In
+                Processing</span>
+            <span th:if="${entity.status == 2}" class="btn btn-success">Done</span>
+        </dd>
+    </dl>
+</div>

@@ -74,11 +74,17 @@
                             <tr th:each="entity : ${entities}">
                                 <td th:text="${entity.name}"></td>
                                 <td th:text="${entity.description}"></td>
-                                <td th:text="${entity.teacher?.name}"></td>
+                                <td>
+                                    <a th:href="'/admin/users/detail/' + ${entity.teacher?.id}" class="bold shadow-lg"
+                                        tabindex="-1" aria-disabled="true" th:text="${entity.teacher?.name}"></a>
+                                </td>
                                 <td> <img th:src="${entity.imageLink}" alt="Image course" width="100px" /> </td>
                                 <td th:text="${entity.price}"></td>
                                 <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
-                                <td th:text="${entity.topic.name}"></td>
+                                <td>
+                                    <a th:href="'/admin/topics/detail/' + ${entity.topic?.id}" class="bold shadow-lg"
+                                        tabindex="-1" aria-disabled="true" th:text="${entity.topic?.name}"></a>
+                                </td>
                                 <td>
                                     <th:block th:unless="${entity.views.isEmpty}"
                                         th:text="${entity.views?.![viewNumber]?.get(entity.views.size() - 1)}">
@@ -98,7 +104,7 @@
                                 <td th:if="${entity.status == 3}"><span class="btn btn-success">Approved</span>
                                 </td>
                                 <td>
-                                    <a th:href="'details/' + ${entity[fields[0].getName]}"
+                                    <a th:href="'detail/' + ${entity[fields[0].getName]}"
                                         class="btn btn-secondary btn-sm " tabindex="-1" aria-disabled="true">Details</a>
                                 </td>
                                 <td>

@@ -1,0 +1,69 @@
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<style>
+    table {
+        width: 100%;
+    }
+
+    .datatable-search {
+        position: relative;
+    }
+
+    .datatable-input,
+    .datatable-selector {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .datatable-input:focus,
+    .datatable-selector:focus {
+        outline: none;
+        border-color: #5c7cfa;
+        box-shadow: 0 0 0 2px rgba(92, 124, 250, 0.5);
+    }
+
+    th {
+        color: #5c7cfa;
+    }
+</style>
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <h2 class="card-header">
+            List order details
+        </h2>
+        <div class="card-body table-responsive">
+            <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Id</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Topic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="entity : ${entities}">
+                        <td th:text="${entity.id}"></td>
+                        <td th:text="${entity.course?.id}"></td>
+                        <td>
+                            <a th:href="'/admin/courses/detail/' + ${entity.id}" class="bold shadow-lg" tabindex="-1"
+                                aria-disabled="true" th:text="${entity.course?.name}"></a>
+                        </td>
+                        <td> <img th:src="${entity.course?.imageLink}" alt="Image course" width="100px" /> </td>
+                        <td th:text="${entity.course?.price}"></td>
+                        <td>
+                            <a th:href="'/admin/topics/detail/' + ${entity.course?.topic.id}" class="bold shadow-lg"
+                                tabindex="-1" aria-disabled="true" th:text="${entity.course?.topic.name}"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
