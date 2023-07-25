@@ -48,6 +48,7 @@ public class HomeController {
         // get total
         model.addAttribute("numberOfUsers", userService.getAllUsers().size());
         model.addAttribute("numberOfCourses", courseService.getAllCourses().size());
+        model.addAttribute("numberOfCourseReviews", courseService.getReviewCourses().size());
         model.addAttribute("numberOfCVs", cvService.getCVs().size());
         model.addAttribute("numberOfTopics", topicService.getTopics().size());
         model.addAttribute("numberOfWithdrawalDetails", withdrawalDetailService.getAllWithdrawalDetails().size());
