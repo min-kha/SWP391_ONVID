@@ -35,6 +35,7 @@ public class StaffFilter implements Filter {
             } else {
                 // Redirect hoặc trả về thông báo lỗi nếu không có quyền truy cập
                 httpResponse.sendRedirect("/access-denied");
+                return;
             }
         }
 
