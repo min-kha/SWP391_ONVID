@@ -9,9 +9,8 @@ import group5.swp391.onlinelearning.entity.User;
 
 import java.io.IOException;
 
-@WebFilter("/student/*")
-
-public class StudentFilter implements Filter {
+@WebFilter("/admin/users/*")
+public class AdminFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -20,18 +19,18 @@ public class StudentFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         // Kiểm tra vai trò của người dùng
-        User user = (User) httpRequest.getSession().getAttribute("studentSession");
+        User user = (User) httpRequest.getSession().getAttribute("user");
         String requestURI = httpRequest.getRequestURI();
         boolean allowAccess = false; // Biến để theo dõi xem có cho phép truy cập không
 
-        if (requestURI.equals("/student/login")) {
+        if (requestURI.equals("/admin/login")) {
             allowAccess = true;
         }
 
         if (!allowAccess && user != null) {
             int role = user.getRole();
-            if (role >= 0) {
-                // Cho phép truy cập vào các trang bắt đầu bằng "/admin/*"
+            if (role == 3) {
+                // Cho phép truy cập vào các trang bắt đầu bằng "/admin/user/*"
                 allowAccess = true;
             } else {
                 // Redirect hoặc trả về thông báo lỗi nếu không có quyền truy cập
@@ -43,9 +42,7 @@ public class StudentFilter implements Filter {
         if (allowAccess) {
             chain.doFilter(request, response);
         } else {
-            httpResponse.sendRedirect("/student/login");
+            httpResponse.sendRedirect("/admin/login");
         }
     }
-    // Các phương thức khác của Interface Filter
-    // ...
 }
