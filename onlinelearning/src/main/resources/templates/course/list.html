@@ -100,7 +100,7 @@
                     <td th:text="${course.description}"></td>
                     <td th:text="${course.price}"></td>
                     <td th:text="${course.date}"></td>
-                    <td> <a tH:href="@{update/{courseId}(courseId=${course.courseId})}" class="btn btn-warning">Sửa</a>
+                    <td> <a th:href="@{update/{courseId}(courseId=${course.courseId})}" class="btn btn-warning">Sửa</a>
                     </td>
                     <td> <a th:href="@{delete/{courseId}(courseId=${course.courseId})}" class="btn btn-danger">Xóa</a>
                     </td>

@@ -19,4 +19,7 @@ public interface FeedbackRepositoty extends JpaRepository<Feedback, Integer> {
 
     @Query(value = "SELECT * FROM feedback WHERE course_id = ?1", nativeQuery = true)
     public List<Feedback> getFeedbackByCourseId(int courseId);
+
+    @Query(value = "SELECT * FROM swp391_onvid.feedback left join swp391_onvid.course on feedback.course_id = course.id where teacher_id = ?1", nativeQuery = true)
+    public List<Feedback> getFeedbackByTeacherId(int teacherId);
 }

@@ -102,16 +102,6 @@
                                     <a th:if="${entity.isReviews}" th:href="'review/' + ${entity.id}"
                                         class="btn btn btn-dark btn-sm" tabindex="-1" aria-disabled="true">Reviews</a>
                                 </td>
-                                <!-- <td>
-                                    <div th:if="${entity.status != 4}">
-                                        <a th:href="'delete/' + ${entity.id}" class="btn btn-danger btn-sm"
-                                            tabindex="-1" aria-disabled="true">Deactive</a>
-                                    </div>
-                                    <div th:if="${entity.status == 4}">
-                                        <a th:href="'delete/' + ${entity.id}" class="btn btn-success btn-sm"
-                                            tabindex="-1" aria-disabled="true">Active</a>
-                                    </div>
-                                </td> -->
                             </tr>
                         </tbody>
                     </table>
