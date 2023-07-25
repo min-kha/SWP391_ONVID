@@ -1,10 +1,8 @@
 package group5.swp391.onlinelearning.service.impl;
 
-
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,9 +46,6 @@ public class AnswerChoiceService implements IAnswerChoiceService {
         List<AnswerChoice> list = answerChoiceRepository.getAsByQuestionId(questionId);
         return list;
     }
-
-    @Autowired
-    AnswerChoiceRepository answerChoiceRepository;
 
     public AnswerChoice getAnswerChoiceByAnswer(String answer, int questionId) {
         return answerChoiceRepository.getIdByAnswer(answer, questionId);
