@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -31,12 +31,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.entity.CourseReview;
+import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
+import group5.swp391.onlinelearning.service.IFeedbackServive;
 import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.IUserService;
@@ -66,6 +67,9 @@ public class CourseController {
     // TODO: remove req nhá
     @Autowired
     IUserService userService;
+
+    @Autowired
+    IFeedbackServive feedbackServive;
 
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
@@ -255,5 +259,24 @@ public class CourseController {
             // handle exception
         }
         return "teacher/course/review";
+    }
+
+    @GetMapping("/feedback/{courseId}")
+    public String getFeedback(Model model, @PathVariable @NotNull int courseId, HttpSession session) throws Exception {
+        String title = "Feedback Course - Teacher";
+        try {
+            Course course = courseService.getCourseById(courseId);
+            User user = (User) session.getAttribute("user");
+            if (!courseService.checkCourseOwner(courseId)) {
+                return "AccessDenied";
+            }
+            thymeleafBaseCRUD.setBaseForEntity(model, course, title);
+            List<Feedback> feedbacks = feedbackServive.getFeedbackByCourseId(courseId);
+            Collections.reverse(feedbacks);
+            model.addAttribute("feedbacks", feedbacks);
+        } catch (Exception e) {
+            // handle exception
+        }
+        return "teacher/course/feedback";
     }
 }

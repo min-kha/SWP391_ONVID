@@ -39,7 +39,7 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
             BigDecimal money = course.getPrice().multiply(percent);
             // set thuoc tinh
             withdrawalDetail.setDate(date);
-            withdrawalDetail.setStatus(1);
+            withdrawalDetail.setStatus(0);
             withdrawalDetail.setTeacher(course.getTeacher());
             withdrawalDetail.setUser(student);
             withdrawalDetail.setMoney(money);

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import group5.swp391.onlinelearning.entity.CV;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.service.ICVService;
+import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.impl.UserService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
 @Controller
@@ -30,6 +32,9 @@ public class CVController {
     private ThymeleafBaseCRUD thymeleafBaseCRUD;
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IUserService userService;
 
     @GetMapping("/index")
     public String getIndex(Model model) {
@@ -70,7 +75,6 @@ public class CVController {
             if (approve.equals("true")) {
                 cV.setStatus(2); // set status to approved
                 cVService.updateCV(cV);
-
             }
             if (approve.equals("false")) {
                 cV.setStatus(3); // set status to rejected

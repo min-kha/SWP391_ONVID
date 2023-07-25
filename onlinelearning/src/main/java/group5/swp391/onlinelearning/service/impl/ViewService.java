@@ -73,6 +73,7 @@ public class ViewService implements IViewService {
                 .date(currentDate)
                 .viewNumber(0)
                 .build();
+        viewRepositoty.save(view);
     }
 
 }
