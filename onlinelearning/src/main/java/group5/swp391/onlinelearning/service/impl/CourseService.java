@@ -48,6 +48,7 @@ public class CourseService {
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
+
     public List<Course> getReviewCourses() {
         return courseRepository.findReviewCourses();
     }
@@ -71,6 +72,11 @@ public class CourseService {
         User teacher = (User) session.getAttribute("user");
         course.setTeacher(teacher);
         return courseRepository.save(course);
+    }
+
+    public List<Course> getCourseByTeacherId(int teacherId) {
+        List<Course> courses = courseRepository.findAllByTeacherId(teacherId);
+        return courses;
     }
 
     public List<CourseDTOTeacher> getCourseDTOTeacherList() {

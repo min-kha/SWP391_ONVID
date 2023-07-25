@@ -1,5 +1,7 @@
 package group5.swp391.onlinelearning.controller.teacher;
 
+import java.math.BigDecimal;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.entity.Wallet;
 import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.service.ICartService;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.IWalletService;
 
 @Controller
 @RequestMapping("/teacher")
@@ -25,6 +29,8 @@ public class LoginTeacherController {
     private IUserService userService;
     @Autowired
     private ICartService cartService;
+    @Autowired
+    private IWalletService walletService;
 
     @GetMapping("/login")
     public String getStudentLogin(Model model, RedirectAttributes redirectAttributes) {
@@ -44,11 +50,13 @@ public class LoginTeacherController {
             User teacherRes = userService.loginTeacher(teacher, model, isProcess);
             if (teacherRes != null) {
                 session.setAttribute("user", teacherRes);
+                BigDecimal wallet = walletService.getRevenue();
+                session.setAttribute("wallet", wallet);
                 // TODO: GO HOME TEACHER
                 return "redirect:/teacher/home";
             } else {
                 if ((Boolean) model.getAttribute("cVProcess")) {
-                    return "/teacher/login/watting";
+                    return "teacher/register/watting";
                 }
                 model.addAttribute("loginError", "Login failed");
                 return "/teacher/login/login";
