@@ -16,102 +16,8 @@
                                             <div class="card-body py-5 px-4 p-md-5">
                                                 <div class="pb-3">
                                                     <h1 th:text="${title}"></h1>
-                                                    <div>
-                                                        <hr />
-                                                        <dl class="row border rounded p-3">
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                id
-                                                            </dt>
-                                                            <dd th:text="${entity.id}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                name
-                                                            </dt>
-                                                            <dd th:text="${entity.name}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                description
-                                                            </dt>
-                                                            <dd th:text="${entity.description}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                teacher
-                                                            </dt>
-                                                            <dd th:text="${entity.teacher?.name}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                price
-                                                            </dt>
-                                                            <dd th:text="${entity.price}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                topic
-                                                            </dt>
-                                                            <dd th:text="${entity.topic?.name}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                view
-                                                            </dt>
-                                                            <dd th:text="${entity.views.![viewNumber].get(entity.views.size() - 1)}"
-                                                                class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                lessons
-                                                            </dt>
-                                                            <dd th:text="${entity.lessons?.size}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                date
-                                                            </dt>
-                                                            <dd th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"
-                                                                class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                image
-                                                            </dt>
-                                                            <dd class="col-sm-9">
-                                                                <img th:src="${entity.imageLink}" alt="image of course"
-                                                                    class="" width="100px" />
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                Go to course
-                                                            </dt>
-                                                            <dd class="col-sm-9">
-                                                                <a th:href="'/student/course/detail/' + ${entity.id}"
-                                                                    target="_blank" class="btn btn-link"
-                                                                    th:text="${entity.name}"></a>
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt class="col-sm-3 fw-bold text-capitalize">
-                                                                status
-                                                            </dt>
-                                                            <dd class="col-sm-9">
-                                                                <span th:if="${entity.status == 0}"
-                                                                    class="btn btn-info">To Do
-                                                                </span>
-                                                                <span th:if="${entity.status == 1}"
-                                                                    class="btn btn-primary">In
-                                                                    Processing</span>
-                                                                <span th:if="${entity.status == 3}"
-                                                                    class="btn btn-success">Approved</span>
-                                                                <span th:if="${entity.status == 2}"
-                                                                    class="btn btn-dark">Rejected</span>
-                                                            </dd>
-                                                        </dl>
-                                                    </div>
+                                                    <th:block th:insert="admin/course/detail-component.html">
+                                                    </th:block>
                                                     <div class="text-end">
                                                         <a th:href="'../' + 'index'" class="btn btn-link px-3 "
                                                             aria-disabled="true">Back
@@ -137,7 +43,7 @@
 
                                                 <div class="d-flex justify-content-between">
                                                     <div class="d-flex flex-row align-items-center">
-                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp"
+                                                        <img src="https://webstockreview.net/images/clipart-computer-homework-1.png"
                                                             alt="avatar" width="25" height="25" />
                                                         <p class="small mb-0 ms-2"
                                                             th:text="${courseReview.staff?.name}"></p>
@@ -162,7 +68,7 @@
                                             <form method="post" th:object="${courseReview}">
                                                 <div class="d-flex flex-start w-100">
                                                     <img class="rounded-circle shadow-1-strong me-3"
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                                                        src="https://webstockreview.net/images/clipart-computer-homework-1.png"
                                                         alt="avatar" width="40" height="40" />
                                                     <div class="form-outline w-100">
                                                         <textarea required th:field="*{comment}" class="form-control"

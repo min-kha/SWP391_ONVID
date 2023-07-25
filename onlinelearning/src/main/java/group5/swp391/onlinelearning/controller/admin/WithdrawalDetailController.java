@@ -84,4 +84,5 @@ public class WithdrawalDetailController {
         }
         return "redirect:/admin/withdrawalDetails/detail/{id}";
     }
+
 }

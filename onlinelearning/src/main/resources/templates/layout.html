@@ -11,7 +11,8 @@
 </head>
 
 <body>
-    <header th:insert="/component/header.html"></header>
+    <header th:unless="${session?.user?.role >= 2}" th:insert="/component/header.html"></header>
+    <header th:if="${session?.user?.role >= 2}" th:insert="/component/header-admin.html"></header>
 
     <main class="p-3">
         <th:block th:insert=":: main-content"></th:block>

@@ -57,7 +57,7 @@ public class StudentController {
         return "redirect:/admin/users/index";
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/detail/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         try {
             User user = userService.getUserById(id);

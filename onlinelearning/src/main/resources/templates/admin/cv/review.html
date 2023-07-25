@@ -12,58 +12,8 @@
                                             <div class="card-body py-5 px-4 p-md-5">
                                                 <div class="pb-3">
                                                     <h1 th:text="${title}"></h1>
-                                                    <div>
-                                                        <hr />
-                                                        <dl class="row border rounded p-3">
-                                                            <dt th:text="id" class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd th:text="${entity.id}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-
-                                                            <dt th:text="date" class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"
-                                                                class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt th:text="pdfLink"
-                                                                class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd class="col-sm-9">
-                                                                <a th:href="'/pdf/cv/' + ${entity.pdfLink}"
-                                                                    target="_blank" class="btn btn-outline-primary">CV
-                                                                    file</a>
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt th:text="status"
-                                                                class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd class="col-sm-9">
-                                                                <span th:if="${entity.status == 0}"
-                                                                    class="btn btn-info">To Do
-                                                                </span>
-                                                                <span th:if="${entity.status == 1}"
-                                                                    class="btn btn-primary">In
-                                                                    Processing</span>
-                                                                <span th:if="${entity.status == 2}"
-                                                                    class="btn btn-success">Done</span>
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt th:text="teacher"
-                                                                class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd th:text="${entity.teacher?.name}" class="col-sm-9">
-                                                            </dd>
-                                                            <hr style="color: #aaaaaa" />
-                                                            <dt th:text="staff"
-                                                                class="col-sm-3 fw-bold text-capitalize">
-                                                            </dt>
-                                                            <dd th:text="${entity.staff?.name}" class="col-sm-9">
-                                                            </dd>
-
-                                                        </dl>
-                                                    </div>
+                                                    <th:block th:insert="admin/cv/detail-component.html">
+                                                    </th:block>
                                                     <form method="POST" class="text-end">
                                                         <button type="submit" name="approve" value="true"
                                                             th:href="'../' + 'index'" class="btn btn-success p-2 m-2"

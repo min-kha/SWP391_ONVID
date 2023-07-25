@@ -10,4 +10,10 @@ public interface IOrderService {
     public MyOrder createOrder(BigDecimal amount, User student);
 
     public List<MyOrder> getOrderByStudentId(int studentId);
+
+    public void deleteMyOrderById(int orderId);
+
+    public MyOrder getOrderById(int orderId);
+
+    public List<MyOrder> getAllOrders();
 }

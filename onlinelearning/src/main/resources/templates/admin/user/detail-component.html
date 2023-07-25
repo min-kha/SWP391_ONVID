@@ -1,0 +1,21 @@
+<div>
+    <hr />
+    <dl class="row border rounded p-3">
+        <th:block th:each="field : ${fields}">
+            <th:block>
+                <dt th:text="${field.getName}" class="col-sm-3 fw-bold text-capitalize">
+                </dt>
+                <dd class="col-sm-9" th:switch="${field.getType().getSimpleName()}">
+                    <ol th:each="e : ${entity[field.getName()]}" th:case="'Collection'">
+                        <li th:text="${e.name}"></li>
+                    </ol>
+                    <span th:case="Boolean" th:text="${entity[field.getName()]==true?'Active':'Deactive'}"
+                        class="col-sm-9">
+                    </span>
+                    <span th:case="*" th:text="${entity[field.getName()]}" class="col-sm-9">
+                    </span>
+                </dd>
+                <hr style="color: #aaaaaa" />
+            </th:block>
+    </dl>
+</div>
