@@ -50,7 +50,7 @@ public class CourseController {
         return "admin/course/index";
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/detail/{id}")
     public String getDetail(Model model, @PathVariable @NotNull int id) {
         Course course = courseService.getCourseById(id);
         thymeleafBaseCRUD.setBaseForEntity(model, course, "Detail Course - Admin");
