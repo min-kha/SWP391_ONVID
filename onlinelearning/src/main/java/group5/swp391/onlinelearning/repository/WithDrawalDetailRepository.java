@@ -18,7 +18,7 @@ public interface WithDrawalDetailRepository extends JpaRepository<WithdrawalDeta
     @Query(value = "SELECT * FROM swp391_onvid.withdrawal_detail where teacher_id = ?1 AND MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE());", nativeQuery = true)
     public List<WithdrawalDetail> getRevenueByMonth(int studentId);
 
-    @Query(value = "SELECT * FROM swp391_onvid.withdrawal_detail where teacher_id = ?1 date >= DATE_SUB(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH) AND date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH));", nativeQuery = true)
+    @Query(value = "SELECT * FROM swp391_onvid.withdrawal_detail where teacher_id = ?1 AND date >= DATE_SUB(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH) AND date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH));", nativeQuery = true)
     public List<WithdrawalDetail> getRevenueByMonthBefore(int studentId);
 
     @Query(value = "SELECT * FROM swp391_onvid.withdrawal_detail join user on withdrawal_detail.user_id = user.id where withdrawal_detail.user_id = null or user.role >= 2", nativeQuery = true)

@@ -268,6 +268,34 @@ public class CourseService {
         return courseDtoHomeDetailsPrice;
     }
 
+    public List<CourseDtoHomeDetail> getCourseByHashtag(int topicId) {
+        List<Course> coursesPrice = courseRepository.searchCourseHashtag(topicId);
+        List<CourseDtoHomeDetail> courseDtoHomeDetailsHashtag = new ArrayList<>();
+        List<Course> courseAvailable = new ArrayList<>();
+        for (Course course : coursesPrice) {
+            if (course.getStatus() == 3) {
+                courseAvailable.add(course);
+            }
+        }
+        for (Course course : courseAvailable) {
+
+            List<Feedback> feedbackList = new ArrayList<Feedback>();
+            feedbackList = feedbackService.getFeedbackByCourseId(course.getId());
+            float avg = 0;
+            if (feedbackList.size() == 0) {
+                avg = 0;
+            } else {
+                for (Feedback feedback : feedbackList) {
+                    avg += feedback.getRatingStar();
+                }
+                avg = avg / feedbackList.size();
+            }
+
+            courseDtoHomeDetailsHashtag.add(courseMapper.courseToCourseDtoHomeDetail(course, avg));
+        }
+        return courseDtoHomeDetailsHashtag;
+    }
+
     public void submitCourse(Course course) {
         course.setStatus(0);
         courseRepository.save(course);

@@ -1,8 +1,6 @@
 package group5.swp391.onlinelearning.model.mapper;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import group5.swp391.onlinelearning.entity.Course;
-import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetailStudent;
@@ -19,7 +16,6 @@ import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOEdit;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.repository.TopicRepository;
-import group5.swp391.onlinelearning.service.impl.FeedbackService;
 
 @Component
 public class CourseMapper {
@@ -32,7 +28,6 @@ public class CourseMapper {
     }
 
     public CourseDtoHomeDetail courseToCourseDtoHomeDetail(Course course, float avg) {
-        
 
         CourseDtoHomeDetail courseDtoHomeDetail = CourseDtoHomeDetail.builder()
                 .id(course.getId())
@@ -71,6 +66,11 @@ public class CourseMapper {
                 .description(course.getDescription())
                 // TODO:Thêm star
                 .build();
+        if (course.getCourseReviews().isEmpty()) {
+            courseDTOTeacher.setReviews(false);
+        } else {
+            courseDTOTeacher.setReviews(true);
+        }
         return courseDTOTeacher;
     }
 

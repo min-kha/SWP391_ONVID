@@ -97,7 +97,19 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
 
     @Override
     public BigDecimal getRevenueByMonthBefore() {
-        throw new UnsupportedOperationException("Unimplemented method 'getRevenueByMonthBefore'");
+        User user = (User) session.getAttribute("user");
+        List<WithdrawalDetail> list = withdrawalDetailRepository.getRevenueByMonthBefore(user.getId());
+        BigDecimal revenue = BigDecimal.ZERO;
+        for (WithdrawalDetail withdrawalDetail : list) {
+            if (withdrawalDetail.getUser() != null) {
+                revenue = revenue.add(withdrawalDetail.getMoney());
+                if (withdrawalDetail.getUser().getRole() != 0) {
+                    revenue = revenue.subtract(withdrawalDetail.getMoney());
+                    list.remove(withdrawalDetail);
+                }
+            }
+        }
+        return revenue;
     }
 
     @Override

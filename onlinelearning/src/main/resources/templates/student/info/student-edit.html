@@ -1,0 +1,47 @@
+<th:block th:replace="/layout-no-cart.html">
+    <th:block th:fragment="main-content">
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="row justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-body py-5 px-4 p-md-5">
+                                                <h1>Edit student profile</h1>
+                                                <hr>
+                                                <form method="post" class="row border rounded p-3s"
+                                                    style="padding: 20px;" th:action="@{/student/information/edit/}">
+                                                    <input th:value="${studentDto.name}" type="text" name="nameChange">
+                                                    <div class="text-end ">
+                                                        <br>
+                                                        <br>
+                                                        <button type="submit" class="px-3 btn btn-primary">Save</button>
+                                                        <button type="reset" class="px-3 btn btn-outline-secondary">
+                                                            Cancel
+                                                        </button>
+                                                        <a href="/student/home/1" class="btn btn-link px-3 "
+                                                            aria-disabled="true">Back
+                                                            to home</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </section>
+    </th:block>
+</th:block>

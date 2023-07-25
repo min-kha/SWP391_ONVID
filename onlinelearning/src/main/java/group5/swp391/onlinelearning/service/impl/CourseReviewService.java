@@ -50,4 +50,19 @@ public class CourseReviewService implements ICourseReviewService {
         return courseReviewRepository.findById(id).orElse(null);
     }
 
+    // By Hung: GET 5 Review Early by teacherid
+    @Override
+    public List<CourseReview> getCourseReview(int teacherId) {
+        List<CourseReview> list = courseReviewRepository.findDistinctByMaxTime();
+        for (CourseReview review : list) {
+            if (review.getCourse().getTeacher().getId() != teacherId) {
+                list.remove(list);
+                if (list.size() == 5) {
+                    return list;
+                }
+            }
+        }
+        return list;
+    }
+
 }

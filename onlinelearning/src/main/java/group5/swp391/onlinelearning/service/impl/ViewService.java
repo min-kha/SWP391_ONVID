@@ -49,4 +49,30 @@ public class ViewService implements IViewService {
         return viewRepositoty.findAll();
     }
 
+    @Override
+    public Long getViewNumberByTeacherIdInDay(int teacherId) {
+        if (viewRepositoty.getViewNumberByTeacherIdInToday(teacherId) == null)
+            return Long.valueOf(0);
+        return viewRepositoty.getViewNumberByTeacherIdInToday(teacherId);
+    }
+
+    @Override
+    public Long getViewNumberByTeacherIdInYesterday(int teacherId) {
+        if (viewRepositoty.getViewNumberByTeacherIdInYesterday(teacherId) == null)
+            return Long.valueOf(0);
+        return viewRepositoty.getViewNumberByTeacherIdInYesterday(teacherId);
+    }
+
+    // create new course --> create empty view
+    @Override
+    public void createEmptyView(Course course) {
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = (Date) calendar.getTime();
+        View view = View.builder()
+                .course(course)
+                .date(currentDate)
+                .viewNumber(0)
+                .build();
+    }
+
 }
