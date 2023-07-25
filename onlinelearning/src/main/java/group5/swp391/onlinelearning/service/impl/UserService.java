@@ -266,6 +266,7 @@ public class UserService implements IUserService {
     public User addTeacherRegister(UserDTORegisterRequest userDTORegisterRequest) {
         userDTORegisterRequest.setPassword(SHA1.toSHA1(userDTORegisterRequest.getPassword()));
         User user = mapper.userDTORegisterRequestToTeacher(userDTORegisterRequest);
+        user.setStatus(true);
         return userRepository.save(user);
     }
 }

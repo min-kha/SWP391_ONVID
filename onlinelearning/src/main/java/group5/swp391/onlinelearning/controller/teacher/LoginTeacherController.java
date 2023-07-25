@@ -45,7 +45,7 @@ public class LoginTeacherController {
             if (teacherRes != null) {
                 session.setAttribute("user", teacherRes);
                 // TODO: GO HOME TEACHER
-                return "404";
+                return "redirect:/teacher/home";
             } else {
                 if ((Boolean) model.getAttribute("cVProcess")) {
                     return "/teacher/login/watting";
