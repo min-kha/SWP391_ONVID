@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.CourseReview;
@@ -36,8 +38,13 @@ public class CourseController {
     private ModelMapper modelMapper;
 
     @GetMapping("/index")
-    public String getIndex(Model model) {
-        List<Course> courses = courseService.getAllCourses();
+    public String getIndex(Model model, @RequestParam(required = false) String reviewMode) {
+        List<Course> courses;
+        if (reviewMode != null && reviewMode.equals("true")) {
+            courses = courseService.getReviewCourses();
+        } else {
+            courses = courseService.getAllCourses();
+        }
         String title = "List Courses - Admin";
         thymeleafBaseCRUD.setBaseForList(model, courses, title);
         return "admin/course/index";

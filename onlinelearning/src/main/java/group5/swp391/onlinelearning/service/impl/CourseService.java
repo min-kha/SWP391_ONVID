@@ -48,6 +48,9 @@ public class CourseService {
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
+    public List<Course> getReviewCourses() {
+        return courseRepository.findReviewCourses();
+    }
 
     public Course getCourseByCourseId(int id) {
         return courseRepository.findById(id).get();

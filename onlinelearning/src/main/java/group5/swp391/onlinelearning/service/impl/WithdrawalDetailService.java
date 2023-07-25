@@ -3,15 +3,19 @@ package group5.swp391.onlinelearning.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import group5.swp391.onlinelearning.entity.WithdrawalDetail;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.entity.WithdrawalDetail;
+import group5.swp391.onlinelearning.exception.InvalidInputException;
 import group5.swp391.onlinelearning.repository.WithDrawalDetailRepository;
 import group5.swp391.onlinelearning.service.IWithdrawalDetailService;
 
@@ -19,7 +23,7 @@ import group5.swp391.onlinelearning.service.IWithdrawalDetailService;
 public class WithdrawalDetailService implements IWithdrawalDetailService {
 
     @Autowired
-    WithDrawalDetailRepository withDrawalDetailRepository;
+    WithDrawalDetailRepository withdrawalDetailRepository;
 
     private HttpSession session;
 
@@ -43,15 +47,15 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
             withdrawalDetail.setTeacher(course.getTeacher());
             withdrawalDetail.setUser(student);
             withdrawalDetail.setMoney(money);
-            withdrawalDetail.setDescripton("Register course" + course.getName());
-            withDrawalDetailRepository.save(withdrawalDetail);
+            withdrawalDetail.setDescription("Register course" + course.getName());
+            withdrawalDetailRepository.save(withdrawalDetail);
         }
     }
 
     @Override
     // lấy hết tất cả các withdraw của teacher
     public List<WithdrawalDetail> getListByTeacherId(int teacher_id) {
-        List<WithdrawalDetail> list = withDrawalDetailRepository.findByTeacherId(teacher_id);
+        List<WithdrawalDetail> list = withdrawalDetailRepository.findByTeacherId(teacher_id);
         return list;
     }
 
@@ -70,14 +74,14 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
         // BigDecimal currentMoney = withdrawalDetail.getMoney();
         // currentMoney = currentMoney.subtract(money);
         withdrawalDetail.setMoney(money);
-        withdrawalDetail.setDescripton("Withdraw money " + money);
-        withDrawalDetailRepository.save(withdrawalDetail);
+        withdrawalDetail.setDescription("Withdraw money " + money);
+        withdrawalDetailRepository.save(withdrawalDetail);
     }
 
     @Override
     public BigDecimal getRevenueByMonth() {
         User user = (User) session.getAttribute("user");
-        List<WithdrawalDetail> list = withDrawalDetailRepository.getRevenueByMonth(user.getId());
+        List<WithdrawalDetail> list = withdrawalDetailRepository.getRevenueByMonth(user.getId());
         BigDecimal revenue = BigDecimal.ZERO;
         for (WithdrawalDetail withdrawalDetail : list) {
             if (withdrawalDetail.getUser() != null) {
@@ -94,7 +98,7 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
     @Override
     public BigDecimal getRevenueByMonthBefore() {
         User user = (User) session.getAttribute("user");
-        List<WithdrawalDetail> list = withDrawalDetailRepository.getRevenueByMonthBefore(user.getId());
+        List<WithdrawalDetail> list = withdrawalDetailRepository.getRevenueByMonthBefore(user.getId());
         BigDecimal revenue = BigDecimal.ZERO;
         for (WithdrawalDetail withdrawalDetail : list) {
             if (withdrawalDetail.getUser() != null) {
@@ -108,4 +112,28 @@ public class WithdrawalDetailService implements IWithdrawalDetailService {
         return revenue;
     }
 
+    @Override
+    public List<WithdrawalDetail> getAllWithdrawalDetails() {
+        return withdrawalDetailRepository.findAll();
+    }
+
+    @Override
+    public List<WithdrawalDetail> getWithdrawalDetailsToReview() {
+        return withdrawalDetailRepository.findWithdrawalDetailsToReview();
+    }
+
+    @Override
+    public WithdrawalDetail getWithdrawalDetailById(int id) {
+        return withdrawalDetailRepository.findById(id).get();
+    }
+
+    @Override
+    public void updateWithdrawalDetail(@NotNull WithdrawalDetail withdrawalDetail) throws Exception {
+        Optional<WithdrawalDetail> withdrawalDetailTmp = withdrawalDetailRepository.findById(withdrawalDetail.getId());
+        if (withdrawalDetailTmp.isPresent()) {
+            withdrawalDetailRepository.save(withdrawalDetail);
+        } else {
+            throw new InvalidInputException("id", "withdrawalDetail.notfound", "WithdrawalDetail not found");
+        }
+    }
 }
