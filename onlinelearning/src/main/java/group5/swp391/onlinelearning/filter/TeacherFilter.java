@@ -9,7 +9,7 @@ import group5.swp391.onlinelearning.entity.User;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = { "", "" })
+@WebFilter(urlPatterns = { "/teacher/course/*", "/teacher/lesson/*", "/teacher/course/wallet/*" })
 public class TeacherFilter implements Filter {
 
     @Override
@@ -29,6 +29,15 @@ public class TeacherFilter implements Filter {
             allowAccess = true;
         }
         if (requestURI.equals("/teacher/login/watting")) {
+            allowAccess = true;
+        }
+        if (requestURI.equals("/teacher/store-account")) {
+            allowAccess = true;
+        }
+        if (requestURI.equals("/teacher/check-otp")) {
+            allowAccess = true;
+        }
+        if (requestURI.equals("/teacher/register/cv/*")) {
             allowAccess = true;
         }
 

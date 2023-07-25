@@ -1,4 +1,4 @@
-<th:block th:replace="/layout-no-cart.html">
+<th:block th:replace="/layout.html">
     <th:block th:fragment="main-content">
         <h2>Add New Lesson</h2>
         <form th:action="@{'/teacher/lesson/create/video'+ '/' + ${id}}" th:object="${lesson}" method="post"

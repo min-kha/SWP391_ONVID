@@ -1,4 +1,4 @@
-<th:block th:replace="/layout-no-cart.html">
+<th:block th:replace="/layout.html">
     <th:block th:fragment="main-content">
         <section class="intro">
             <div class="bg-image h-100">
@@ -110,6 +110,11 @@
                                                                 th:href="'../feedback/' + ${course.getId()}"
                                                                 class="btn btn-warning px-3 " aria-disabled="true"
                                                                 style="display: inline-block;">Feedback</a>
+                                                            <a th:if="${course.status ne 3 and course.status ne 0 and course.status ne 1}"
+                                                                th:href="'/teacher/question/create/' + ${course.getId()}"
+                                                                class="btn btn-warning px-3 " aria-disabled="true"
+                                                                style="display: inline-block;"> List Question
+                                                                Practice</a>
                                                         </div>
 
                                                         <a class="btn btn-dark px-3" href="/teacher/course/list"

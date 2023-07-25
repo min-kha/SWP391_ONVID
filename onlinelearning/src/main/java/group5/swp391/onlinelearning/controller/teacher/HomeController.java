@@ -3,6 +3,7 @@ package group5.swp391.onlinelearning.controller.teacher;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.User;
+import group5.swp391.onlinelearning.entity.WithdrawalDetail;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOHomePage;
 import group5.swp391.onlinelearning.service.IFeedbackServive;
 import group5.swp391.onlinelearning.service.IViewService;
@@ -53,15 +55,22 @@ public class HomeController {
         // Get total of sales in year
         getTotalSale(model, teacher);
 
-        // TODO: Get 5 course bán chạy nhất
+        // Get 5 course bán chạy nhất
         getTop5CourseSale(model, teacher);
-        // TODO: Get top cousrse đã bán
-
+        // Get 5 revenue đã bán
+        getTop5Revenue(model, teacher);
         // get 5 new feedback
         // lay list feedback according to teacher id
         getListFeedback(model, teacher);
         // end get 5 feedback
         return "teacher/index";
+    }
+
+    public void getTop5Revenue(Model model, User teacher) {
+        List<WithdrawalDetail> list = withdrawalDetailService.getListByTeacherId(teacher.getId());
+        Collections.reverse(list);
+        List<WithdrawalDetail> listWithDrawdetail = list.subList(0, Math.min(list.size(), 5));
+        model.addAttribute("listWithDrawdetail", listWithDrawdetail);
     }
 
     public void getIsIncreaseView(Model model, User teacher) {

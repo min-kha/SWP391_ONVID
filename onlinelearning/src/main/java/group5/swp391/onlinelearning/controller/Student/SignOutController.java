@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SignOutController {
-    @GetMapping("/student/sign-out")
+    @GetMapping("/sign-out")
     public String studentSignOut(HttpSession session) {
         session.removeAttribute("studentSession");
         session.removeAttribute("cartStudentSession");
+        session.removeAttribute("user");
         return "redirect:/student/login";
     }
 }
