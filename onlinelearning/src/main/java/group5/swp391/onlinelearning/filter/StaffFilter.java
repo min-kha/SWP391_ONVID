@@ -45,7 +45,4 @@ public class StaffFilter implements Filter {
             httpResponse.sendRedirect("/admin/login");
         }
     }
-
-    // Các phương thức khác của Interface Filter
-    // ...
 }
