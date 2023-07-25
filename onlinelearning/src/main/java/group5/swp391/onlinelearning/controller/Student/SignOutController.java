@@ -12,6 +12,7 @@ public class SignOutController {
         session.removeAttribute("studentSession");
         session.removeAttribute("cartStudentSession");
         session.removeAttribute("user");
+        session.removeAttribute("wallet");
         return "redirect:/student/login";
     }
 }
