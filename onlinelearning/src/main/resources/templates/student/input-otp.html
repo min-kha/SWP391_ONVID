@@ -13,7 +13,7 @@
                             <button class="btn btn-primary d-block w-100" type="submit">
                                 Submit
                             </button>
-                            <input type="text" th:value="${register}" name="register">
+                            <input type="hidden" th:value="${register}" name="register">
                             <p th:text="${OtpCodeTimeOut}" style="color: red;"></p>
                             <p th:text="${OtpCodeNotTrue}" style="color: red;"></p>
                         </form>
