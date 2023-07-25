@@ -3,10 +3,12 @@ package group5.swp391.onlinelearning.controller.teacher;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import group5.swp391.onlinelearning.entity.Course;
+import group5.swp391.onlinelearning.entity.CourseReview;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.mapper.CourseMapper;
 import group5.swp391.onlinelearning.model.teacher.CourseDTOAdd;
@@ -37,6 +40,7 @@ import group5.swp391.onlinelearning.model.teacher.CourseDTOTeacher;
 import group5.swp391.onlinelearning.service.ILessonService;
 import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.IUserService;
+import group5.swp391.onlinelearning.service.IViewService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.ThymeleafBaseCRUD;
 
@@ -56,6 +60,8 @@ public class CourseController {
     CourseMapper mapper;
     @Autowired
     ThymeleafBaseCRUD thymeleafBaseCRUD;
+    @Autowired
+    IViewService viewService;
 
     // TODO: remove req nhá
     @Autowired
@@ -64,24 +70,21 @@ public class CourseController {
     @GetMapping("/list")
     public String getCourseList(Model model, HttpSession req) {
         // TODO: remove user service
-        User user = userService.getUserById(70);
-        req.setAttribute("userSession", user);
+        // User user = userService.getUserById(70);
+        // req.setAttribute("user", user);
         // Check role access site
-        if (user.getRole() != 1)
-            return "AccessDenied";
-
+        // Create List course of teacher and send to front end
         List<CourseDTOTeacher> courses = courseService.getCourseDTOTeacherList();
         String title = "Course List";
+        // Throw data to base front end
         thymeleafBaseCRUD.setBaseForList(model, courses, title);
         return "teacher/course/list";
     }
 
     @GetMapping("/create")
     public String getCreateCourse(Model model, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("userSession");
-        if (user.getRole() != 1)
-            return "AccessDenied";
+        // create a new model
+        model.addAttribute("errorFormat", "");
         model.addAttribute("course", new CourseDTOAdd());
         model.addAttribute("topics", topicService.getTopics());
         return "teacher/course/add";
@@ -89,38 +92,54 @@ public class CourseController {
 
     @PostMapping("/create")
     public String addCourse(@Valid @ModelAttribute("course") CourseDTOAdd courseDTOAdd, HttpServletRequest req,
-            @RequestParam("image") MultipartFile image, BindingResult result)
+            @RequestParam("image") MultipartFile image, BindingResult result, Model model)
             throws IOException, ServletException {
+        if (courseDTOAdd.getPrice().compareTo(BigDecimal.ZERO) < 0) {
+            result.rejectValue("price", "error.price.invalid", "price must be greater than zero");
+        }
+        // check error
         if (result.hasErrors()) {
+            model.addAttribute("errorFormat", "");
+            model.addAttribute("topics", topicService.getTopics());
             return "teacher/course/add";
         }
+        // get link image
         String projectPath = System.getProperty("user.dir");
         String fileName = "";
         Part filePart = req.getPart("image");
         fileName = filePart.getSubmittedFileName();
-        String relativePath = "\\src\\main\\resources\\static\\image";
+        if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
+            String relativePath = "\\src\\main\\resources\\static\\image";
 
-        String filePath = projectPath + relativePath + File.separator + fileName;
-        Path path = Paths.get(filePath);
+            String filePath = projectPath + relativePath + File.separator + fileName;
+            Path path = Paths.get(filePath);
 
-        try (InputStream inputStream = filePart.getInputStream()) {
-            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+            try (InputStream inputStream = filePart.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+            }
+            // fileName is not valid ( != jpg and png files)
+        } else {
+            model.addAttribute("errorFormat", "File Name must format same .jpg or .png");
+            model.addAttribute("course", new CourseDTOAdd());
+            model.addAttribute("topics", topicService.getTopics());
+            return "teacher/course/add";
         }
-
+        fileName = "/image/" + fileName;
+        // set link to model directory
         courseDTOAdd.setImageLink(fileName);
         int topic_id = Integer.parseInt(req.getParameter("topic"));
         courseDTOAdd.setTopic_id(topic_id);
-        courseService.createCourse(courseDTOAdd);
+        // create a new Course
+        Course course = courseService.createCourse(courseDTOAdd);
+        // create a new view
+        viewService.createEmptyView(course);
+        // redirect to course list
         return "redirect:/teacher/course/list";
     }
 
     @GetMapping("/edit/{id}")
     public String getUpdateCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("userSession");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
@@ -128,34 +147,57 @@ public class CourseController {
         // check owner course
         if (!courseService.checkCourseOwner(id))
             return "AccessDenied";
-        // check published course
-        if (course.getStatus() == 3)
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
             return "AccessDenied";
         CourseDTOEdit courseDTEdit = mapper.courseToCourseDtoEdit(course);
+        model.addAttribute("errorFormat", "");
         model.addAttribute("course", courseDTEdit);
         model.addAttribute("topics", topicService.getTopics());
         return "teacher/course/edit";
     }
 
     @PostMapping("/edit")
-    public String postUpdateCourse(@Valid @ModelAttribute CourseDTOEdit course, HttpServletRequest req,
-            BindingResult bindingResult) throws IOException, ServletException {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/teacher/course/edit/" + course.getId();
+    public String postUpdateCourse(@Valid @ModelAttribute CourseDTOEdit course, BindingResult bindingResult,
+            HttpServletRequest req,
+            Model model) throws IOException, ServletException {
+        if (course.getPrice().compareTo(BigDecimal.ZERO) < 0) {
+            bindingResult.rejectValue("price", "error.price.invalid", "price must be greater than zero");
         }
+        // check error status
+        // TODO: Chưa bắn đc lỗi
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errorFormat", "");
+            model.addAttribute("course", course);
+            model.addAttribute("topics", topicService.getTopics());
+            return "teacher/course/edit";
+        }
+        // get link image and set link image
+        // get link image
         String projectPath = System.getProperty("user.dir");
         String fileName = "";
         Part filePart = req.getPart("image");
         fileName = filePart.getSubmittedFileName();
-        if (!fileName.equals("")) {
-            String relativePath = "\\onlinelearning\\src\\main\\resources\\static\\image";
+        if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
+            String relativePath = "\\src\\main\\resources\\static\\image";
 
             String filePath = projectPath + relativePath + File.separator + fileName;
             Path path = Paths.get(filePath);
-            InputStream inputStream = filePart.getInputStream();
-            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+
+            try (InputStream inputStream = filePart.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+            }
+            fileName = "/image/" + fileName;
             course.setImageLink(fileName);
+            // fileName is not valid ( != jpg and png files)
+        } else {
+            model.addAttribute("errorFormat", "Image in not correct");
+            model.addAttribute("course", course);
+            model.addAttribute("topics", topicService.getTopics());
+            return "teacher/course/edit";
         }
+        // set other parameters and save them
         int topic_id = Integer.parseInt(req.getParameter("topic"));
         course.setTopic_id(topic_id);
         courseService.updateCourse(course);
@@ -164,22 +206,18 @@ public class CourseController {
 
     @GetMapping("/delete/{id}")
     public String getDeleteCourse(@PathVariable @NotNull Integer id, HttpSession req) {
-        // Check role access site
-        User user = (User) req.getAttribute("userSession");
-        if (user.getRole() != 1)
-            return "AccessDenied";
         // check course exit
         Course course = courseService.getCourseById(id);
         if (course == null)
             return "404";
         // check owner course
-        if (courseService.checkCourseOwner(id))
+        if (!courseService.checkCourseOwner(id))
             return "AccessDenied";
-        // check published course
-        if (course.getStatus() == 3)
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
             return "AccessDenied";
         courseService.deleteCourse((int) id);
-        return "redirect:../list";
+        return "redirect:/teacher/course/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -187,5 +225,35 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         model.addAttribute("course", course);
         return "teacher/course/detail";
+    }
+
+    @GetMapping("/submit/{id}")
+    public String getSubmitCourse(Model model, @PathVariable @NotNull Integer id, HttpSession req) {
+        // check course exit
+        Course course = courseService.getCourseById(id);
+        if (course == null)
+            return "404";
+        // check owner course
+        if (!courseService.checkCourseOwner(id))
+            return "AccessDenied";
+        // check published course, submited, progeressing
+        if (course.getStatus() == 3 || course.getStatus() == 0 || course.getStatus() == 1)
+            return "AccessDenied";
+        // change status of course
+        courseService.submitCourse(course);
+        return "redirect:/teacher/course/list";
+    }
+
+    @GetMapping("/review/{id}")
+    public String getReview(Model model, @PathVariable @NotNull int id, HttpSession session) throws Exception {
+        String title = "Review Course - Teacher";
+        try {
+            Course course = courseService.getCourseById(id);
+            User user = (User) session.getAttribute("user");
+            thymeleafBaseCRUD.setBaseForEntity(model, course, title);
+        } catch (Exception e) {
+            // handle exception
+        }
+        return "teacher/course/review";
     }
 }

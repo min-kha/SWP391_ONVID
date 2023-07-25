@@ -26,9 +26,9 @@ public class CourseMapper {
     public CourseMapper(HttpSession session) {
         this.session = session;
     }
-    // TODO: 0: Unsubmit 1: Submit 2: Reject 3 Published 4 DeActive
 
-    public static CourseDtoHomeDetail courseToCourseDtoHomeDetail(Course course) {
+    public CourseDtoHomeDetail courseToCourseDtoHomeDetail(Course course, float avg) {
+
         CourseDtoHomeDetail courseDtoHomeDetail = CourseDtoHomeDetail.builder()
                 .id(course.getId())
                 .name(course.getName())
@@ -37,6 +37,7 @@ public class CourseMapper {
                 .imageLink(course.getImageLink())
                 .price(course.getPrice())
                 .date(course.getDate())
+                .ratingStar(avg)
                 .build();
         return courseDtoHomeDetail;
     }
@@ -65,6 +66,11 @@ public class CourseMapper {
                 .description(course.getDescription())
                 // TODO:Thêm star
                 .build();
+        if (course.getCourseReviews().isEmpty()) {
+            courseDTOTeacher.setReviews(false);
+        } else {
+            courseDTOTeacher.setReviews(true);
+        }
         return courseDTOTeacher;
     }
 
@@ -77,7 +83,7 @@ public class CourseMapper {
                 .name(courseDTOAdd.getName())
                 .date(date)
                 .imageLink(courseDTOAdd.getImageLink())
-                .status(0)
+                .status(-1)
                 .price(courseDTOAdd.getPrice())
                 .topic(topic)
                 .teacher(teacher)

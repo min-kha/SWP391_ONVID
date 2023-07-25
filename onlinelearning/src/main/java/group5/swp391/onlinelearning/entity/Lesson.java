@@ -29,6 +29,7 @@ public class Lesson {
     private int id;
     private String title;
     private String name;
+
     private String document;
     private String video;
     private boolean status;

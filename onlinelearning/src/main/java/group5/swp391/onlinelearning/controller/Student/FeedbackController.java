@@ -20,7 +20,6 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Feedback;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.FeedbackDtoRequest;
-import group5.swp391.onlinelearning.model.dto.UserDTOLoginRequest;
 import group5.swp391.onlinelearning.model.mapper.FeedbackMapper;
 import group5.swp391.onlinelearning.service.IFeedbackServive;
 import group5.swp391.onlinelearning.service.impl.CourseService;
@@ -67,7 +66,9 @@ public class FeedbackController {
             model.addAttribute("isUpdate", false);
             return "student/course/feedback";
         }
-        Feedback feedbackRes = feedbackServive.createFeedback(Integer.parseInt(courseId), feedback.getRatingStar(),
+
+        Course courseRes = courseService.getCourseByCourseId(Integer.parseInt(courseId));
+        Feedback feedbackRes = feedbackServive.createFeedback(courseRes, feedback.getRatingStar(),
                 feedback.getComment());
         FeedbackDtoRequest feedbackDtoRequest = FeedbackMapper.feedbackToFeedbackDtoRequest(feedbackRes);
         redirectAttributes.addFlashAttribute("feedback", feedbackDtoRequest);

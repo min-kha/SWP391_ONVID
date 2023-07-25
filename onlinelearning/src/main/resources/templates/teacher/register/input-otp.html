@@ -1,0 +1,30 @@
+<th:block th:replace="/layout-no-cart.html">
+    <th:block th:fragment="main-content">
+        <section class="py-4 py-xl-5">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-8 col-xl-6 text-center mx-auto">
+                        <form th:action="@{/teacher/check-otp}" method="post">
+                            <h2>Get OTP code</h2>
+                            <p>Enter the OTP the system just sent you</p>
+                            <input class="form-control" type="text" placeholder="OTP code" required
+                                style="margin-top: 10px" name="otpCodeInput" />
+                            <br>
+                            <button class="btn btn-primary d-block w-100" type="submit">
+                                Submit
+                            </button>
+                            <p th:text="${OtpCodeTimeOut}" style="color: red;"></p>
+                            <p th:text="${OtpCodeNotTrue}" style="color: red;"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </section>
+    </th:block>
+</th:block>

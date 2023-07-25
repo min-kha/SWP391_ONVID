@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.model.dto.CourseDtoHomeDetail;
+import group5.swp391.onlinelearning.service.ITopicService;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.utils.PagingUtils;
 
@@ -18,54 +20,86 @@ import group5.swp391.onlinelearning.utils.PagingUtils;
 @RequestMapping(value = "/student/course")
 public class SearchCourseController {
 
-    @Autowired
-    CourseService courseService;
+        @Autowired
+        CourseService courseService;
 
-    @Autowired
-    PagingUtils pagingUtils;
+        @Autowired
+        ITopicService topicService;
 
-    @GetMapping("/search")
-    public String getSearchListByKeyword(@RequestParam("keyword") String keyword,
-            @RequestParam("pageChoose") String pageChoose,
-            Model model) {
-        List<CourseDtoHomeDetail> courseDtoHomeDetailsSearch = courseService.getSearchCourse(keyword);
-        int numberPerPage = 9;
-        List<CourseDtoHomeDetail> listOnPage = (List<CourseDtoHomeDetail>) pagingUtils.getPagingList(pageChoose,
-                courseDtoHomeDetailsSearch, numberPerPage);
-        int numberOfPage = pagingUtils.getNumberOfPage(courseDtoHomeDetailsSearch, numberPerPage);
-        int pageChooseInt = Integer.parseInt(pageChoose);
+        @Autowired
+        PagingUtils pagingUtils;
 
-        List<Integer> listPageNumber = pagingUtils.getListPageNumber(numberOfPage);
+        @GetMapping("/search")
+        public String getSearchListByKeyword(@RequestParam("keyword") String keyword,
+                        @RequestParam("pageChoose") String pageChoose,
+                        Model model) {
+                List<CourseDtoHomeDetail> courseDtoHomeDetailsSearch = courseService.getSearchCourse(keyword);
+                int numberPerPage = 9;
+                List<CourseDtoHomeDetail> listOnPage = (List<CourseDtoHomeDetail>) pagingUtils.getPagingList(pageChoose,
+                                courseDtoHomeDetailsSearch, numberPerPage);
+                int numberOfPage = pagingUtils.getNumberOfPage(courseDtoHomeDetailsSearch, numberPerPage);
+                int pageChooseInt = Integer.parseInt(pageChoose);
 
-        model.addAttribute("courses", listOnPage);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("pageChooseInt", pageChooseInt);
-        model.addAttribute("listPageNumber", listPageNumber);
+                List<Integer> listPageNumber = pagingUtils.getListPageNumber(numberOfPage);
 
-        return "/student/search/search-list";
-    }
+                List<Topic> topics = topicService.getTopics();
+                model.addAttribute("topics", topics);
+                model.addAttribute("courses", listOnPage);
+                model.addAttribute("keyword", keyword);
+                model.addAttribute("pageChoose", pageChooseInt);
+                model.addAttribute("listPageNumber", listPageNumber);
 
-    @GetMapping("/searchByPrice")
-    public String getSearchListByPrice(@RequestParam("from") String from, @RequestParam("to") String to,
-            @RequestParam("pageChoose") String pageChoose,
-            Model model) {
+                return "/student/search/search-list";
+        }
 
-        Double fromDouble = Double.parseDouble(from);
-        Double toDouble = Double.parseDouble(to);
+        @GetMapping("/searchByPrice")
+        public String getSearchListByPrice(@RequestParam("from") String from, @RequestParam("to") String to,
+                        @RequestParam("pageChoose") String pageChoose,
+                        Model model) {
 
-        List<CourseDtoHomeDetail> courseDtoHomeDetailsSearchByPrice = courseService.getCourseByPrice(fromDouble,
-                toDouble);
-        int numberPerPage = 9;
-        List<CourseDtoHomeDetail> listOnPage = (List<CourseDtoHomeDetail>) pagingUtils.getPagingList(pageChoose,
-                courseDtoHomeDetailsSearchByPrice, numberPerPage);
-        int numberOfPage = pagingUtils.getNumberOfPage(courseDtoHomeDetailsSearchByPrice, numberPerPage);
-        int pageChooseInt = Integer.parseInt(pageChoose);
-        List<Integer> listPageNumber = pagingUtils.getListPageNumber(numberOfPage);
-        model.addAttribute("courses", listOnPage);
-        model.addAttribute("from", from);
-        model.addAttribute("to", to);
-        model.addAttribute("pageChooseInt", pageChooseInt);
-        model.addAttribute("listPageNumber", listPageNumber);
-        return "/student/search/search-list";
-    }
+                Double fromDouble = Double.parseDouble(from);
+                Double toDouble = Double.parseDouble(to);
+
+                List<CourseDtoHomeDetail> courseDtoHomeDetailsSearchByPrice = courseService.getCourseByPrice(fromDouble,
+                                toDouble);
+                int numberPerPage = 9;
+                List<CourseDtoHomeDetail> listOnPage = (List<CourseDtoHomeDetail>) pagingUtils.getPagingList(pageChoose,
+                                courseDtoHomeDetailsSearchByPrice, numberPerPage);
+                int numberOfPage = pagingUtils.getNumberOfPage(courseDtoHomeDetailsSearchByPrice, numberPerPage);
+                int pageChooseInt = Integer.parseInt(pageChoose);
+                List<Integer> listPageNumber = pagingUtils.getListPageNumber(numberOfPage);
+
+                List<Topic> topics = topicService.getTopics();
+                model.addAttribute("topics", topics);
+                model.addAttribute("courses", listOnPage);
+                model.addAttribute("from", from);
+                model.addAttribute("to", to);
+                model.addAttribute("pageChoose", pageChooseInt);
+                model.addAttribute("listPageNumber", listPageNumber);
+                return "/student/search/search-list-by-price";
+        }
+
+        @GetMapping("/search-by-hashtag")
+        public String getSearchHashtag(@RequestParam("topicId") int topicId, @RequestParam("hashtag") String hashtag,
+                        @RequestParam("pageChoose") String pageChoose,
+                        Model model) {
+
+                List<CourseDtoHomeDetail> courseDtoHomeDetailsSearchByPrice = courseService.getCourseByHashtag(topicId);
+                int numberPerPage = 9;
+                List<CourseDtoHomeDetail> listOnPage = (List<CourseDtoHomeDetail>) pagingUtils.getPagingList(pageChoose,
+                                courseDtoHomeDetailsSearchByPrice, numberPerPage);
+                int numberOfPage = pagingUtils.getNumberOfPage(courseDtoHomeDetailsSearchByPrice, numberPerPage);
+                int pageChooseInt = Integer.parseInt(pageChoose);
+                List<Integer> listPageNumber = pagingUtils.getListPageNumber(numberOfPage);
+
+                List<Topic> topics = topicService.getTopics();
+                model.addAttribute("topics", topics);
+                model.addAttribute("courses", listOnPage);
+                model.addAttribute("hashtag", hashtag);
+                model.addAttribute("topicId", topicId);
+
+                model.addAttribute("pageChoose", pageChooseInt);
+                model.addAttribute("listPageNumber", listPageNumber);
+                return "/student/search/search-list-by-hashtag";
+        }
 }

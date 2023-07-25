@@ -1,0 +1,30 @@
+<th:block th:replace="/layout-no-cart.html">
+    <th:block th:fragment="main-content">
+        <section class="py-4 py-xl-5">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-8 col-xl-6 text-center mx-auto">
+                        <form th:action="@{/teacher/register/cv/} + ${teacherId}" method="post"
+                            enctype="multipart/form-data">
+                            <h2>Submit CV</h2>
+                            <p>Hello there. In order for us to learn more about each other, could you please upload your
+                                CV (in PDF format), please?</p>
+                            <input type="file" class="form-control-file" id="cv" name="cv" required>
+                            <br>
+                            <button class="btn btn-primary d-block w-100" type="submit">
+                                Submit
+                            </button>
+                            <p th:if="${errorFormat != ''}" th:text="${errorFormat}" style="color: red;"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </section>
+    </th:block>
+</th:block>

@@ -18,7 +18,7 @@
                     </a>
                 </li>
             </ul>
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" style="margin-left: 450px;"
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" style="margin-left: 200px;"
                 th:action="@{/student/course/search}" method="get">
                 <div class="input-group">
                     <div class="form-outline">
@@ -35,10 +35,10 @@
             </form>
 
             <div class=" nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <a th:if="${session.cartStudentSession == null}" href="/student/login">
+                <a th:if="${session.studentSession == null}" href="/student/login">
                     <button type="button" class="btn btn-outline-light me-2">Login</button>
                 </a>
-                <a th:if="${session.cartStudentSession == null}" href="/register">
+                <a th:if="${session.studentSession == null}" href="/register">
                     <button type="button" class="btn btn-warning">Sign-up</button>
                 </a>
                 <a th:if="${session.cartStudentSession != null}" href="/student/cart/detail" style="margin-left: 15px;">
@@ -49,14 +49,14 @@
                         </span>
                     </button>
                 </a>
-                <div th:if="${session.cartStudentSession != null}" class="dropdown text-end" style="margin-left: 15px;">
+                <div th:if="${session.studentSession != null}" class="dropdown text-end" style="margin-left: 15px;">
                     <button type="button" class="btn btn-warning" style="padding: 2px;">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="/image/7542670.png" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="/student/information">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

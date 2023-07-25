@@ -17,6 +17,8 @@ import group5.swp391.onlinelearning.model.dto.UserDTORegisterRequest;
 public interface IUserService {
     public List<User> getAllUsers();
 
+    public User addTeacherRegister(UserDTORegisterRequest userDTORegisterRequest);
+
     public Collection<UserDTOAccountRequest> getAllUserDTOAccountRequest();
 
     public User getUserById(int id);
@@ -30,6 +32,8 @@ public interface IUserService {
     public User addUserRegister(UserDTORegisterRequest userDTORegisterRequest);
 
     public User loginStudent(UserDTOLoginRequest student, Model model);
+
+    public User loginTeacher(UserDTOLoginRequest student, Model model, Boolean isProcess);
 
     public User changePassword(User user);
 

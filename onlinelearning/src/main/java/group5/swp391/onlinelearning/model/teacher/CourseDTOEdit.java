@@ -23,4 +23,5 @@ public class CourseDTOEdit {
     private BigDecimal price;
     private int topic_id;
     private String imageLink;
+    private int status;
 }

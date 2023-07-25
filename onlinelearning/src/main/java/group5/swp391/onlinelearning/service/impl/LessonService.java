@@ -1,6 +1,7 @@
 package group5.swp391.onlinelearning.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -33,7 +34,12 @@ public class LessonService implements ILessonService {
 
     @Override
     public Lesson getLessonById(int lessonId) {
-        return lessonRepository.findById(lessonId).get();
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
+        if (lesson.isPresent()) {
+            return lesson.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -51,19 +57,28 @@ public class LessonService implements ILessonService {
     @Override
     public boolean isLessonVideo(int lessonId) {
         Lesson lesson = getLessonById(lessonId);
-        if (lesson.getVideo() == null || lesson.getVideo().equals("")) {
+        if (lesson != null) {
+            if (lesson.getVideo() == null || lesson.getVideo().equals("")) {
+                return false;
+            }
+            return true;
+        } else {
             return false;
+
         }
-        return true;
     }
 
     @Override
     public boolean isLessonOfCourse(int lessonId, int courseId) {
         Lesson lesson = getLessonById(lessonId);
-        if (lesson.getCourse().getId() == courseId) {
-            return true;
+        if (lesson != null) {
+            if (lesson.getCourse().getId() == courseId) {
+                return true;
+            }
+            return false;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -81,10 +96,10 @@ public class LessonService implements ILessonService {
     @Override
     public Lesson deleteLessonByIdOfTeacher(Integer lessonId, Integer courseId) {
         Course course = courseService.getCourseById(courseId);
-        if (course.getStatus() != 3) {
+        // check published course, submited, progeressing
+        if (course.getStatus() != 3 || course.getStatus() != 0 || course.getStatus() != 1) {
             return deleteLessonById(lessonId);
         }
-        // TODO: course == 3 (đã được đăng) Thì xử lý ntn
         return null;
     }
 

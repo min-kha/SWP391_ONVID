@@ -18,14 +18,14 @@
                                                         <label class="form-label text-capitalize">Money</label>
                                                         <input type="number" id="money" name="money"
                                                             class="form-control">
-                                                        <label th:if="${error}" th:text="@{errorName}"
+                                                        <label th:if="${error}" th:text="${errorName}"
                                                             class="form-text text-danger">
                                                         </label>
                                                     </div>
 
                                                     <div class="text-end">
                                                         <button type="submit" class="px-3 btn btn-success">Save</button>
-                                                        <a th:href="'index'" class="btn btn-link px-3 "
+                                                        <a th:href="'list'" class="btn btn-link px-3 "
                                                             aria-disabled="true">Back
                                                             to list</a>
                                                     </div>

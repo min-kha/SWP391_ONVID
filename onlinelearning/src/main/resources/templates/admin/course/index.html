@@ -44,49 +44,78 @@
             <div class="card mb-4">
                 <h1 class="card-header" th:text="${title}">
                 </h1>
+                <a th:unless="${#httpServletRequest.getParameter('reviewMode') eq 'true'}" href="index?reviewMode=true"
+                    class="btn btn-outline-primary px-3 " aria-disabled="true">Focus to review
+                    mode</a>
+                <a th:if="${#httpServletRequest.getParameter('reviewMode') eq 'true'}" href="index"
+                    class="btn btn-primary px-3 " aria-disabled="true">List all courses</a>
                 <div class="card-body table-responsive">
                     <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
-                        <a href="create" class="btn btn-primary px-3 " aria-disabled="true">Create</a>
                         <!-- Name	Status	Description	ImageLink	Price	Date	
                             Topic	Views	CourseReviews	Feedbacks	Carts	Teacher	OrderDetails	Lessons -->
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Status</th>
                                 <th>Description</th>
-                                <th>ImageLink</th>
+                                <th>Teacher</th>
+                                <th>Image</th>
                                 <th>Price</th>
                                 <th>Date</th>
                                 <th>Topic</th>
                                 <th>Views</th>
                                 <th>Lessons</th>
+                                <th>Status</th>
                                 <th>Detail</th>
-                                <th>Update</th>
-                                <th>Delete</th>
+                                <th>Review</th>
+                                <th>Deactive</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="entity : ${entities}">
                                 <td th:text="${entity.name}"></td>
-                                <td th:text="${entity.status}"></td>
                                 <td th:text="${entity.description}"></td>
-                                <td th:text="${entity.imageLink}"></td>
+                                <td th:text="${entity.teacher?.name}"></td>
+                                <td> <img th:src="${entity.imageLink}" alt="Image course" width="100px" /> </td>
                                 <td th:text="${entity.price}"></td>
-                                <td th:text="${entity.date}"></td>
+                                <td th:text="${#dates.format(entity.date, 'dd/MM/yyyy HH:mm')}"></td>
                                 <td th:text="${entity.topic.name}"></td>
-                                <td th:text="*{entity.views[0].viewNumber}"></td>
-                                <td th:text="${entity.lessons.size}"></td>
+                                <td>
+                                    <th:block th:unless="${entity.views.isEmpty}"
+                                        th:text="${entity.views?.![viewNumber]?.get(entity.views.size() - 1)}">
+                                    </th:block>
+                                    <th:block th:if="${entity.views.isEmpty}" th:text="0"></th:block>
+                                </td>
+                                <td th:text=" ${entity.lessons?.size}"></td>
+                                <td th:if="${entity.status == -2}"><span class="btn btn-danger">Deactived</span></td>
+                                <td th:if="${entity.status == -1}"><span class="btn btn-outline-secondary">Draff</span>
+                                </td>
+                                <td th:if="${entity.status == 0}"><span class="btn btn-info">To
+                                        Do</span></td>
+                                <td th:if="${entity.status == 1}"><span class="btn-sm btn btn-primary">In
+                                        Progressing</span></td>
+                                <td th:if="${entity.status == 2}"><span class="btn btn-dark">Rejected</span>
+                                </td>
+                                <td th:if="${entity.status == 3}"><span class="btn btn-success">Approved</span>
+                                </td>
                                 <td>
                                     <a th:href="'details/' + ${entity[fields[0].getName]}"
                                         class="btn btn-secondary btn-sm " tabindex="-1" aria-disabled="true">Details</a>
                                 </td>
                                 <td>
-                                    <a th:href="'edit/' + ${entity[fields[0].getName]}"
-                                        class="btn btn-warning btn-sm px-3" tabindex="-1" aria-disabled="true">Edit</a>
+                                    <a th:href="'review/' + ${entity[fields[0].getName]}"
+                                        class="btn btn-warning btn-sm px-3" tabindex="-1"
+                                        aria-disabled="true">Review</a>
                                 </td>
                                 <td>
-                                    <a th:href="'delete/' + ${entity[fields[0].getName]}" class="btn btn-danger btn-sm "
-                                        tabindex="-1" aria-disabled="true">Delete</a>
+                                    <a th:if="*{entity.status==-2}" th:href="'active/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-success btn-sm" tabindex="-1"
+                                        aria-disabled="true">&ensp;Active&ensp;
+                                    </a>
+                                    <a th:unless="*{entity.status==-2}"
+                                        th:href="'deactive/' + ${entity[fields[0]?.getName]}"
+                                        class="btn btn-outline-danger btn-sm" tabindex="-1"
+                                        aria-disabled="true">Deactive
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

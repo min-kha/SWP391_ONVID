@@ -1,0 +1,69 @@
+<th:block th:replace="/layout.html">
+    <th:block th:fragment="main-content">
+        <div class="container px-4">
+            <h1 class="mt-4 ms-5">Dashboard</h1>
+            <ol class="breadcrumb mb-4 ms-5">
+                <li class="breadcrumb-item active">Admin</li>
+                <li class="breadcrumb-item active">Home</li>
+            </ol>
+            <div class="row d-flex" style="width: 90%;">
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Total Users: </div>
+                        <h3 class="card-body text-center"></h3>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/admin/users/index">View
+                                Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Total Courses: </div>
+                        <h3 class="card-body text-center"></h3>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/admin/courses/index">View
+                                Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Total CVs: </div>
+                        <h3 class="card-body text-center"></h3>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/admin/cvs/index">View
+                                Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Total Topics: </div>
+                        <h3 class="card-body text-center"></h3>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/admin/topics/index">View
+                                Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Total Withdrawal: </div>
+                        <h3 class="card-body text-center"></h3>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/admin/withdrawalDetails/index">View
+                                Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </th:block>
+</th:block>

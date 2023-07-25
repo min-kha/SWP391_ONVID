@@ -1,12 +1,7 @@
 <th:block th:replace="/layout.html">
   <th:block th:fragment="main-content">
-    <link
-      href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
-      rel="stylesheet"
-    />
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"
-    ></script>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
       table {
@@ -40,11 +35,8 @@
     <div class="row no-gutters fixed-top justify-content-end m-3">
       <div class="col-lg-5 col-md-12 ml-auto">
         <div class="alert alert-success fade show" role="alert">
-          <h4 class="alert-heading">Success!</h4>
-          <p>
-            This is an alert within a column. The column can be made any size at
-            different viewpoints.
-          </p>
+          <h4 class="alert-heading">Notation !</h4>
+          <p>List Wallet Successfull</p>
         </div>
       </div>
     </div>
@@ -52,67 +44,48 @@
       <div class="card mb-4">
         <h1 class="card-header" th:text="${title}"></h1>
         <div class="card-body table-responsive">
-          <table
-            id="datatablesSimple"
-            class="table table-hover"
-            aria-describedby="list-table"
-          >
-            <a href="create" class="btn btn-primary px-3" aria-disabled="true"
-              >Create</a
-            >
-
+          <table id="datatablesSimple" class="table table-hover" aria-describedby="list-table">
+            <a href="create" class="btn btn-primary px-3" aria-disabled="true">Create</a>
             <thead>
               <tr>
-                <th
-                  th:each="field : ${fields}"
-                  th:text="${field.getName}"
-                  class="text-capitalize"
-                ></th>
-                <th>Details</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th>ID</th>
+                <th>Deposit</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Time</th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="entity : ${entities}">
-                <th:block th:each="field : ${fields}">
-                  <td
-                    th:if="${field.getType.getSimpleName == 'Collection'}"
-                    th:text="${entity[field.getName].size}"
-                  ></td>
-                  <td
-                    th:if="${field.getType.getSimpleName != 'Collection'}"
-                    th:text="${entity[field.getName]}"
-                  ></td>
-                </th:block>
-
+              <tr th:each="wallet : ${wallets}">
+                <td th:text="${wallet.id}"></td>
                 <td>
-                  <a
-                    th:href="'details/' + ${entity[fields[0].getName]}"
-                    class="btn btn-secondary btn-sm"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Details</a
-                  >
+                  <div th:switch="${wallet.status}">
+                    <div th:case="0">
+                      <span th:text="' + ' + ${wallet.money}"></span>
+                    </div>
+                    <div th:case="1">
+                      <span th:text="' - ' + ${wallet.money}"></span>
+                    </div>
+                    <div th:case="2">
+                      <span th:text="' - ' + ${wallet.money}"></span>
+                    </div>
+                  </div>
                 </td>
                 <td>
-                  <a
-                    th:href="'edit/' + ${entity[fields[0].getName]}"
-                    class="btn btn-warning btn-sm px-3"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Edit</a
-                  >
+                  <div th:switch="${wallet.status}">
+                    <div th:case="0">
+                      <div class="btn btn-success btn-sm">Approved</div>
+                    </div>
+                    <div th:case="1">
+                      <div class="btn btn-info btn-sm">In Progress</div>
+                    </div>
+                    <div th:case="2">
+                      <div class="btn btn-light btn-sm">Reject</div>
+                    </div>
+                  </div>
                 </td>
-                <td>
-                  <a
-                    th:href="'delete/' + ${entity[fields[0].getName]}"
-                    class="btn btn-danger btn-sm"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Delete</a
-                  >
-                </td>
+                <td th:text="${wallet.descripton}"></td>
+                <td th:text="${wallet.date}"></td>
               </tr>
             </tbody>
           </table>
@@ -127,10 +100,7 @@
         }, 2000);
       });
     </script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script th:src="@{/assets/js/datatables-simple-demo.js}"></script>
   </th:block>
 </th:block>

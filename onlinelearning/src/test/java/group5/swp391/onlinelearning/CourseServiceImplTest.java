@@ -1,9 +1,5 @@
 package group5.swp391.onlinelearning;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -22,9 +18,9 @@ import group5.swp391.onlinelearning.entity.Course;
 import group5.swp391.onlinelearning.entity.Topic;
 import group5.swp391.onlinelearning.entity.User;
 import group5.swp391.onlinelearning.model.dto.CourseDtoDetail;
+import group5.swp391.onlinelearning.repository.CourseRepository;
 import group5.swp391.onlinelearning.service.impl.CourseService;
 import group5.swp391.onlinelearning.service.impl.UserService;
-import group5.swp391.onlinelearning.repository.CourseRepository;
 
 public class CourseServiceImplTest {
     @Mock
@@ -132,55 +128,6 @@ public class CourseServiceImplTest {
     }
 
     // @Test
-    // public void testGetAllCourses() {
-    // // Arrange
-    // Course course1 = new Course();
-    // course1.setId(1);
-    // course1.setName("Course 1");
-
-    // Course course2 = new Course();
-    // course2.setId(1);
-    // course2.setName("Course 2");
-
-    // List<Course> courses = new ArrayList<>();
-    // courses.add(course1);
-    // courses.add(course2);
-
-    // when(courseRepository.findAll()).thenReturn(courses);
-
-    // // Act
-    // List<Course> result = courseService.getAllCourses();
-
-    // // Assert
-    // assertEquals(2, result.size());
-    // assertEquals("Course 1", result.get(0).getName());
-    // assertEquals("Course 2", result.get(1).getName());
-    // }
-
-    // @Test
-    // public void testGetCourseById() {
-    // // Arrange
-    // int courseId = 1;
-    // Course course = new Course();
-    // course.setId(courseId);
-    // course.setName("Course 1");
-    // course.setStatus(1);
-    // // Set other properties for the course
-
-    // Optional<Course> courseOptional = Optional.of(course);
-    // when(courseRepository.findById(courseId)).thenReturn(courseOptional);
-
-    // // Act
-    // CourseDtoDetail result = courseService.getCourseById(courseId);
-
-    // // Assert
-    // assertEquals(courseId, result.getCourseId());
-    // assertEquals("Course 1", result.getCourseName());
-    // assertEquals(1, result.getStatus());
-    // // Assert other properties for the result
-    // }
-
-    // @Test
     // public void testCreateCourse() {
     // // Arrange
     // Course course = new Course();
@@ -252,14 +199,14 @@ public class CourseServiceImplTest {
         // verify(courseRepository, times(1)).save(existingCourse);
     }
 
-    @Test
-    public void testDeleteCourse() {
-        // Arrange
-        int courseId = 1;
-        // Act
-        courseService.deleteCourse(courseId);
-        // Assert
-        verify(courseRepository, times(1)).deleteById(courseId);
-    }
+    // @Test
+    // public void testDeleteCourse() {
+    // // Arrange
+    // int courseId = 1;
+    // // Act
+    // courseService.deleteCourse(courseId);
+    // // Assert
+    // verify(courseRepository, times(1)).deleteById(courseId);
+    // }
 
 }

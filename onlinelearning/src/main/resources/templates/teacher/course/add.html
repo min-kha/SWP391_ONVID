@@ -5,12 +5,12 @@
             <div class="form-group">
                 <label for="courseName">Course Name:</label>
                 <input type="text" class="form-control" id="courseName" name="courseName" required th:field="*{name}">
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></p>
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="text" class="form-control" id="price" name="price" required th:field="*{price}">
-                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+                <input type="number" class="form-control" id="price" name="price" required th:field="*{price}">
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color: red;"></p>
             </div>
             <div class="form-group">
                 <label for="topic">Topic:</label>
@@ -22,11 +22,12 @@
                 <label for="descriptionfake">Description:</label>
                 <textarea class="form-control" id="descriptionfake" name="descriptionfake" rows="4" required
                     th:field="*{description}"></textarea>
-                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red;"></p>
             </div>
             <div class="form-group">
                 <label for="image">Image:</label>
                 <input type="file" class="form-control-file" id="image" name="image" required>
+                <p th:if="${errorFormat != ''}" th:text="${errorFormat}" style="color: red;"></p>
             </div>
             <input type="hidden" class="form-control" id="description" name="description" th:value="*{description}">
             <input type="hidden" class="form-control" id="topicfake" name="topicfake" th:field="*{topic_id}" value="1">

@@ -54,4 +54,15 @@ public class UserMapper {
                 .build();
         return user;
     }
+
+    public User userDTORegisterRequestToTeacher(UserDTORegisterRequest userDTORegisterRequest) {
+        User user = User.builder()
+                .name(userDTORegisterRequest.getName())
+                .email(userDTORegisterRequest.getEmail())
+                .password(userDTORegisterRequest.getPassword())
+                .role(1)
+                .status(false)
+                .build();
+        return user;
+    }
 }
