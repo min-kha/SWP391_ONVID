@@ -10,7 +10,6 @@ import group5.swp391.onlinelearning.entity.User;
 import java.io.IOException;
 
 @WebFilter("/admin/*")
-
 public class StaffFilter implements Filter {
 
     @Override
