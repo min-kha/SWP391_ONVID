@@ -138,6 +138,7 @@ public class RegisterTeacherController {
         }
         // save cv
         User user = userService.getUserById(id);
+        fileName = "/pdf/cv/" + fileName;
         cvService.createNewCV(user, fileName);
         return "teacher/register/watting";
     }

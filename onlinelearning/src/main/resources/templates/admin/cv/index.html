@@ -69,8 +69,8 @@
                                         tabindex="-1" aria-disabled="true" th:text="${entity.staff?.name}"></a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-outline-primary" th:href="'/pdf/cv/' + ${entity.pdfLink}"
-                                        tabindex="-1" aria-disabled="true">CV File</a>
+                                    <a class="btn btn-outline-primary" th:href="${entity.pdfLink}" tabindex="-1"
+                                        aria-disabled="true">CV File</a>
                                 </td>
                                 <td th:if="${entity.status == 0}"><span class="btn btn-danger w-75">To
                                         Do</span></td>

@@ -80,8 +80,9 @@ public class CartController {
         // TODO: Hung code
         walletService.changeRevenue(courses);
         withdrawalDetailService.addWithdrawalDetail(courses, student);
-
         cartService.deleteAllCourseInCart(courses, cart.getId());
+
+        session.setAttribute("wallet", walletService.getRevenue());
         session.setAttribute("cartStudentSession",
                 cartService.getCoursebyCartId(cart.getId()));
         return "redirect:/student/my-course/1";
