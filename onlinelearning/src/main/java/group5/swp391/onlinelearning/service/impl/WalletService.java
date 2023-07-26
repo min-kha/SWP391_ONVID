@@ -47,6 +47,7 @@ public class WalletService implements IWalletService {
             wallet.setRevenue(revenue);
             walletRepository.save(wallet);
         }
+        
     }
 
     @Override
