@@ -1,4 +1,4 @@
-package group5.swp391.onlinelearning.controller.admin;
+package group5.swp391.onlinelearning.controller.guest;
 
 import java.util.List;
 

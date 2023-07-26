@@ -34,7 +34,7 @@
         <div class="container-fluid">
             <h4><small th:text="${course.name}">Course name</small></h4>
             <label for="file" th:text="'Progress(' + ${progress} + '%):' "></label>
-            <progress th:value="${progress}" max="100"></progress>
+            <progress th:unless="${session?.user?.role > 1}" th:value="${progress}" max="100"></progress>
             <hr>
             <div class="row content" style="display: flex;">
                 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 330px;">

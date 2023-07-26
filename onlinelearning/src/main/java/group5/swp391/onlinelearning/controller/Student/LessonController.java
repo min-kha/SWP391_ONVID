@@ -63,6 +63,7 @@ public class LessonController {
         List<Learn> learns = learnService.getListLearnByLessonIdAndStudentId(listLesson, student);
         List<LessonDtoDetail> lessonDtoDetails = new ArrayList<>();
         int countDone = 0;
+
         for (int i = 0; i < listLesson.size(); i++) {
             LessonDtoDetail lessonDtoDetail = LearnMapper.lessonToLessonDtoDetail(listLesson.get(i), learns.get(i),
                     i + 1);
@@ -78,6 +79,7 @@ public class LessonController {
         } else {
             model.addAttribute("isDone", "false");
         }
+
         List<Integer> numberList = IntStream.range(1, listLesson.size() + 1).boxed().collect(Collectors.toList());
         model.addAttribute("numberList", numberList);
 

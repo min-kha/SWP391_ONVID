@@ -43,7 +43,7 @@ public class LoginController {
             User userRes = userService.loginStudent(teacher, model);
             if (userRes != null) {
                 session.setAttribute("user", userRes);
-                session.setAttribute("studentSession", userRes);
+                session.setAttribute("studentSession", userService.getUserById(1));
                 if (cartService.getCartByStudentId(userRes.getId()) == null)
                     cartService.createCart(userRes);
                 return "redirect:/admin/home";

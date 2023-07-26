@@ -17,16 +17,14 @@
                     <div class="container-fluid text-center" style="border: 3px solid black">
                         <div style="font-size: 35px; margin-bottom: 20px; text-align: center" class="col-md-12">
                             #Hashtag
-                            <div style="display: flex;">
-                                <form th:action="'/course/search-by-hashtag'" th:each="topic : ${topics}"
-                                    class="col-md-3" method="get">
-                                    <input type="hidden" value="1" name="pageChoose">
-                                    <input type="hidden" th:value="${topic.id}" name="topicId">
-
-                                    <input type="submit" name="hashtag" th:value="${topic.hashtag}"
-                                        style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff" />
-                                </form>
-                            </div>
+                            <br>
+                            <form th:action="'/course/search-by-hashtag'" th:each="topic : ${topics}" method="get"
+                                class="col-md-12" style="display: inline;">
+                                <input type="hidden" value="1" name="pageChoose">
+                                <input type="hidden" th:value="${topic.id}" name="topicId">
+                                <input type="submit" name="hashtag" th:value="${topic.hashtag}"
+                                    style="margin-bottom: 10px; font-size: 15px; height: 30px; border: 2px solid black; color: white; background-color: #0066ff" />
+                            </form>
                         </div>
                     </div>
                     <br>

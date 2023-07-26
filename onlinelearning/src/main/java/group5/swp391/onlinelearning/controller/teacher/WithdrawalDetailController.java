@@ -77,6 +77,8 @@ public class WithdrawalDetailController {
                 withDetailService.removeWithdrawalDetailByWallet(money);
                 // update wallet
                 walletService.subRevenue(money);
+                session.setAttribute("wallet", walletService.getRevenue());
+
             }
 
         } catch (Exception e) {
